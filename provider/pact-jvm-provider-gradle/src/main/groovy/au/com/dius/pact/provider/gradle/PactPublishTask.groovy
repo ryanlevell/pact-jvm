@@ -9,6 +9,8 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.GradleScriptException
 import org.gradle.api.tasks.TaskAction
 
+import java.util.regex.Pattern
+
 /**
  * Task to push pact files to a pact broker
  */
@@ -43,7 +45,7 @@ class PactPublishTask extends DefaultTask {
         def brokerClient = new PactBrokerClient(pactPublish.pactBrokerUrl, options)
         File pactDirectory = pactPublish.pactDirectory as File
         boolean anyFailed = false
-        pactDirectory.eachFileMatch(FileType.FILES, ~/.*\.json/) { pactFile ->
+        pactDirectory.eachFileMatch(FileType.FILES, Pattern.compile(pactPublish.include)) { pactFile ->
           if (pactFileIsExcluded(pactPublish, pactFile)) {
             println("Not publishing '${pactFile.name}' as it matches an item in the excluded list")
           } else {
@@ -53,7 +55,7 @@ class PactPublishTask extends DefaultTask {
             } else {
               print "Publishing '${pactFile.name}' ... "
             }
-            result = brokerClient.uploadPactFile(pactFile, pactPublish.version, pactPublish.tags)
+            result = brokerClient.uploadContract(pactFile, pactPublish.version, pactPublish.tags)
             println result
             if (!anyFailed && result.startsWith('FAILED!')) {
               anyFailed = true

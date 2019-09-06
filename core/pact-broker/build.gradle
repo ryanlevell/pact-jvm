@@ -10,6 +10,7 @@ dependencies {
     exclude group: 'org.jetbrains.kotlin'
   }
   implementation "org.slf4j:slf4j-api:${project.slf4jVersion}"
+  compile 'org.yaml:snakeyaml:1.25'
 
   testRuntime "org.junit.vintage:junit-vintage-engine:${project.junit5Version}"
   testCompile 'net.bytebuddy:byte-buddy:1.9.12'

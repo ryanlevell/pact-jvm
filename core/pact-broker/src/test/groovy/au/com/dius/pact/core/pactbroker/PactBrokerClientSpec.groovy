@@ -7,6 +7,7 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import kotlin.Pair
 import kotlin.collections.MapsKt
+import org.apache.http.entity.ContentType
 import spock.lang.Issue
 import spock.lang.Specification
 import spock.lang.Unroll
@@ -177,9 +178,9 @@ class PactBrokerClientSpec extends Specification {
     def result = client.uploadPactFile(pactFile, '10.0.0')
 
     then:
-    1 * halClient.uploadJson(
+    1 * halClient.uploadDocument(
       '/pacts/provider/Provider/consumer/Foo%20Consumer/version/10.0.0',
-      pactContents, _, false) >>
+      pactContents, _, false, _) >>
       { args -> args[2].apply('Failed', 'Error') }
     result == 'FAILED! Error'
   }
@@ -208,8 +209,8 @@ class PactBrokerClientSpec extends Specification {
     client.uploadPactFile(pactFile, '10.0.0/B', [tag])
 
     then:
-    1 * halClient.uploadJson('/pacts/provider/Provider%2FA/consumer/Foo%20Consumer%2FA/version/10.0.0%2FB',
-      pactContents, _, false) >> { args -> args[2].apply('OK', 'OK') }
+    1 * halClient.uploadDocument('/pacts/provider/Provider%2FA/consumer/Foo%20Consumer%2FA/version/10.0.0%2FB',
+      pactContents, _, false, _) >> { args -> args[2].apply('OK', 'OK') }
     1 * halClient.uploadJson('/pacticipants/Foo%20Consumer%2FA/versions/10.0.0%2FB/tags/A%2FB', '', _, false)
   }
 
@@ -241,8 +242,8 @@ class PactBrokerClientSpec extends Specification {
     1 * halClient.uploadJson('/pacticipants/Foo%20Consumer%2FA/versions/10.0.0%2FB/tags/A%2FB', '', _, false)
 
     then:
-    1 * halClient.uploadJson('/pacts/provider/Provider%2FA/consumer/Foo%20Consumer%2FA/version/10.0.0%2FB',
-      pactContents, _, false) >> { args -> args[2].apply('OK', 'OK') }
+    1 * halClient.uploadDocument('/pacts/provider/Provider%2FA/consumer/Foo%20Consumer%2FA/version/10.0.0%2FB',
+      pactContents, _, false, _) >> { args -> args[2].apply('OK', 'OK') }
   }
 
   @Unroll
@@ -292,5 +293,81 @@ class PactBrokerClientSpec extends Specification {
     then:
     1 * halClient.fetch(url) >> json
     result.pactFile == Json.INSTANCE.toJson([a: 'a', b: 100, _links: [:], c: [true, 10.2, 'test']])
+  }
+
+  def 'supports uploading swagger files'() {
+    given:
+    def halClient = Mock(IHalClient)
+    def client = Spy(PactBrokerClient, constructorArgs: ['baseUrl']) {
+      newHalClient() >> halClient
+    }
+    pactContents = '''
+      {
+        "openapi": "3.0.1",
+        "info": {
+          "title": "Swagger Petstore",
+          "description": "",
+          "version": "1.0.0"
+        },
+        "paths": {
+          "/pet": {
+            "put": {
+              "summary": "Update an existing pet",
+              "responses": {
+                "400": {
+                  "description": "Invalid ID supplied"
+                }
+              }
+            }
+          }
+        }
+      }
+    '''
+    pactFile.write pactContents
+
+    when:
+    client.uploadContract(pactFile, '0.0.0')
+
+    then:
+    1 * halClient.uploadDocument('/pacts/provider/Swagger%20Petstore/version/1.0.0',
+      pactContents, _, false, 'application/json; charset=UTF-8') >> { args -> args[2].apply('OK', 'OK') }
+  }
+
+  def 'supports uploading swagger files in YAML'() {
+    given:
+    def halClient = Mock(IHalClient)
+    def client = Spy(PactBrokerClient, constructorArgs: ['baseUrl']) {
+      newHalClient() >> halClient
+    }
+    pactContents = '''
+      openapi: 3.0.1
+      info:
+        title: Swagger Petstore
+        description: 'This is a sample server Petstore server.  You can find out more about     Swagger
+          at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For
+          this sample, you can use the api key `special-key` to test the authorization     filters.\'
+        termsOfService: http://swagger.io/terms/
+        contact:
+          email: apiteam@swagger.io
+        license:
+          name: Apache 2.0
+          url: http://www.apache.org/licenses/LICENSE-2.0.html
+        version: '1.0.0'
+      paths:
+        /pet:
+          put:
+            summary: Update an existing pet
+            responses:
+              400:
+                description: Invalid ID supplied
+    '''
+    pactFile.write pactContents
+
+    when:
+    client.uploadContract(pactFile, '0.0.0')
+
+    then:
+    1 * halClient.uploadDocument('/pacts/provider/Swagger%20Petstore/version/1.0.0',
+      pactContents, _, false, 'application/yaml') >> { args -> args[2].apply('OK', 'OK') }
   }
 }

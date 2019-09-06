@@ -2,6 +2,7 @@ package au.com.dius.pact.core.pactbroker
 
 import au.com.dius.pact.com.github.michaelbull.result.Err
 import au.com.dius.pact.com.github.michaelbull.result.Result
+import au.com.dius.pact.core.support.ContentTypeUtils
 import com.github.salomonbrys.kotson.get
 import com.github.salomonbrys.kotson.jsonArray
 import com.github.salomonbrys.kotson.jsonObject
@@ -13,7 +14,9 @@ import com.google.common.net.UrlEscapers.urlPathSegmentEscaper
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import mu.KLogging
+import org.apache.http.entity.ContentType
 import org.dmfs.rfc3986.encoding.Precoded
+import org.yaml.snakeyaml.Yaml
 import java.io.File
 import java.net.URLDecoder
 import java.util.function.BiFunction
@@ -114,24 +117,63 @@ open class PactBrokerClient(val pactBrokerUrl: String, val options: Map<String, 
    * Uploads the given pact file to the broker, and optionally applies any tags
    */
   @JvmOverloads
-  open fun uploadPactFile(pactFile: File, unescapedVersion: String, tags: List<String> = emptyList()): Any? {
+  @Deprecated("Renamed to uploadContract",
+    ReplaceWith("uploadContract(pactFile, unescapedVersion, tags)"))
+  open fun uploadPactFile(pactFile: File, unescapedVersion: String, tags: List<String> = emptyList()) =
+    uploadContract(pactFile, unescapedVersion, tags)
+
+  /**
+   * Uploads the given contract file to the broker, and optionally applies any tags
+   */
+  @JvmOverloads
+  open fun uploadContract(pactFile: File, unescapedVersion: String, tags: List<String> = emptyList()): Any? {
+    var version = urlPathSegmentEscaper().escape(unescapedVersion)
     val pactText = pactFile.readText()
-    val pact = JsonParser().parse(pactText)
+    var contentType = ContentType.TEXT_PLAIN.toString()
+    var uploadPath = ""
+    var consumerName = ""
+    if (ContentTypeUtils.detectContentType(pactText) == "application/json") {
+      contentType = ContentType.APPLICATION_JSON.toString()
+      val json = JsonParser().parse(pactText)
+      if (json.isJsonObject && json.obj.has("openapi")) {
+        val providerName = urlPathSegmentEscaper().escape(json["info"]["title"].string)
+        if (json["info"]["version"].isJsonPrimitive && json["info"]["version"].asJsonPrimitive.asString.isNotEmpty()) {
+          version = urlPathSegmentEscaper().escape(json["info"]["version"].asJsonPrimitive.asString)
+        }
+        uploadPath = "/pacts/provider/$providerName/version/$version"
+      } else {
+        val providerName = urlPathSegmentEscaper().escape(json["provider"]["name"].string)
+        consumerName = urlPathSegmentEscaper().escape(json["consumer"]["name"].string)
+        uploadPath = "/pacts/provider/$providerName/consumer/$consumerName/version/$version"
+      }
+    } else {
+      val yaml = Yaml()
+      val doc = yaml.load<Map<String, Any?>>(pactText)
+      if (doc.containsKey("openapi")) {
+        contentType = "application/yaml"
+        val info = doc["info"]
+        if (info is Map<*, *>) {
+          val providerName = urlPathSegmentEscaper().escape(info["title"].toString())
+          val ver = info["version"]?.toString()
+          if (!ver.isNullOrEmpty()) {
+            version = ver
+          }
+          uploadPath = "/pacts/provider/$providerName/version/$version"
+        }
+      }
+    }
+
     val halClient = newHalClient()
-    val providerName = urlPathSegmentEscaper().escape(pact["provider"]["name"].string)
-    val consumerName = urlPathSegmentEscaper().escape(pact["consumer"]["name"].string)
-    val version = urlPathSegmentEscaper().escape(unescapedVersion)
-    val uploadPath = "/pacts/provider/$providerName/consumer/$consumerName/version/$version"
-    if (tags.isNotEmpty()) {
+    if (tags.isNotEmpty() && consumerName.isNotEmpty()) {
       uploadTags(halClient, consumerName, version, tags)
     }
-    return halClient.uploadJson(uploadPath, pactText, BiFunction { result, status ->
+    return halClient.uploadDocument(uploadPath, pactText, BiFunction { result, status ->
       if (result == "OK") {
         status
       } else {
         "FAILED! $status"
       }
-    }, false)
+    }, false, contentType)
   }
 
   open fun getUrlForProvider(providerName: String, tag: String): String? {

@@ -123,6 +123,17 @@ interface IHalClient {
    * @param path The path to the HAL document. If it is a relative path, it is relative to the base URL
    */
   fun fetch(path: String): JsonElement
+
+  /**
+   * Uploads the document to the provided path, using a PUT request
+   * @param path Path to upload the document
+   * @param body Contents for the body
+   * @param closure Closure that will be invoked with details about the response. The result from the closure will be
+   * returned.
+   * @param encodePath If the path must be encoded beforehand.
+   * @param contentType The content type of the body
+   */
+  fun uploadDocument(path: String, body: String, closure: BiFunction<String, String, Any?>, encodePath: Boolean, contentType: String): Any?
 }
 
 /**
@@ -337,11 +348,19 @@ open class HalClient @JvmOverloads constructor(
     bodyJson: String,
     closure: BiFunction<String, String, Any?>,
     encodePath: Boolean
+  ): Any? = uploadDocument(path, bodyJson, closure, encodePath, ContentType.APPLICATION_JSON.toString())
+
+  override fun uploadDocument(
+    path: String,
+    body: String,
+    closure: BiFunction<String, String, Any?>,
+    encodePath: Boolean,
+    contentType: String
   ): Any? {
     val client = setupHttpClient()
     val httpPut = initialiseRequest(HttpPut(buildUrl(baseUrl, path, encodePath)))
-    httpPut.addHeader("Content-Type", ContentType.APPLICATION_JSON.toString())
-    httpPut.entity = StringEntity(bodyJson, ContentType.APPLICATION_JSON)
+    httpPut.addHeader("Content-Type", contentType)
+    httpPut.entity = StringEntity(body, contentType)
 
     client.execute(httpPut, httpContext).use {
       return when {

@@ -1,6 +1,7 @@
 package au.com.dius.pact.core.model
 
 import au.com.dius.pact.core.model.matchingrules.MatchingRules
+import au.com.dius.pact.core.support.ContentTypeUtils
 import mu.KLogging
 import org.apache.http.entity.ContentType
 import java.nio.charset.Charset
@@ -34,13 +35,7 @@ abstract class HttpPart {
       val s = body.value!!.take(32).map {
         if (it == '\n'.toByte()) ' ' else it.toChar()
       }.joinToString("")
-      when {
-        s.matches(XMLREGEXP) -> "application/xml"
-        s.toUpperCase().matches(HTMLREGEXP) -> "text/html"
-        s.matches(JSONREGEXP) -> "application/json"
-        s.matches(XMLREGEXP2) -> "application/xml"
-        else -> "text/plain"
-      }
+      ContentTypeUtils.detectContentType(s)
     }
     else -> "text/plain"
   }
@@ -53,11 +48,6 @@ abstract class HttpPart {
 
   companion object : KLogging() {
     private const val CONTENT_TYPE = "Content-Type"
-
-    val XMLREGEXP = """^\s*<\?xml\s*version.*""".toRegex()
-    val HTMLREGEXP = """^\s*(<!DOCTYPE)|(<HTML>).*""".toRegex()
-    val JSONREGEXP = """^\s*(true|false|null|[0-9]+|"\w*|\{\s*(}|"\w+)|\[\s*).*""".toRegex()
-    val XMLREGEXP2 = """^\s*<\w+\s*(:\w+=[\"”][^\"”]+[\"”])?.*""".toRegex()
   }
 
   @Deprecated("use the method on OptionalBody")

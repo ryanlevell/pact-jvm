@@ -15,5 +15,6 @@ class PactPublish {
     String pactBrokerPassword
     String pactBrokerAuthenticationScheme
     List<String> tags = []
+    String include = '.*\\.json'
     List<String> excludes = []
 }
