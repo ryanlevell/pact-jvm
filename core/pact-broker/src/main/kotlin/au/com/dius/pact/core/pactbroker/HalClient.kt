@@ -378,7 +378,7 @@ open class HalClient @JvmOverloads constructor(
     val client = setupHttpClient()
     val httpPut = initialiseRequest(HttpPut(buildUrl(baseUrl, path, encodePath)))
     httpPut.addHeader("Content-Type", contentType)
-    httpPut.entity = StringEntity(body, contentType)
+    httpPut.entity = StringEntity(body, contentType, "UTF-8")
 
     client.execute(httpPut, httpContext).use {
       return when {

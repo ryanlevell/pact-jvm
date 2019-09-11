@@ -202,7 +202,7 @@ open class PactBrokerClient(val pactBrokerUrl: String, val options: Map<String, 
       uploadTags(halClient, providerName, version, tags)
     }
     return Result.of {
-      val result = halClient.uploadDocument("/oas/provider$providerName/version/$version", pactText,
+      val result = halClient.uploadDocument("/oas/provider/$providerName/version/$version", pactText,
         BiFunction { a, b -> callback(a, b) }, false, contentType) as Result<String, String>
       return when (result) {
         is Ok<*> -> result

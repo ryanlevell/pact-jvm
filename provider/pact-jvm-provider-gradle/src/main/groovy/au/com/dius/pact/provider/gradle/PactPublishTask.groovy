@@ -1,5 +1,6 @@
 package au.com.dius.pact.provider.gradle
 
+import au.com.dius.pact.com.github.michaelbull.result.Ok
 import au.com.dius.pact.core.pactbroker.PactBrokerClient
 import groovy.io.FileType
 import org.apache.commons.io.FilenameUtils
@@ -56,8 +57,13 @@ class PactPublishTask extends DefaultTask {
               print "Publishing '${pactFile.name}' ... "
             }
             result = brokerClient.uploadContract(pactFile, pactPublish.version, pactPublish.tags)
-            println result
-            if (!anyFailed && result.startsWith('FAILED!')) {
+            if (result instanceof Ok) {
+              println result.value
+              if (!anyFailed && result.value.startsWith('FAILED!')) {
+                anyFailed = true
+              }
+            } else {
+              println result.error
               anyFailed = true
             }
           }
