@@ -1,7 +1,6 @@
 package au.com.dius.pact.core.pactbroker
 
-import au.com.dius.pact.com.github.michaelbull.result.Err
-import au.com.dius.pact.com.github.michaelbull.result.Result
+import au.com.dius.pact.com.github.michaelbull.result.*
 import au.com.dius.pact.core.support.ContentTypeUtils
 import com.github.salomonbrys.kotson.get
 import com.github.salomonbrys.kotson.jsonArray
@@ -126,54 +125,112 @@ open class PactBrokerClient(val pactBrokerUrl: String, val options: Map<String, 
    * Uploads the given contract file to the broker, and optionally applies any tags
    */
   @JvmOverloads
-  open fun uploadContract(pactFile: File, unescapedVersion: String, tags: List<String> = emptyList()): Any? {
-    var version = urlPathSegmentEscaper().escape(unescapedVersion)
+  open fun uploadContract(pactFile: File, unescapedVersion: String, tags: List<String> = emptyList()): Result<String, String> {
+    val version = urlPathSegmentEscaper().escape(unescapedVersion)
     val pactText = pactFile.readText()
-    var contentType = ContentType.TEXT_PLAIN.toString()
-    var uploadPath = ""
-    var consumerName = ""
-    if (ContentTypeUtils.detectContentType(pactText) == "application/json") {
-      contentType = ContentType.APPLICATION_JSON.toString()
-      val json = JsonParser().parse(pactText)
-      if (json.isJsonObject && json.obj.has("openapi")) {
-        val providerName = urlPathSegmentEscaper().escape(json["info"]["title"].string)
-        if (json["info"]["version"].isJsonPrimitive && json["info"]["version"].asJsonPrimitive.asString.isNotEmpty()) {
-          version = urlPathSegmentEscaper().escape(json["info"]["version"].asJsonPrimitive.asString)
-        }
-        uploadPath = "/pacts/provider/$providerName/version/$version"
+    val callback = { result: String, status: String ->
+      if (result == "OK") {
+        Ok(status)
       } else {
-        val providerName = urlPathSegmentEscaper().escape(json["provider"]["name"].string)
-        consumerName = urlPathSegmentEscaper().escape(json["consumer"]["name"].string)
-        uploadPath = "/pacts/provider/$providerName/consumer/$consumerName/version/$version"
-      }
-    } else {
-      val yaml = Yaml()
-      val doc = yaml.load<Map<String, Any?>>(pactText)
-      if (doc.containsKey("openapi")) {
-        contentType = "application/yaml"
-        val info = doc["info"]
-        if (info is Map<*, *>) {
-          val providerName = urlPathSegmentEscaper().escape(info["title"].toString())
-          val ver = info["version"]?.toString()
-          if (!ver.isNullOrEmpty()) {
-            version = ver
-          }
-          uploadPath = "/pacts/provider/$providerName/version/$version"
-        }
+        Err("FAILED! $status")
       }
     }
+    return if (ContentTypeUtils.detectContentType(pactText) == "application/json") {
+      uploadJsonContract(pactText, version, tags, callback)
+    } else {
+      uploadYamlContract(pactText, version, tags, callback)
+    }
+  }
 
+  private fun uploadYamlContract(
+    pactText: String,
+    version: String,
+    tags: List<String> = emptyList(),
+    callback: (String, String) -> Result<String, String>
+  ): Result<String, String> {
+    val yaml = Yaml()
+    val doc = yaml.load<Map<String, Any?>>(pactText)
+    return if (doc.containsKey("openapi")) {
+      val info = doc["info"]
+      if (info is Map<*, *>) {
+        val providerName = urlPathSegmentEscaper().escape(info["title"].toString())
+        var ver = info["version"].toString()
+        ver = if (ver.isEmpty()) {
+          version
+        } else {
+          urlPathSegmentEscaper().escape(ver)
+        }
+        uploadOasContract(tags, ver, providerName, pactText, callback, "application/yaml")
+      } else {
+        Err("OAS info section is mandatory")
+      }
+    } else {
+      Err("Contract is not an OAS format")
+    }
+  }
+
+  private fun uploadJsonContract(
+    pactText: String,
+    version: String,
+    tags: List<String> = emptyList(),
+    callback: (String, String) -> Result<String, String>
+  ): Result<String, String> {
+    val json = JsonParser().parse(pactText)
+    return if (json.isJsonObject && json.obj.has("openapi")) {
+      val providerName = urlPathSegmentEscaper().escape(json["info"]["title"].string)
+      var ver = version
+      if (json["info"]["version"].isJsonPrimitive && json["info"]["version"].asJsonPrimitive.asString.isNotEmpty()) {
+        ver = urlPathSegmentEscaper().escape(json["info"]["version"].asJsonPrimitive.asString)
+      }
+      uploadOasContract(tags, ver, providerName, pactText, callback, "application/json")
+    } else {
+      val providerName = urlPathSegmentEscaper().escape(json["provider"]["name"].string)
+      val consumerName = urlPathSegmentEscaper().escape(json["consumer"]["name"].string)
+      uploadPactContract(tags, version, providerName, consumerName, pactText, callback)
+    }
+  }
+
+  private fun uploadOasContract(
+    tags: List<String>,
+    version: String,
+    providerName: String,
+    pactText: String, callback: (String, String) -> Result<String, String>,
+    contentType: String
+  ): Result<String, String> {
+    val halClient = newHalClient()
+    if (tags.isNotEmpty() && providerName.isNotEmpty()) {
+      uploadTags(halClient, providerName, version, tags)
+    }
+    return Result.of {
+      val result = halClient.uploadDocument("/oas/provider$providerName/version/$version", pactText,
+        BiFunction { a, b -> callback(a, b) }, false, contentType) as Result<String, String>
+      return when (result) {
+        is Ok<*> -> result
+        else -> throw Exception(result.getError())
+      }
+    }.mapError { err -> err.message.toString() }
+  }
+
+  private fun uploadPactContract(
+    tags: List<String>,
+    version: String,
+    providerName: String,
+    consumerName: String,
+    pactText: String,
+    callback: (String, String) -> Result<String, String>
+  ): Result<String, String> {
     val halClient = newHalClient()
     if (tags.isNotEmpty() && consumerName.isNotEmpty()) {
       uploadTags(halClient, consumerName, version, tags)
     }
-    return halClient.uploadDocument(uploadPath, pactText, BiFunction { result, status ->
-      if (result == "OK") {
-        status
-      } else {
-        "FAILED! $status"
+    return Result.of {
+      val result = halClient.uploadDocumentToLink("pb:publish-pact", pactText, mapOf(),
+        callback, false, ContentType.APPLICATION_JSON.toString())
+      return when (result) {
+        is Ok<*> -> result
+        else -> throw Exception(result.getError())
       }
-    }, false, contentType)
+    }.mapError { err -> err.message.toString() }
   }
 
   open fun getUrlForProvider(providerName: String, tag: String): String? {

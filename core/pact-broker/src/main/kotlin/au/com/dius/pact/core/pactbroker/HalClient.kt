@@ -134,6 +134,24 @@ interface IHalClient {
    * @param contentType The content type of the body
    */
   fun uploadDocument(path: String, body: String, closure: BiFunction<String, String, Any?>, encodePath: Boolean, contentType: String): Any?
+
+  /**
+   * Uploads the document to the path defined by the HAL link name, using a PUT request
+   * @param linkName Link name to use (like pb:publish-pact)
+   * @param body Contents for the body
+   * @param callback Closure that will be invoked with details about the response. The result from the closure will be
+   * returned.
+   * @param encodePath If the path must be encoded beforehand.
+   * @param contentType The content type of the body
+   */
+  fun uploadDocumentToLink(
+    linkName: String,
+    body: String,
+    options: Map<String, Any>,
+    callback: (String, String) -> Result<String, String>,
+    encodePath: Boolean,
+    contentType: String
+  ): Result<String, String>
 }
 
 /**
@@ -219,7 +237,7 @@ open class HalClient @JvmOverloads constructor(
 
   override fun navigate(options: Map<String, Any>, link: String): IHalClient {
     pathInfo = pathInfo ?: fetch(ROOT)
-    pathInfo = fetchLink(link, options)
+    pathInfo = withLink(link, options) { url, encode -> fetch(url, encode) }
     return this
   }
 
@@ -260,7 +278,7 @@ open class HalClient @JvmOverloads constructor(
     }
   }
 
-  private fun fetchLink(link: String, options: Map<String, Any>): JsonElement {
+  private fun <R> withLink(link: String, options: Map<String, Any>, callback: (url: String, encode: Boolean) -> R): R {
     if (pathInfo?.nullObj?.get(LINKS) == null) {
       throw InvalidHalResponse("Expected a HAL+JSON response from the pact broker, but got " +
         "a response with no '_links'. URL: '$baseUrl', LINK: '$link'")
@@ -279,9 +297,9 @@ open class HalClient @JvmOverloads constructor(
           val linkByName = linkData.asJsonArray.find { it.isJsonObject && it["name"] == options["name"] }
           return if (linkByName != null && linkByName.isJsonObject && linkByName["templated"].isJsonPrimitive &&
             linkByName["templated"].bool) {
-            this.fetch(parseLinkUrl(linkByName["href"].toString(), options), false)
+            callback(parseLinkUrl(linkByName["href"].toString(), options), false)
           } else if (linkByName != null && linkByName.isJsonObject) {
-            this.fetch(linkByName["href"].string)
+            callback(linkByName["href"].string, true)
           } else {
             throw InvalidNavigationRequest("Link '$link' does not have an entry with name '${options["name"]}'. " +
               "URL: '$baseUrl', LINK: '$link'")
@@ -293,9 +311,9 @@ open class HalClient @JvmOverloads constructor(
       } else if (linkData.isJsonObject) {
         return if (linkData.obj.has("templated") && linkData["templated"].isJsonPrimitive &&
           linkData["templated"].bool) {
-          fetch(parseLinkUrl(linkData["href"].string, options), false)
+          callback(parseLinkUrl(linkData["href"].string, options), false)
         } else {
-          fetch(linkData["href"].string)
+          callback(linkData["href"].string, true)
         }
       } else {
         throw InvalidHalResponse("Expected link in map form in the response, but " +
@@ -376,6 +394,39 @@ open class HalClient @JvmOverloads constructor(
         else -> {
           val body = it.entity.content.bufferedReader().readText()
           handleFailure(it, body, closure)
+        }
+      }
+    }
+  }
+
+  override fun uploadDocumentToLink(
+    linkName: String,
+    body: String,
+    options: Map<String, Any>,
+    callback: (String, String) -> Result<String, String>,
+    encodePath: Boolean,
+    contentType: String
+  ): Result<String, String> {
+    val client = setupHttpClient()
+    val path = withLink("pb:publish-pact", options) { url, _ -> url }
+    val httpPut = initialiseRequest(HttpPut(buildUrl(baseUrl, path, encodePath)))
+    httpPut.addHeader("Content-Type", contentType)
+    httpPut.entity = StringEntity(body, contentType)
+
+    client.execute(httpPut, httpContext).use {
+      return when {
+        it.statusLine.statusCode < 300 -> {
+          EntityUtils.consume(it.entity)
+          callback("OK", it.statusLine.toString())
+        }
+        it.statusLine.statusCode == 409 -> {
+          val body = it.entity.content.bufferedReader().readText()
+          callback("FAILED",
+            "${it.statusLine.statusCode} ${it.statusLine.reasonPhrase} - $body")
+        }
+        else -> {
+          val body = it.entity.content.bufferedReader().readText()
+          handleFailure(it, body, BiFunction { status, error -> callback(status, error) }) as Result<String, String>
         }
       }
     }
