@@ -1,9 +1,11 @@
 name: Trigger update to docs.pact.io
 
-on:
-  push:
-    branches:
-      - master
+
+on: push
+# on:
+#   push:
+#     branches:
+#       - master
 
 jobs:
   run:
@@ -16,9 +18,9 @@ jobs:
 
       - name: Detect changes to markdown files
         id: detect-changed-markdown-files
-        uses: marceloprado/has-changed-path@master
+        uses: bethtesque/has-changed-path@master
         with:
-          paths: "\\*.md"
+          paths: "*.md"
 
       - name: Trigger docs.pact.io update workflow
         if: steps.detect-changed-markdown-files.outputs.changed == 'true'
