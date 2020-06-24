@@ -1,7 +1,10 @@
 name: Trigger update to docs.pact.io
 
 
-on: push
+on:
+  push:
+    paths:
+    - '**.md'
 # on:
 #   push:
 #     branches:
@@ -11,19 +14,7 @@ jobs:
   run:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 100
-
-      - name: Detect changes to markdown files
-        id: detect-changed-markdown-files
-        uses: bethtesque/has-changed-path@0.0.1
-        with:
-          paths: "*.md"
-
       - name: Trigger docs.pact.io update workflow
-        if: steps.detect-changed-markdown-files.outputs.changed == 'true'
         run: |
           curl -X POST https://api.github.com/repos/pact-foundation/docs.pact.io/dispatches \
                 -H 'Accept: application/vnd.github.everest-preview+json' \
