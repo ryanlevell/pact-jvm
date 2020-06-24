@@ -18,7 +18,7 @@ jobs:
 
       - name: Detect changes to markdown files
         id: detect-changed-markdown-files
-        uses: bethtesque/has-changed-path@master
+        uses: bethtesque/has-changed-path@0.0.1
         with:
           paths: "*.md"
 
