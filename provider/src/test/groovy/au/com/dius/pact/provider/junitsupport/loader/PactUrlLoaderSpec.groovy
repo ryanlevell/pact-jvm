@@ -1,11 +1,11 @@
 package au.com.dius.pact.provider.junitsupport.loader
 
-import au.com.dius.pact.core.model.Consumer
-import au.com.dius.pact.core.model.PactReader
-import au.com.dius.pact.core.model.Provider
-import au.com.dius.pact.core.model.RequestResponsePact
-import au.com.dius.pact.core.model.UrlSource
-import au.com.dius.pact.core.support.Auth
+import io.pact.core.model.Consumer
+import io.pact.core.model.PactReader
+import io.pact.core.model.Provider
+import io.pact.core.model.RequestResponsePact
+import io.pact.core.model.UrlSource
+import io.pact.core.support.Auth
 import spock.lang.Specification
 import spock.util.environment.RestoreSystemProperties
 

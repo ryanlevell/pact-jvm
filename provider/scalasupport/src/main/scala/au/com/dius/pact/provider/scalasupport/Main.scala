@@ -1,8 +1,8 @@
 package au.com.dius.pact.provider.scalasupport
 
-import java.io.File
+import io.pact.core.model.RequestResponsePact
 
-import au.com.dius.pact.core.model.RequestResponsePact
+import java.io.File
 import org.scalatest._
 
 object Main {

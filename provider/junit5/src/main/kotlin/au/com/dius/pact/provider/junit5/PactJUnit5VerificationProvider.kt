@@ -1,9 +1,9 @@
 package au.com.dius.pact.provider.junit5
 
-import au.com.dius.pact.core.model.Pact
-import au.com.dius.pact.core.support.expressions.ValueResolver
-import au.com.dius.pact.core.support.handleWith
-import au.com.dius.pact.core.support.isNotEmpty
+import io.pact.core.model.Pact
+import io.pact.core.support.expressions.ValueResolver
+import io.pact.core.support.handleWith
+import io.pact.core.support.isNotEmpty
 import au.com.dius.pact.provider.ProviderUtils
 import au.com.dius.pact.provider.ProviderUtils.instantiatePactLoader
 import au.com.dius.pact.provider.junitsupport.AllowOverridePactUrl

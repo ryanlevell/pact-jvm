@@ -1,16 +1,16 @@
 package au.com.dius.pact.provider
 
-import au.com.dius.pact.core.model.BrokerUrlSource
-import au.com.dius.pact.core.model.Consumer
-import au.com.dius.pact.core.model.FileSource
-import au.com.dius.pact.core.model.Provider
-import au.com.dius.pact.core.model.Request
-import au.com.dius.pact.core.model.RequestResponseInteraction
-import au.com.dius.pact.core.model.RequestResponsePact
-import au.com.dius.pact.core.model.Response
-import au.com.dius.pact.core.model.UnknownPactSource
-import au.com.dius.pact.core.model.UrlSource
-import au.com.dius.pact.core.pactbroker.TestResult
+import io.pact.core.model.BrokerUrlSource
+import io.pact.core.model.Consumer
+import io.pact.core.model.FileSource
+import io.pact.core.model.Provider
+import io.pact.core.model.Request
+import io.pact.core.model.RequestResponseInteraction
+import io.pact.core.model.RequestResponsePact
+import io.pact.core.model.Response
+import io.pact.core.model.UnknownPactSource
+import io.pact.core.model.UrlSource
+import io.pact.core.pactbroker.TestResult
 import org.apache.commons.lang3.builder.HashCodeBuilder
 import spock.lang.Specification
 import spock.lang.Unroll

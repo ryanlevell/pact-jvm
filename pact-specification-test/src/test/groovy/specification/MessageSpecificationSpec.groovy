@@ -1,9 +1,9 @@
 package specification
 
-import au.com.dius.pact.core.model.OptionalBody
-import au.com.dius.pact.core.model.messaging.Message
-import au.com.dius.pact.core.support.Json
-import au.com.dius.pact.core.support.json.JsonParser
+import io.pact.core.model.OptionalBody
+import io.pact.core.model.messaging.Message
+import io.pact.core.support.Json
+import io.pact.core.support.json.JsonParser
 import au.com.dius.pact.provider.ResponseComparison
 import groovy.json.JsonBuilder
 import spock.lang.Specification

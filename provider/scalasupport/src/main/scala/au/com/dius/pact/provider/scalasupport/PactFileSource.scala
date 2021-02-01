@@ -1,8 +1,7 @@
 package au.com.dius.pact.provider.scalasupport
 
 import java.io.File
-
-import au.com.dius.pact.core.model.{DefaultPactReader, RequestResponsePact}
+import io.pact.core.model.{DefaultPactReader, RequestResponsePact}
 import org.apache.commons.io.FileUtils
 
 object PactFileSource {

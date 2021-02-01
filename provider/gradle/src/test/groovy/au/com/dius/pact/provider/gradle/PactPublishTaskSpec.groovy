@@ -1,9 +1,9 @@
 package au.com.dius.pact.provider.gradle
 
-import au.com.dius.pact.core.pactbroker.PactBrokerClient
+import io.pact.core.pactbroker.PactBrokerClient
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
-import au.com.dius.pact.core.support.Version
+import io.pact.core.support.Version
 import org.apache.commons.io.IOUtils
 import org.gradle.api.GradleScriptException
 import org.gradle.api.Project

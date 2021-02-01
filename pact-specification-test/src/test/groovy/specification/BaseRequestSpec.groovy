@@ -1,8 +1,8 @@
 package specification
 
-import au.com.dius.pact.core.model.DefaultPactReader
-import au.com.dius.pact.core.support.Json
-import au.com.dius.pact.core.support.json.JsonParser
+import io.pact.core.model.DefaultPactReader
+import io.pact.core.support.Json
+import io.pact.core.support.json.JsonParser
 import spock.lang.Specification
 
 class BaseRequestSpec extends Specification {

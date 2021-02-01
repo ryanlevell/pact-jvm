@@ -4,7 +4,7 @@
             [clojure.string :as str]
             [leiningen.core.main :as lein])
   (:import (au.com.dius.pact.provider ProviderInfo ConsumerInfo)
-           (au.com.dius.pact.core.model UrlSource)))
+           (io.pact.core.model UrlSource)))
 
 (defn wrap-task [verifier task-name]
   #(lein/resolve-and-apply (.getProject verifier) [task-name]))

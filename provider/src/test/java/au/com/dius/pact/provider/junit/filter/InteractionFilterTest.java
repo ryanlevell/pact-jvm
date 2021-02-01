@@ -1,10 +1,10 @@
 package au.com.dius.pact.provider.junit.filter;
 
-import au.com.dius.pact.core.model.Interaction;
-import au.com.dius.pact.core.model.ProviderState;
-import au.com.dius.pact.core.model.Request;
-import au.com.dius.pact.core.model.RequestResponseInteraction;
-import au.com.dius.pact.core.model.messaging.Message;
+import io.pact.core.model.Interaction;
+import io.pact.core.model.ProviderState;
+import io.pact.core.model.Request;
+import io.pact.core.model.RequestResponseInteraction;
+import io.pact.core.model.messaging.Message;
 import au.com.dius.pact.provider.junitsupport.filter.InteractionFilter;
 import org.junit.Assert;
 import org.junit.jupiter.api.Nested;

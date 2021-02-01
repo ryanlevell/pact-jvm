@@ -1,10 +1,10 @@
 package au.com.dius.pact.provider.spring.junit5
 
-import au.com.dius.pact.core.model.ContentType
-import au.com.dius.pact.core.model.Interaction
-import au.com.dius.pact.core.model.PactSource
-import au.com.dius.pact.core.model.Request
-import au.com.dius.pact.core.model.RequestResponseInteraction
+import io.pact.core.model.ContentType
+import io.pact.core.model.Interaction
+import io.pact.core.model.PactSource
+import io.pact.core.model.Request
+import io.pact.core.model.RequestResponseInteraction
 import au.com.dius.pact.provider.IProviderVerifier
 import au.com.dius.pact.provider.ProviderInfo
 import au.com.dius.pact.provider.ProviderResponse

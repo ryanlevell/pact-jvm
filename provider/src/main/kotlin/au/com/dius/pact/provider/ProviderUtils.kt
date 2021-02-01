@@ -1,8 +1,7 @@
 package au.com.dius.pact.provider
 
-import au.com.dius.pact.core.model.DefaultPactReader
-import au.com.dius.pact.core.model.FileSource
-import au.com.dius.pact.core.model.Interaction
+import io.pact.core.model.DefaultPactReader
+import io.pact.core.model.FileSource
 import au.com.dius.pact.provider.junitsupport.loader.PactLoader
 import au.com.dius.pact.provider.junitsupport.loader.PactSource
 import mu.KLogging

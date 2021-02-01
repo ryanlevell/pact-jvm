@@ -1,9 +1,9 @@
 package au.com.dius.pact.provider
 
-import au.com.dius.pact.core.model.OptionalBody
-import au.com.dius.pact.core.model.generators.Generators
-import au.com.dius.pact.core.model.matchingrules.MatchingRulesImpl
-import au.com.dius.pact.core.model.messaging.Message
+import io.pact.core.model.OptionalBody
+import io.pact.core.model.generators.Generators
+import io.pact.core.model.matchingrules.MatchingRulesImpl
+import io.pact.core.model.messaging.Message
 import com.github.michaelbull.result.Ok
 import spock.lang.Specification
 

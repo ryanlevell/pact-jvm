@@ -1,13 +1,12 @@
 package au.com.dius.pact.provider.scalasupport
 
-import java.util.concurrent.Executors
-
-import au.com.dius.pact.core.matchers._
-import au.com.dius.pact.core.model.{RequestResponsePact, Response}
-import org.scalatest.exceptions.TestFailedException
+import io.pact.core.matchers._
+import io.pact.core.model.{RequestResponsePact, Response}
 import org.scalatest.Assertions
+import org.scalatest.exceptions.TestFailedException
 import org.scalatest.freespec.AnyFreeSpec
 
+import java.util.concurrent.Executors
 import scala.concurrent.duration._
 import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.jdk.CollectionConverters._

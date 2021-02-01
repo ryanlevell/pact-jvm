@@ -1,9 +1,8 @@
 package au.com.dius.pact.provider.junit
 
-import au.com.dius.pact.core.model.Interaction
-import au.com.dius.pact.core.model.Pact
-import au.com.dius.pact.core.support.expressions.SystemPropertyResolver
-import au.com.dius.pact.core.support.json.JsonException
+import io.pact.core.model.Pact
+import io.pact.core.support.expressions.SystemPropertyResolver
+import io.pact.core.support.json.JsonException
 import au.com.dius.pact.provider.ProviderUtils
 import au.com.dius.pact.provider.ProviderUtils.findAnnotation
 import au.com.dius.pact.provider.ProviderUtils.instantiatePactLoader
@@ -138,7 +137,7 @@ open class PactRunner(private val clazz: Class<*>) : ParentRunner<InteractionRun
   protected open fun newInteractionRunner(
     testClass: TestClass,
     pact: Pact,
-    pactSource: au.com.dius.pact.core.model.PactSource
+    pactSource: io.pact.core.model.PactSource
   ): InteractionRunner {
     return InteractionRunner(testClass, pact, pactSource)
   }

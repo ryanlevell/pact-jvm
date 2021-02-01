@@ -1,7 +1,7 @@
 package au.com.dius.pact.server
 
-import au.com.dius.pact.core.model.ContentType
-import au.com.dius.pact.core.model.Request
+import io.pact.core.model.ContentType
+import io.pact.core.model.Request
 import scala.collection.JavaConverters
 import spock.lang.Issue
 import spock.lang.Specification

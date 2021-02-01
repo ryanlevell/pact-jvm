@@ -1,11 +1,11 @@
 package au.com.dius.pact.provider.readme
 
-import au.com.dius.pact.core.model.DefaultPactReader
-import au.com.dius.pact.core.model.Interaction
-import au.com.dius.pact.core.model.Pact
-import au.com.dius.pact.core.model.ProviderState
-import au.com.dius.pact.core.model.RequestResponseInteraction
-import au.com.dius.pact.core.model.UrlSource
+import io.pact.core.model.DefaultPactReader
+import io.pact.core.model.Interaction
+import io.pact.core.model.Pact
+import io.pact.core.model.ProviderState
+import io.pact.core.model.RequestResponseInteraction
+import io.pact.core.model.UrlSource
 import au.com.dius.pact.provider.ConsumerInfo
 import au.com.dius.pact.provider.HttpClientFactory
 import au.com.dius.pact.provider.ProviderClient

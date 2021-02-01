@@ -1,8 +1,8 @@
 package au.com.dius.pact.provider.junit.descriptions
 
-import au.com.dius.pact.core.model.Interaction
-import au.com.dius.pact.core.model.Pact
-import au.com.dius.pact.core.model.PactSource
+import io.pact.core.model.Interaction
+import io.pact.core.model.Pact
+import io.pact.core.model.PactSource
 import au.com.dius.pact.provider.junitsupport.TestDescription
 import org.junit.runner.Description
 import org.junit.runners.model.TestClass

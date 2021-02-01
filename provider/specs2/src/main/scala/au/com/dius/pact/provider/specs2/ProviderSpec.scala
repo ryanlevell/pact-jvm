@@ -1,18 +1,17 @@
 package au.com.dius.pact.provider.specs2
 
-import java.io.{File, InputStream, Reader, StringReader}
-import java.util.concurrent.Executors
-
-import au.com.dius.pact.core.matchers.{FullResponseMatch, ResponseMatching}
-import au.com.dius.pact.core.model.{DefaultPactReader, RequestResponsePact}
 import au.com.dius.pact.provider.scalasupport.HttpClient
+import io.pact.core.matchers.{FullResponseMatch, ResponseMatching}
+import io.pact.core.model.{DefaultPactReader, RequestResponsePact}
 import org.specs2.Specification
 import org.specs2.execute.Result
 import org.specs2.specification.core.Fragments
 
-import scala.jdk.CollectionConverters._
+import java.io.{File, InputStream, Reader, StringReader}
+import java.util.concurrent.Executors
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContext, ExecutionContextExecutor}
+import scala.jdk.CollectionConverters._
 
 trait PactInput
 case class StringInput(string: String) extends PactInput

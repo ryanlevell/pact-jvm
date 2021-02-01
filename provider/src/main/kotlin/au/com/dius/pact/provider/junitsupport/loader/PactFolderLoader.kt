@@ -1,8 +1,8 @@
 package au.com.dius.pact.provider.junitsupport.loader
 
-import au.com.dius.pact.core.model.DefaultPactReader
-import au.com.dius.pact.core.model.DirectorySource
-import au.com.dius.pact.core.model.Pact
+import io.pact.core.model.DefaultPactReader
+import io.pact.core.model.DirectorySource
+import io.pact.core.model.Pact
 import java.io.File
 import java.net.URLDecoder
 

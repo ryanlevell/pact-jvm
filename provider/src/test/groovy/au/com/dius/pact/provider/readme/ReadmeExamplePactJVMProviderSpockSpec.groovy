@@ -1,6 +1,6 @@
 package au.com.dius.pact.provider.readme
 
-import au.com.dius.pact.core.model.FileSource
+import io.pact.core.model.FileSource
 import au.com.dius.pact.provider.ConsumerInfo
 import au.com.dius.pact.provider.ProviderInfo
 import au.com.dius.pact.provider.ProviderVerifier

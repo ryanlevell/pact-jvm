@@ -1,11 +1,10 @@
 package au.com.dius.pact.provider.specs2
 
-import au.com.dius.pact.consumer.model.MockProviderConfig
-import au.com.dius.pact.core.model.PactSpecVersion
+import io.pact.consumer.model.MockProviderConfig
+import io.pact.core.model.PactSpecVersion
 import unfiltered.netty.cycle.{Plan, SynchronousExecution}
 import unfiltered.netty.{Server, ServerErrorResponse}
 import unfiltered.response.ResponseString
-
 
 /**
  * This is not really part of the example, it's just a fake server instead of building a real provider

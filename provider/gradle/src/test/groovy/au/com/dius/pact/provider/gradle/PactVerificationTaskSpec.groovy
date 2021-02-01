@@ -1,10 +1,10 @@
 package au.com.dius.pact.provider.gradle
 
-import au.com.dius.pact.core.matchers.StatusMismatch
-import au.com.dius.pact.core.model.Consumer
-import au.com.dius.pact.core.model.Provider
-import au.com.dius.pact.core.model.RequestResponseInteraction
-import au.com.dius.pact.core.model.RequestResponsePact
+import io.pact.core.matchers.StatusMismatch
+import io.pact.core.model.Consumer
+import io.pact.core.model.Provider
+import io.pact.core.model.RequestResponseInteraction
+import io.pact.core.model.RequestResponsePact
 import au.com.dius.pact.provider.IProviderVerifier
 import au.com.dius.pact.provider.VerificationFailureType
 import au.com.dius.pact.provider.VerificationResult

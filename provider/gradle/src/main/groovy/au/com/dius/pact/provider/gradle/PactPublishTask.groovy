@@ -1,8 +1,8 @@
 package au.com.dius.pact.provider.gradle
 
-import au.com.dius.pact.core.pactbroker.PactBrokerClient
-import au.com.dius.pact.core.pactbroker.PactBrokerClientConfig
-import au.com.dius.pact.core.pactbroker.RequestFailedException
+import io.pact.core.pactbroker.PactBrokerClient
+import io.pact.core.pactbroker.PactBrokerClientConfig
+import io.pact.core.pactbroker.RequestFailedException
 import com.github.michaelbull.result.Ok
 import groovy.io.FileType
 import org.apache.commons.io.FilenameUtils

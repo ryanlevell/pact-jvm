@@ -1,12 +1,12 @@
 package au.com.dius.pact.provider.junit5
 
-import au.com.dius.pact.core.matchers.generators.ArrayContainsJsonGenerator
-import au.com.dius.pact.core.model.BrokerUrlSource
-import au.com.dius.pact.core.model.FilteredPact
-import au.com.dius.pact.core.model.Interaction
-import au.com.dius.pact.core.model.Pact
-import au.com.dius.pact.core.support.expressions.ValueResolver
-import au.com.dius.pact.core.support.isNotEmpty
+import io.pact.core.matchers.generators.ArrayContainsJsonGenerator
+import io.pact.core.model.BrokerUrlSource
+import io.pact.core.model.FilteredPact
+import io.pact.core.model.Interaction
+import io.pact.core.model.Pact
+import io.pact.core.support.expressions.ValueResolver
+import io.pact.core.support.isNotEmpty
 import au.com.dius.pact.provider.ConsumerInfo
 import au.com.dius.pact.provider.DefaultTestResultAccumulator
 import au.com.dius.pact.provider.IProviderVerifier
@@ -14,6 +14,7 @@ import au.com.dius.pact.provider.ProviderInfo
 import au.com.dius.pact.provider.ProviderVerifier
 import au.com.dius.pact.provider.junitsupport.VerificationReports
 import au.com.dius.pact.provider.reporters.ReporterManager
+import io.pact.core.model.PactSource
 import mu.KLogging
 import org.apache.http.HttpRequest
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback
@@ -32,7 +33,7 @@ import java.io.File
  */
 class PactVerificationExtension(
   private val pact: Pact,
-  private val pactSource: au.com.dius.pact.core.model.PactSource,
+  private val pactSource: PactSource,
   private val interaction: Interaction,
   private val serviceName: String,
   private val consumerName: String?
@@ -118,7 +119,7 @@ class PactVerificationExtension(
     }
   }
 
-  private fun prepareVerifier(testContext: PactVerificationContext, extContext: ExtensionContext, pactSource: au.com.dius.pact.core.model.PactSource) {
+  private fun prepareVerifier(testContext: PactVerificationContext, extContext: ExtensionContext, pactSource: PactSource) {
     val consumer = when {
       pactSource is BrokerUrlSource && pactSource.result != null -> ConsumerInfo(pactSource.result!!.name,
         pactSource = pactSource, notices = pactSource.result!!.notices, pending = pactSource.result!!.pending)

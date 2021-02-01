@@ -1,6 +1,6 @@
 package au.com.dius.pact.server
 
-import au.com.dius.pact.core.model.RequestResponseInteraction
+import io.pact.core.model.RequestResponseInteraction
 
 import scala.util.Failure
 import scala.util.Success

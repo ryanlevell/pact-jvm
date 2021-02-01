@@ -1,9 +1,9 @@
 package au.com.dius.pact.provider
 
-import au.com.dius.pact.core.matchers.BodyMismatch
-import au.com.dius.pact.core.matchers.HeaderMismatch
-import au.com.dius.pact.core.matchers.StatusMismatch
-import au.com.dius.pact.core.pactbroker.TestResult
+import io.pact.core.matchers.BodyMismatch
+import io.pact.core.matchers.HeaderMismatch
+import io.pact.core.matchers.StatusMismatch
+import io.pact.core.pactbroker.TestResult
 import com.github.michaelbull.result.Err
 import spock.lang.Specification
 import spock.lang.Unroll

@@ -1,7 +1,7 @@
 package au.com.dius.pact.provider.gradle
 
-import au.com.dius.pact.core.pactbroker.Latest
-import au.com.dius.pact.core.pactbroker.PactBrokerClient
+import io.pact.core.pactbroker.Latest
+import io.pact.core.pactbroker.PactBrokerClient
 import com.github.ajalt.mordant.TermColors
 import org.gradle.api.GradleScriptException
 import org.gradle.api.tasks.TaskAction

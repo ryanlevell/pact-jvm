@@ -1,6 +1,6 @@
 package au.com.dius.pact.provider.maven
 
-import au.com.dius.pact.core.pactbroker.PactBrokerClient
+import io.pact.core.pactbroker.PactBrokerClient
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import org.apache.maven.plugin.MojoExecutionException

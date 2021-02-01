@@ -1,11 +1,10 @@
 package au.com.dius.pact.provider.junitsupport
 
-import au.com.dius.pact.core.model.BrokerUrlSource
-import au.com.dius.pact.core.model.Consumer
-import au.com.dius.pact.core.model.Interaction
-import au.com.dius.pact.core.model.PactSource
-import au.com.dius.pact.core.model.messaging.Message
-import au.com.dius.pact.core.support.isNotEmpty
+import io.pact.core.model.BrokerUrlSource
+import io.pact.core.model.Interaction
+import io.pact.core.model.PactSource
+import io.pact.core.model.Consumer
+import io.pact.core.support.isNotEmpty
 
 class TestDescription(
   val interaction: Interaction,

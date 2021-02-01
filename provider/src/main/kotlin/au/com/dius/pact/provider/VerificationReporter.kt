@@ -1,9 +1,9 @@
 package au.com.dius.pact.provider
 
-import au.com.dius.pact.core.model.BrokerUrlSource
-import au.com.dius.pact.core.model.Pact
-import au.com.dius.pact.core.pactbroker.PactBrokerClient
-import au.com.dius.pact.core.pactbroker.TestResult
+import io.pact.core.model.BrokerUrlSource
+import io.pact.core.model.Pact
+import io.pact.core.pactbroker.PactBrokerClient
+import io.pact.core.pactbroker.TestResult
 import com.github.michaelbull.result.Err
 import mu.KLogging
 

@@ -1,10 +1,10 @@
 package au.com.dius.pact.provider.gradle
 
-import au.com.dius.pact.core.model.OptionalBody
-import au.com.dius.pact.core.model.ProviderState
-import au.com.dius.pact.core.model.Request
-import au.com.dius.pact.core.model.RequestResponseInteraction
-import au.com.dius.pact.core.model.Response
+import io.pact.core.model.OptionalBody
+import io.pact.core.model.ProviderState
+import io.pact.core.model.Request
+import io.pact.core.model.RequestResponseInteraction
+import io.pact.core.model.Response
 import au.com.dius.pact.provider.ConsumerInfo
 import au.com.dius.pact.provider.DefaultStateChange
 import au.com.dius.pact.provider.ProviderClient

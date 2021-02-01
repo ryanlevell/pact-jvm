@@ -1,8 +1,8 @@
 package au.com.dius.pact.provider.spring.target
 
-import au.com.dius.pact.core.model.Interaction
-import au.com.dius.pact.core.model.PactSource
-import au.com.dius.pact.core.model.RequestResponseInteraction
+import io.pact.core.model.Interaction
+import io.pact.core.model.PactSource
+import io.pact.core.model.RequestResponseInteraction
 import au.com.dius.pact.provider.junitsupport.target.Target
 import au.com.dius.pact.provider.spring.MvcProviderVerifier
 import org.springframework.http.converter.HttpMessageConverter

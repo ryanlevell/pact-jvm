@@ -3,12 +3,12 @@ package au.com.dius.pact.provider.scalasupport
 import _root_.unfiltered.netty.{ReceivedMessage, Server, ServerErrorResponse, cycle}
 import _root_.unfiltered.request.HttpRequest
 import _root_.unfiltered.response.ResponseFunction
-import au.com.dius.pact.core.model.{Request, Response}
 import au.com.dius.pact.provider.scalasupport.AnimalServiceResponses.responses
 import au.com.dius.pact.provider.scalasupport.unfilteredsupport.Conversions
 import com.typesafe.scalalogging.StrictLogging
 import groovy.json.JsonSlurper
 import io.netty.channel.ChannelHandler.Sharable
+import io.pact.core.model.{Request, Response}
 import unfiltered.netty.cycle.Plan.Intent
 
 object TestService extends StrictLogging {

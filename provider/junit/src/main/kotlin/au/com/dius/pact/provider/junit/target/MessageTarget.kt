@@ -1,10 +1,9 @@
 package au.com.dius.pact.provider.junit.target
 
-import au.com.dius.pact.core.model.DirectorySource
-import au.com.dius.pact.core.model.Interaction
-import au.com.dius.pact.core.model.PactBrokerSource
-import au.com.dius.pact.core.model.PactSource
-import au.com.dius.pact.core.model.messaging.Message
+import io.pact.core.model.DirectorySource
+import io.pact.core.model.Interaction
+import io.pact.core.model.PactBrokerSource
+import io.pact.core.model.PactSource
 import au.com.dius.pact.provider.ConsumerInfo
 import au.com.dius.pact.provider.IConsumerInfo
 import au.com.dius.pact.provider.IProviderInfo

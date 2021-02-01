@@ -1,7 +1,7 @@
 package au.com.dius.pact.provider.spring.target
 
-import au.com.dius.pact.core.model.Interaction
-import au.com.dius.pact.core.model.PactSource
+import io.pact.core.model.Interaction
+import io.pact.core.model.PactSource
 import au.com.dius.pact.provider.junit.target.HttpTarget
 
 /**

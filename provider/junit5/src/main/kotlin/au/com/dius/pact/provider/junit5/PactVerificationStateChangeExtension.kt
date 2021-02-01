@@ -1,9 +1,9 @@
 package au.com.dius.pact.provider.junit5
 
-import au.com.dius.pact.core.model.BrokerUrlSource
-import au.com.dius.pact.core.model.Interaction
-import au.com.dius.pact.core.model.ProviderState
-import au.com.dius.pact.core.support.isNotEmpty
+import io.pact.core.model.BrokerUrlSource
+import io.pact.core.model.Interaction
+import io.pact.core.model.ProviderState
+import io.pact.core.support.isNotEmpty
 import au.com.dius.pact.provider.ProviderUtils
 import au.com.dius.pact.provider.StateChangeResult
 import au.com.dius.pact.provider.VerificationFailureType
@@ -13,6 +13,7 @@ import au.com.dius.pact.provider.junitsupport.MissingStateChangeMethod
 import au.com.dius.pact.provider.junitsupport.State
 import au.com.dius.pact.provider.junitsupport.StateChangeAction
 import com.github.michaelbull.result.Err
+import io.pact.core.model.PactSource
 import mu.KLogging
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback
 import org.junit.jupiter.api.extension.BeforeTestExecutionCallback
@@ -27,7 +28,7 @@ import java.lang.reflect.Method
  */
 class PactVerificationStateChangeExtension(
   private val interaction: Interaction,
-  private val pactSource: au.com.dius.pact.core.model.PactSource
+  private val pactSource: PactSource
 ) : BeforeTestExecutionCallback, AfterTestExecutionCallback {
   override fun beforeTestExecution(extensionContext: ExtensionContext) {
     logger.debug { "beforeEach for interaction '${interaction.description}'" }

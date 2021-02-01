@@ -1,11 +1,11 @@
 package au.com.dius.pact.provider.reporters
 
-import au.com.dius.pact.core.model.Interaction
-import au.com.dius.pact.core.model.Pact
-import au.com.dius.pact.core.model.PactSource
-import au.com.dius.pact.core.model.UrlPactSource
-import au.com.dius.pact.core.pactbroker.VerificationNotice
-import au.com.dius.pact.core.support.Json
+import io.pact.core.model.Interaction
+import io.pact.core.model.Pact
+import io.pact.core.model.PactSource
+import io.pact.core.model.UrlPactSource
+import io.pact.core.pactbroker.VerificationNotice
+import io.pact.core.support.Json
 import au.com.dius.pact.provider.IConsumerInfo
 import au.com.dius.pact.provider.IProviderInfo
 import au.com.dius.pact.provider.IProviderVerifier

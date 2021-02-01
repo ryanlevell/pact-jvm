@@ -3,14 +3,14 @@ package au.com.dius.pact.provider.scalatest
 import java.io.File
 import java.net.URL
 import java.util.concurrent.Executors
-
-import au.com.dius.pact.core.matchers
-import au.com.dius.pact.core.matchers.ResponseMatching
-import au.com.dius.pact.core.model.{RequestResponseInteraction, Pact => PactForConsumer}
+import io.pact.core.matchers
+import io.pact.core.matchers.ResponseMatching
+import io.pact.core.model.{Pact => PactForConsumer}
 import au.com.dius.pact.provider.scalasupport.HttpClient
 import au.com.dius.pact.provider.scalatest.ProviderDsl.defaultPactDirectory
 import au.com.dius.pact.provider.scalatest.Tags.ProviderTest
 import au.com.dius.pact.provider.{ProviderInfo, ProviderUtils, ProviderVerifier}
+import io.pact.core.model.RequestResponseInteraction
 import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
 
 import scala.jdk.CollectionConverters._

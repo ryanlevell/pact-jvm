@@ -1,6 +1,6 @@
 package specification
 
-import au.com.dius.pact.core.matchers.RequestMatching
+import io.pact.core.matchers.RequestMatching
 import spock.lang.Unroll
 
 class RequestSpecificationV3Spec extends BaseRequestSpec {

@@ -1,9 +1,9 @@
 package au.com.dius.pact.provider.maven
 
-import au.com.dius.pact.core.pactbroker.Latest
-import au.com.dius.pact.core.pactbroker.PactBrokerClient
-import au.com.dius.pact.core.pactbroker.PactBrokerClientConfig
-import au.com.dius.pact.core.support.isNotEmpty
+import io.pact.core.pactbroker.Latest
+import io.pact.core.pactbroker.PactBrokerClient
+import io.pact.core.pactbroker.PactBrokerClientConfig
+import io.pact.core.support.isNotEmpty
 import com.github.ajalt.mordant.TermColors
 import org.apache.maven.plugin.MojoExecutionException
 import org.apache.maven.plugins.annotations.Mojo

@@ -1,6 +1,6 @@
 package au.com.dius.pact.provider.scalasupport
 
-import au.com.dius.pact.core.model.Request
+import io.pact.core.model.Request
 
 object ServiceInvokeRequest {
   def apply(url: String, request: Request): Request = {

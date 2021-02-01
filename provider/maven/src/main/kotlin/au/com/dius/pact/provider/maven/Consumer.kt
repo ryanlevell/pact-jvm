@@ -1,6 +1,6 @@
 package au.com.dius.pact.provider.maven
 
-import au.com.dius.pact.core.model.UrlSource
+import io.pact.core.model.UrlSource
 import au.com.dius.pact.provider.ConsumerInfo
 import au.com.dius.pact.provider.PactVerification
 import java.net.URL

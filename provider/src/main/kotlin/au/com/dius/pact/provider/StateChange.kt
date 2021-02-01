@@ -1,9 +1,9 @@
 package au.com.dius.pact.provider
 
-import au.com.dius.pact.core.model.Interaction
-import au.com.dius.pact.core.model.ProviderState
-import au.com.dius.pact.core.support.Json
-import au.com.dius.pact.core.support.json.JsonParser
+import io.pact.core.model.Interaction
+import io.pact.core.model.ProviderState
+import io.pact.core.support.Json
+import io.pact.core.support.json.JsonParser
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result

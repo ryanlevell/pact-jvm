@@ -1,15 +1,16 @@
 package au.com.dius.pact.provider.junit
 
-import au.com.dius.pact.core.model.FilteredPact
-import au.com.dius.pact.core.model.OptionalBody
-import au.com.dius.pact.core.model.Pact
-import au.com.dius.pact.core.model.ProviderState
-import au.com.dius.pact.core.model.Request
-import au.com.dius.pact.core.model.RequestResponseInteraction
-import au.com.dius.pact.core.model.RequestResponsePact
-import au.com.dius.pact.core.model.Response
-import au.com.dius.pact.core.model.messaging.Message
-import au.com.dius.pact.core.model.messaging.MessagePact
+import io.pact.core.model.Consumer
+import io.pact.core.model.FilteredPact
+import io.pact.core.model.OptionalBody
+import io.pact.core.model.Pact
+import io.pact.core.model.ProviderState
+import io.pact.core.model.Request
+import io.pact.core.model.RequestResponseInteraction
+import io.pact.core.model.RequestResponsePact
+import io.pact.core.model.Response
+import io.pact.core.model.messaging.Message
+import io.pact.core.model.messaging.MessagePact
 import au.com.dius.pact.provider.junitsupport.IgnoreNoPactsToVerify
 import au.com.dius.pact.provider.junitsupport.Provider
 import au.com.dius.pact.provider.junitsupport.loader.PactFilter
@@ -21,8 +22,8 @@ import spock.lang.Specification
 class MessagePactRunnerSpec extends Specification {
 
   private List<Pact> pacts
-  private au.com.dius.pact.core.model.Consumer consumer, consumer2
-  private au.com.dius.pact.core.model.Provider provider
+  private Consumer consumer, consumer2
+  private io.pact.core.model.Provider provider
   private List<RequestResponseInteraction> interactions
   private List<Message> interactions2
   private MessagePact messagePact
@@ -45,9 +46,9 @@ class MessagePactRunnerSpec extends Specification {
   }
 
   def setup() {
-    consumer = new au.com.dius.pact.core.model.Consumer('Consumer 1')
-    consumer2 = new au.com.dius.pact.core.model.Consumer('Consumer 2')
-    provider = new au.com.dius.pact.core.model.Provider('myAwesomeService')
+    consumer = new Consumer('Consumer 1')
+    consumer2 = new Consumer('Consumer 2')
+    provider = new io.pact.core.model.Provider('myAwesomeService')
     interactions = [
       new RequestResponseInteraction('Req 1', [
         new ProviderState('State 1')

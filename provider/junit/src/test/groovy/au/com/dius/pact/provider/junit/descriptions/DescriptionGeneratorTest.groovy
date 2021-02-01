@@ -1,15 +1,15 @@
 package au.com.dius.pact.provider.junit.descriptions
 
-import au.com.dius.pact.core.model.RequestResponseInteraction
-import au.com.dius.pact.core.model.RequestResponsePact
-import au.com.dius.pact.core.model.BrokerUrlSource
-import au.com.dius.pact.core.model.DirectorySource
-import au.com.dius.pact.core.model.Request
-import au.com.dius.pact.core.model.Response
-import au.com.dius.pact.core.model.Provider
-import au.com.dius.pact.core.model.Consumer
-import au.com.dius.pact.core.model.ProviderState
-import au.com.dius.pact.core.pactbroker.PactBrokerResult
+import io.pact.core.model.RequestResponseInteraction
+import io.pact.core.model.RequestResponsePact
+import io.pact.core.model.BrokerUrlSource
+import io.pact.core.model.DirectorySource
+import io.pact.core.model.Request
+import io.pact.core.model.Response
+import io.pact.core.model.Provider
+import io.pact.core.model.Consumer
+import io.pact.core.model.ProviderState
+import io.pact.core.pactbroker.PactBrokerResult
 import au.com.dius.pact.provider.junit.target.HttpTarget
 import au.com.dius.pact.provider.junitsupport.target.Target
 import au.com.dius.pact.provider.junitsupport.target.TestTarget

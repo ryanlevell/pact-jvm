@@ -1,11 +1,11 @@
 package au.com.dius.pact.provider
 
-import au.com.dius.pact.core.model.BrokerUrlSource
-import au.com.dius.pact.core.model.Interaction
-import au.com.dius.pact.core.model.Pact
-import au.com.dius.pact.core.model.PactSource
-import au.com.dius.pact.core.pactbroker.TestResult
-import au.com.dius.pact.core.support.isNotEmpty
+import io.pact.core.model.BrokerUrlSource
+import io.pact.core.model.Interaction
+import io.pact.core.model.Pact
+import io.pact.core.model.PactSource
+import io.pact.core.pactbroker.TestResult
+import io.pact.core.support.isNotEmpty
 import au.com.dius.pact.provider.ProviderVerifier.Companion.PACT_VERIFIER_PUBLISH_RESULTS
 import mu.KLogging
 import org.apache.commons.lang3.builder.HashCodeBuilder

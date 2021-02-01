@@ -1,6 +1,6 @@
 package au.com.dius.pact.provider.junit;
 
-import au.com.dius.pact.core.matchers.Matchers;
+import io.pact.core.matchers.Matchers;
 import au.com.dius.pact.provider.junit.target.HttpTarget;
 import au.com.dius.pact.provider.junitsupport.Provider;
 import au.com.dius.pact.provider.junitsupport.State;

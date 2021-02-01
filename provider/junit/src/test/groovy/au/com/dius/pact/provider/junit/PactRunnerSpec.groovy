@@ -1,8 +1,9 @@
 package au.com.dius.pact.provider.junit
 
-import au.com.dius.pact.core.model.Pact
-import au.com.dius.pact.core.model.RequestResponsePact
-import au.com.dius.pact.core.model.UrlSource
+import io.pact.core.model.Consumer
+import io.pact.core.model.Pact
+import io.pact.core.model.RequestResponsePact
+import io.pact.core.model.UrlSource
 import au.com.dius.pact.provider.junitsupport.IgnoreNoPactsToVerify
 import au.com.dius.pact.provider.junitsupport.Provider
 import au.com.dius.pact.provider.junitsupport.loader.PactFolder
@@ -75,13 +76,13 @@ class PactRunnerSpec extends Specification {
     @Override
     List<Pact> load(String providerName) throws IOException {
       [
-        new RequestResponsePact(new au.com.dius.pact.core.model.Provider('Bob'),
-          new au.com.dius.pact.core.model.Consumer(), [])
+        new RequestResponsePact(new io.pact.core.model.Provider('Bob'),
+          new Consumer(), [])
       ]
     }
 
     @Override
-    au.com.dius.pact.core.model.PactSource getPactSource() {
+    io.pact.core.model.PactSource getPactSource() {
       new UrlSource('url')
     }
   }
@@ -91,13 +92,13 @@ class PactRunnerSpec extends Specification {
     @Override
     List<Pact> load(String providerName) throws IOException {
       [
-        new RequestResponsePact(new au.com.dius.pact.core.model.Provider('Bob'),
-          new au.com.dius.pact.core.model.Consumer(), [])
+        new RequestResponsePact(new io.pact.core.model.Provider('Bob'),
+          new Consumer(), [])
       ]
     }
 
     @Override
-    au.com.dius.pact.core.model.PactSource getPactSource() {
+    io.pact.core.model.PactSource getPactSource() {
       new UrlSource('url')
     }
   }

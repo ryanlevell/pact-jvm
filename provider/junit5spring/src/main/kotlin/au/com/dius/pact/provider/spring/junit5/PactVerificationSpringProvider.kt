@@ -1,6 +1,6 @@
 package au.com.dius.pact.provider.spring.junit5
 
-import au.com.dius.pact.core.support.expressions.ValueResolver
+import io.pact.core.support.expressions.ValueResolver
 import au.com.dius.pact.provider.junit5.PactVerificationInvocationContextProvider
 import org.junit.jupiter.api.extension.ExtensionContext
 import org.springframework.test.context.TestContextManager

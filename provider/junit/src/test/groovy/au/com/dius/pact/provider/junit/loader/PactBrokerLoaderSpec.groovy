@@ -1,14 +1,14 @@
 package au.com.dius.pact.provider.junit.loader
 
-import au.com.dius.pact.core.model.Pact
-import au.com.dius.pact.core.model.PactBrokerSource
-import au.com.dius.pact.core.model.PactReader
-import au.com.dius.pact.core.pactbroker.ConsumerVersionSelector
-import au.com.dius.pact.core.pactbroker.IPactBrokerClient
-import au.com.dius.pact.core.pactbroker.InvalidHalResponse
-import au.com.dius.pact.core.pactbroker.PactBrokerResult
-import au.com.dius.pact.core.support.expressions.SystemPropertyResolver
-import au.com.dius.pact.core.support.expressions.ValueResolver
+import io.pact.core.model.Pact
+import io.pact.core.model.PactBrokerSource
+import io.pact.core.model.PactReader
+import io.pact.core.pactbroker.ConsumerVersionSelector
+import io.pact.core.pactbroker.IPactBrokerClient
+import io.pact.core.pactbroker.InvalidHalResponse
+import io.pact.core.pactbroker.PactBrokerResult
+import io.pact.core.support.expressions.SystemPropertyResolver
+import io.pact.core.support.expressions.ValueResolver
 import au.com.dius.pact.provider.junitsupport.loader.VersionSelector
 import au.com.dius.pact.provider.junitsupport.loader.NoPactsFoundException
 import au.com.dius.pact.provider.junitsupport.loader.PactBroker
@@ -23,7 +23,7 @@ import spock.util.environment.RestoreSystemProperties
 
 import java.lang.annotation.Annotation
 
-import static au.com.dius.pact.core.support.expressions.ExpressionParser.VALUES_SEPARATOR
+import static io.pact.core.support.expressions.ExpressionParser.VALUES_SEPARATOR
 
 @SuppressWarnings(['LineLength', 'UnnecessaryGetter', 'GStringExpressionWithinString', 'ClassSize'])
 class PactBrokerLoaderSpec extends Specification {

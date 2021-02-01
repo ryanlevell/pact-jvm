@@ -1,9 +1,9 @@
 package au.com.dius.pact.provider.spring
 
-import au.com.dius.pact.core.model.Interaction
-import au.com.dius.pact.core.model.Pact
-import au.com.dius.pact.core.model.PactSource
-import au.com.dius.pact.core.model.UnknownPactSource
+import io.pact.core.model.Interaction
+import io.pact.core.model.Pact
+import io.pact.core.model.PactSource
+import io.pact.core.model.UnknownPactSource
 import au.com.dius.pact.provider.junit.InteractionRunner
 import au.com.dius.pact.provider.junitsupport.target.Target
 import au.com.dius.pact.provider.spring.target.SpringBootHttpTarget

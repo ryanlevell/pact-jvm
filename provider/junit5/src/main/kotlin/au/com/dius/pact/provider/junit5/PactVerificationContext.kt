@@ -1,11 +1,11 @@
 package au.com.dius.pact.provider.junit5
 
-import au.com.dius.pact.core.model.Interaction
-import au.com.dius.pact.core.model.PactSource
-import au.com.dius.pact.core.model.RequestResponseInteraction
-import au.com.dius.pact.core.model.UnknownPactSource
-import au.com.dius.pact.core.support.expressions.SystemPropertyResolver
-import au.com.dius.pact.core.support.expressions.ValueResolver
+import io.pact.core.model.Interaction
+import io.pact.core.model.PactSource
+import io.pact.core.model.RequestResponseInteraction
+import io.pact.core.model.UnknownPactSource
+import io.pact.core.support.expressions.SystemPropertyResolver
+import io.pact.core.support.expressions.ValueResolver
 import au.com.dius.pact.provider.IConsumerInfo
 import au.com.dius.pact.provider.IProviderInfo
 import au.com.dius.pact.provider.IProviderVerifier

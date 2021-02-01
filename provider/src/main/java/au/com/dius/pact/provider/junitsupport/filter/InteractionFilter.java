@@ -1,7 +1,7 @@
 package au.com.dius.pact.provider.junitsupport.filter;
 
-import au.com.dius.pact.core.model.Interaction;
-import au.com.dius.pact.core.model.RequestResponseInteraction;
+import io.pact.core.model.Interaction;
+import io.pact.core.model.RequestResponseInteraction;
 
 import java.util.Arrays;
 import java.util.function.Predicate;

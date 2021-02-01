@@ -1,8 +1,9 @@
 package au.com.dius.pact.server
 
-import au.com.dius.pact.consumer.model.{MockHttpsKeystoreProviderConfig, MockHttpsProviderConfig, MockProviderConfig}
-import au.com.dius.pact.core.model.{PactSpecVersion, Request, Response, Pact => PactModel}
+import io.pact.consumer.model.{MockHttpsKeystoreProviderConfig, MockHttpsProviderConfig, MockProviderConfig}
+import io.pact.core.model.{Pact => PactModel}
 import com.typesafe.scalalogging.StrictLogging
+import io.pact.core.model.{PactSpecVersion, Request, Response}
 
 import scala.util.Try
 

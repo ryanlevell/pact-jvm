@@ -1,12 +1,12 @@
 package au.com.dius.pact.provider
 
-import au.com.dius.pact.core.model.BrokerUrlSource
-import au.com.dius.pact.core.model.PactSource
-import au.com.dius.pact.core.model.ProviderState
-import au.com.dius.pact.core.model.Request
-import au.com.dius.pact.core.pactbroker.PactBrokerResult
-import au.com.dius.pact.core.pactbroker.VerificationNotice
-import au.com.dius.pact.core.support.Json
+import io.pact.core.model.BrokerUrlSource
+import io.pact.core.model.PactSource
+import io.pact.core.model.ProviderState
+import io.pact.core.model.Request
+import io.pact.core.pactbroker.PactBrokerResult
+import io.pact.core.pactbroker.VerificationNotice
+import io.pact.core.support.Json
 import groovy.lang.Binding
 import groovy.lang.Closure
 import groovy.lang.GroovyShell
@@ -40,7 +40,6 @@ import java.nio.charset.UnsupportedCharsetException
 import java.util.concurrent.Callable
 import java.util.function.Consumer
 import java.util.function.Function
-import au.com.dius.pact.core.model.ContentType as PactContentType
 
 interface IHttpClientFactory {
   fun newClient(provider: IProviderInfo): CloseableHttpClient
@@ -79,7 +78,7 @@ interface IConsumerInfo {
   val pending: Boolean
   val wip: Boolean
 
-  fun toPactConsumer(): au.com.dius.pact.core.model.Consumer
+  fun toPactConsumer(): io.pact.core.model.Consumer
   fun resolvePactSource(): PactSource?
 }
 
@@ -97,7 +96,7 @@ open class ConsumerInfo @JvmOverloads constructor (
   override val wip: Boolean = false
 ) : IConsumerInfo {
 
-  override fun toPactConsumer() = au.com.dius.pact.core.model.Consumer(name)
+  override fun toPactConsumer() = io.pact.core.model.Consumer(name)
   override fun resolvePactSource(): PactSource? {
     val source = pactSource
     val result = if (source is Callable<*>) {
@@ -170,7 +169,7 @@ open class ConsumerInfo @JvmOverloads constructor (
 data class ProviderResponse(
   val statusCode: Int,
   val headers: Map<String, List<String>> = emptyMap(),
-  val contentType: au.com.dius.pact.core.model.ContentType = au.com.dius.pact.core.model.ContentType.UNKNOWN,
+  val contentType: io.pact.core.model.ContentType = io.pact.core.model.ContentType.UNKNOWN,
   val body: String? = null
 )
 
@@ -304,7 +303,7 @@ open class ProviderClient(
 
     if (!method.containsHeader(CONTENT_TYPE) && request.body.isPresent()) {
       val contentType = when (request.body.contentType) {
-        PactContentType.UNKNOWN -> "text/plain; charset=ISO-8859-1"
+        io.pact.core.model.ContentType.UNKNOWN -> "text/plain; charset=ISO-8859-1"
         else -> request.body.contentType.toString()
       }
       method.addHeader(CONTENT_TYPE, contentType)
@@ -374,7 +373,7 @@ open class ProviderClient(
   fun handleResponse(httpResponse: HttpResponse): ProviderResponse {
     logger.debug { "Received response: ${httpResponse.statusLine}" }
 
-    var contentType = PactContentType.TEXT_PLAIN
+    var contentType = io.pact.core.model.ContentType.TEXT_PLAIN
     val headers = httpResponse.allHeaders
       .groupBy({ header -> header.name }, { header ->
         if (SINGLE_VALUE_HEADERS.contains(header.name.toLowerCase())) {
@@ -389,7 +388,7 @@ open class ProviderClient(
     val entity = httpResponse.entity
     if (entity != null) {
       if (entity.contentType != null) {
-        contentType = PactContentType.fromString(entity.contentType.value)
+        contentType = io.pact.core.model.ContentType.fromString(entity.contentType.value)
       }
       body = EntityUtils.toString(entity, contentType.asCharset())
     }

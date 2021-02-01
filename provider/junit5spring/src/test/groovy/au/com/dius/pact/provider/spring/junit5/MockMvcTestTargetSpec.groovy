@@ -1,8 +1,8 @@
 package au.com.dius.pact.provider.spring.junit5
 
-import au.com.dius.pact.core.model.OptionalBody
-import au.com.dius.pact.core.model.Request
-import au.com.dius.pact.core.model.RequestResponseInteraction
+import io.pact.core.model.OptionalBody
+import io.pact.core.model.Request
+import io.pact.core.model.RequestResponseInteraction
 import org.springframework.http.HttpStatus
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.setup.MockMvcBuilders

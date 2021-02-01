@@ -1,10 +1,10 @@
 package au.com.dius.pact.provider.junit5
 
-import au.com.dius.pact.core.model.Interaction
-import au.com.dius.pact.core.model.Request
-import au.com.dius.pact.core.model.RequestResponseInteraction
-import au.com.dius.pact.core.model.Response
-import au.com.dius.pact.core.support.expressions.ValueResolver
+import io.pact.core.model.Interaction
+import io.pact.core.model.Request
+import io.pact.core.model.RequestResponseInteraction
+import io.pact.core.model.Response
+import io.pact.core.support.expressions.ValueResolver
 import au.com.dius.pact.provider.ConsumerInfo
 import au.com.dius.pact.provider.IConsumerInfo
 import au.com.dius.pact.provider.IProviderInfo

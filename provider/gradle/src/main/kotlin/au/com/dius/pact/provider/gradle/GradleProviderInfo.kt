@@ -1,6 +1,6 @@
 package au.com.dius.pact.provider.gradle
 
-import au.com.dius.pact.core.pactbroker.ConsumerVersionSelector
+import io.pact.core.pactbroker.ConsumerVersionSelector
 import au.com.dius.pact.provider.ConsumerInfo
 import au.com.dius.pact.provider.ConsumersGroup
 import au.com.dius.pact.provider.IConsumerInfo

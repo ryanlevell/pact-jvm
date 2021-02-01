@@ -1,14 +1,14 @@
 package au.com.dius.pact.provider
 
-import au.com.dius.pact.core.matchers.BodyMismatch
-import au.com.dius.pact.core.matchers.HeaderMismatch
-import au.com.dius.pact.core.matchers.MetadataMismatch
-import au.com.dius.pact.core.matchers.Mismatch
-import au.com.dius.pact.core.matchers.QueryMismatch
-import au.com.dius.pact.core.model.Interaction
-import au.com.dius.pact.core.model.Pact
-import au.com.dius.pact.core.pactbroker.TestResult
-import au.com.dius.pact.core.support.isNotEmpty
+import io.pact.core.matchers.BodyMismatch
+import io.pact.core.matchers.HeaderMismatch
+import io.pact.core.matchers.MetadataMismatch
+import io.pact.core.matchers.Mismatch
+import io.pact.core.matchers.QueryMismatch
+import io.pact.core.model.Interaction
+import io.pact.core.model.Pact
+import io.pact.core.pactbroker.TestResult
+import io.pact.core.support.isNotEmpty
 import com.github.ajalt.mordant.TermColors
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.getError

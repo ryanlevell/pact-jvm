@@ -1,7 +1,7 @@
 package au.com.dius.pact.server
 
-import au.com.dius.pact.core.matchers.{FullRequestMatch, PartialRequestMatch, RequestMatching, RequestMismatch}
-import au.com.dius.pact.core.model.{Interaction, OptionalBody, Request, RequestResponseInteraction, Response, Pact => PactModel}
+import io.pact.core.matchers.{FullRequestMatch, PartialRequestMatch, RequestMatching, RequestMismatch}
+import io.pact.core.model.{Interaction, OptionalBody, Request, RequestResponseInteraction, Response, Pact => PactModel}
 import org.apache.commons.lang3.StringEscapeUtils
 
 import scala.collection.JavaConverters._

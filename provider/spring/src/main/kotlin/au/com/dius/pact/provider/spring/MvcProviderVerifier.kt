@@ -1,8 +1,8 @@
 package au.com.dius.pact.provider.spring
 
-import au.com.dius.pact.core.model.ContentType
-import au.com.dius.pact.core.model.Request
-import au.com.dius.pact.core.model.RequestResponseInteraction
+import io.pact.core.model.ContentType
+import io.pact.core.model.Request
+import io.pact.core.model.RequestResponseInteraction
 import au.com.dius.pact.provider.ProviderClient
 import au.com.dius.pact.provider.ProviderInfo
 import au.com.dius.pact.provider.ProviderResponse

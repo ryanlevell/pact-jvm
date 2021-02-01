@@ -1,13 +1,13 @@
 package au.com.dius.pact.provider.junitsupport
 
-import au.com.dius.pact.core.model.BrokerUrlSource
-import au.com.dius.pact.core.model.DirectorySource
-import au.com.dius.pact.core.model.ProviderState
-import au.com.dius.pact.core.model.Request
-import au.com.dius.pact.core.model.RequestResponseInteraction
-import au.com.dius.pact.core.model.RequestResponsePact
-import au.com.dius.pact.core.model.Response
-import au.com.dius.pact.core.pactbroker.PactBrokerResult
+import io.pact.core.model.BrokerUrlSource
+import io.pact.core.model.DirectorySource
+import io.pact.core.model.ProviderState
+import io.pact.core.model.Request
+import io.pact.core.model.RequestResponseInteraction
+import io.pact.core.model.RequestResponsePact
+import io.pact.core.model.Response
+import io.pact.core.pactbroker.PactBrokerResult
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -16,8 +16,8 @@ class TestDescriptionSpec extends Specification {
     def interaction = new RequestResponseInteraction('Interaction 1',
       [ new ProviderState('Test State') ], new Request(), new Response())
     def pact = new RequestResponsePact(
-      new au.com.dius.pact.core.model.Provider(),
-      new au.com.dius.pact.core.model.Consumer('the-consumer-name'),
+      new io.pact.core.model.Provider(),
+      new io.pact.core.model.Consumer('the-consumer-name'),
       [ interaction ],
       [:],
       new BrokerUrlSource('url', 'url', [:], [:], tag)
@@ -37,8 +37,8 @@ class TestDescriptionSpec extends Specification {
   def 'when non broker pact source tests name are built correctly'() {
     def interaction = new RequestResponseInteraction('Interaction 1',
       [ new ProviderState('Test State') ], new Request(), new Response())
-    def pact = new RequestResponsePact(new au.com.dius.pact.core.model.Provider(),
-      new au.com.dius.pact.core.model.Consumer(),
+    def pact = new RequestResponsePact(new io.pact.core.model.Provider(),
+      new io.pact.core.model.Consumer(),
       [ interaction ],
       [:],
       new DirectorySource(Mock(File))
@@ -57,8 +57,8 @@ class TestDescriptionSpec extends Specification {
     def pactSource =  new BrokerUrlSource('url', 'url', [:], [:], 'master',
       new PactBrokerResult('test', 'test', 'test', [], [],
         pending == 'enabled', null, false, true))
-    def pact = new RequestResponsePact(new au.com.dius.pact.core.model.Provider(),
-      new au.com.dius.pact.core.model.Consumer('the-consumer-name'), [interaction ],
+    def pact = new RequestResponsePact(new io.pact.core.model.Provider(),
+      new io.pact.core.model.Consumer('the-consumer-name'), [interaction ],
       [:], pactSource)
     def generator = new TestDescription(interaction, pact.source, null, pact.consumer)
 

@@ -1,10 +1,9 @@
 package au.com.dius.pact.provider.scalatest
 
 import java.net.URL
-
-import au.com.dius.pact.consumer.model.MockProviderConfig
-import au.com.dius.pact.core.model.PactSpecVersion
+import io.pact.consumer.model.MockProviderConfig
 import io.netty.channel.ChannelHandler.Sharable
+import io.pact.core.model.PactSpecVersion
 import unfiltered.netty.cycle.Plan.Intent
 import unfiltered.netty.cycle.{Plan, SynchronousExecution}
 import unfiltered.netty.{Server, ServerErrorResponse}

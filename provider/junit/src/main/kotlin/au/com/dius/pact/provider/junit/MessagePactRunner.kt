@@ -1,9 +1,8 @@
 package au.com.dius.pact.provider.junit
 
-import au.com.dius.pact.core.model.FilteredPact
-import au.com.dius.pact.core.model.Interaction
-import au.com.dius.pact.core.model.Pact
-import au.com.dius.pact.core.model.messaging.MessagePact
+import io.pact.core.model.FilteredPact
+import io.pact.core.model.Pact
+import io.pact.core.model.messaging.MessagePact
 
 /**
  * Pact runner that only verifies message pacts

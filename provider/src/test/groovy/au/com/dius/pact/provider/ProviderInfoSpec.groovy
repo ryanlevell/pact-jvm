@@ -1,8 +1,8 @@
 package au.com.dius.pact.provider
 
-import au.com.dius.pact.core.pactbroker.ConsumerVersionSelector
-import au.com.dius.pact.core.pactbroker.PactBrokerClient
-import au.com.dius.pact.core.pactbroker.PactBrokerResult
+import io.pact.core.pactbroker.ConsumerVersionSelector
+import io.pact.core.pactbroker.PactBrokerClient
+import io.pact.core.pactbroker.PactBrokerResult
 import com.github.michaelbull.result.Ok
 import spock.lang.Specification
 

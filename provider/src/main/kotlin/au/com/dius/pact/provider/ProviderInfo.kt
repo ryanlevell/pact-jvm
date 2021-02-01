@@ -1,10 +1,10 @@
 package au.com.dius.pact.provider
 
-import au.com.dius.pact.core.model.DefaultPactReader
-import au.com.dius.pact.core.model.FileSource
-import au.com.dius.pact.core.pactbroker.ConsumerVersionSelector
-import au.com.dius.pact.core.pactbroker.PactBrokerClient
-import au.com.dius.pact.core.support.Utils
+import io.pact.core.model.DefaultPactReader
+import io.pact.core.model.FileSource
+import io.pact.core.pactbroker.ConsumerVersionSelector
+import io.pact.core.pactbroker.PactBrokerClient
+import io.pact.core.support.Utils
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.map

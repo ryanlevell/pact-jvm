@@ -1,6 +1,6 @@
 package au.com.dius.pact.provider.junit
 
-import au.com.dius.pact.core.model.ProviderState
+import io.pact.core.model.ProviderState
 import au.com.dius.pact.provider.IProviderVerifier
 import au.com.dius.pact.provider.junitsupport.State
 import au.com.dius.pact.provider.junitsupport.StateChangeAction

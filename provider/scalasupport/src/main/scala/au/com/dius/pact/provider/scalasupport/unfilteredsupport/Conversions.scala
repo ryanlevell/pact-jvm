@@ -3,11 +3,9 @@ package au.com.dius.pact.provider.scalasupport.unfilteredsupport
 import java.io.{BufferedReader, InputStreamReader}
 import java.net.URI
 import java.util.zip.GZIPInputStream
-
-import au.com.dius.pact.core.model.{OptionalBody, ContentType, Response}
-import au.com.dius.pact.core.model.Request
 import com.typesafe.scalalogging.StrictLogging
 import io.netty.handler.codec.http.{HttpResponse => NHttpResponse}
+import io.pact.core.model.{ContentType, OptionalBody, Request, Response}
 import unfiltered.netty.ReceivedMessage
 import unfiltered.request.HttpRequest
 import unfiltered.response.{ContentEncoding, HttpResponse, ResponseFunction, ResponseString, Status}

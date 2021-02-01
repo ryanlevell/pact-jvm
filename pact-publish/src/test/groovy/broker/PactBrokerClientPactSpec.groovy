@@ -1,12 +1,12 @@
 package broker
 
-import au.com.dius.pact.consumer.PactVerificationResult
-import au.com.dius.pact.consumer.groovy.PactBuilder
-import au.com.dius.pact.core.pactbroker.ConsumerVersionSelector
-import au.com.dius.pact.core.pactbroker.Latest
-import au.com.dius.pact.core.pactbroker.PactBrokerClient
-import au.com.dius.pact.core.pactbroker.PactBrokerClientConfig
-import au.com.dius.pact.core.pactbroker.TestResult
+import io.pact.consumer.PactVerificationResult
+import io.pact.consumer.groovy.PactBuilder
+import io.pact.core.pactbroker.ConsumerVersionSelector
+import io.pact.core.pactbroker.Latest
+import io.pact.core.pactbroker.PactBrokerClient
+import io.pact.core.pactbroker.PactBrokerClientConfig
+import io.pact.core.pactbroker.TestResult
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import spock.lang.Specification

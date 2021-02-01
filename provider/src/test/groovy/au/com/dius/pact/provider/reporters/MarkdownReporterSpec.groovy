@@ -1,17 +1,17 @@
 package au.com.dius.pact.provider.reporters
 
-import au.com.dius.pact.core.matchers.BodyMismatch
-import au.com.dius.pact.core.matchers.HeaderMismatch
-import au.com.dius.pact.core.model.Request
-import au.com.dius.pact.core.model.RequestResponseInteraction
-import au.com.dius.pact.core.model.Response
 import au.com.dius.pact.provider.BodyComparisonResult
 import au.com.dius.pact.provider.ConsumerInfo
 import au.com.dius.pact.provider.ProviderInfo
 import com.github.michaelbull.result.Ok
+import io.pact.core.matchers.BodyMismatch
+import io.pact.core.matchers.HeaderMismatch
+import io.pact.core.model.Request
+import io.pact.core.model.RequestResponseInteraction
+import io.pact.core.model.Response
+import io.pact.core.support.json.JsonParser
 import spock.lang.Issue
 import spock.lang.Specification
-import au.com.dius.pact.core.support.json.JsonParser
 
 @SuppressWarnings(['UnnecessaryObjectReferences', 'LineLength'])
 class MarkdownReporterSpec extends Specification {

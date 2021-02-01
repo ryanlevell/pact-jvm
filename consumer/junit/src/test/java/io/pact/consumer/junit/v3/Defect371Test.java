@@ -1,0 +1,75 @@
+package io.pact.consumer.junit.v3;
+
+import io.pact.consumer.MessagePactBuilder;
+import io.pact.consumer.junit.MessagePactProviderRule;
+import io.pact.core.model.annotations.Pact;
+import io.pact.consumer.junit.PactVerification;
+import io.pact.consumer.dsl.PactDslJsonBody;
+import io.pact.core.model.messaging.MessagePact;
+import org.junit.Rule;
+import org.junit.Test;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
+public class Defect371Test {
+
+    @Rule
+    public MessagePactProviderRule mockProvider = new MessagePactProviderRule("provider1", this);
+
+    @Rule
+    public MessagePactProviderRule mockProvider2 = new MessagePactProviderRule("provider2", this);
+
+    private byte[] currentMessage;
+
+    public void setMessage(byte[] messageContents) {
+    currentMessage = messageContents;
+  }
+
+    @Pact(provider = "provider1", consumer = "Defect371")
+    public MessagePact createPact(MessagePactBuilder builder) {
+        PactDslJsonBody body = new PactDslJsonBody();
+        body.stringValue("testParam1", "value1");
+        body.stringValue("testParam2", "value2");
+
+        Map<String, String> metadata = new HashMap<String, String>();
+        metadata.put("contentType", "application/json");
+
+        return builder.given("SomeProviderState")
+          .expectsToReceive("a test message")
+          .withMetadata(metadata)
+          .withContent(body)
+          .toPact();
+    }
+
+    @Pact(provider = "provider2", consumer = "Defect371")
+    public MessagePact createPact2(MessagePactBuilder builder) {
+      PactDslJsonBody body = new PactDslJsonBody();
+      body.stringValue("testParam1", "value3");
+      body.stringValue("testParam2", "value4");
+
+      Map<String, String> metadata = new HashMap<String, String>();
+      metadata.put("contentType", "application/json");
+
+      return builder.given("Some Other Provider State")
+        .expectsToReceive("a test message")
+        .withMetadata(metadata)
+        .withContent(body)
+        .toPact();
+    }
+
+    @Test
+    @PactVerification(value = "provider1", fragment = "createPact")
+    public void test() throws Exception {
+        assertThat(new String(currentMessage), is("{\"testParam1\":\"value1\",\"testParam2\":\"value2\"}"));
+    }
+
+    @Test
+    @PactVerification(value = "provider2", fragment = "createPact2")
+    public void test2() throws Exception {
+      assertThat(new String(currentMessage), is("{\"testParam1\":\"value3\",\"testParam2\":\"value4\"}"));
+    }
+}

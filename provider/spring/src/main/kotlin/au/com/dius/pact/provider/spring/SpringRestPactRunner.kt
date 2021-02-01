@@ -1,8 +1,7 @@
 package au.com.dius.pact.provider.spring
 
-import au.com.dius.pact.core.model.Pact
-import au.com.dius.pact.core.model.PactSource
-import au.com.dius.pact.core.model.RequestResponseInteraction
+import io.pact.core.model.Pact
+import io.pact.core.model.PactSource
 import au.com.dius.pact.provider.junit.InteractionRunner
 import au.com.dius.pact.provider.junit.RestPactRunner
 import au.com.dius.pact.provider.junitsupport.Consumer

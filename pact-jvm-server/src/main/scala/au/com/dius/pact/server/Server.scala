@@ -1,7 +1,7 @@
 package au.com.dius.pact.server
 
-import au.com.dius.pact.core.model.{OptionalBody, Response}
 import ch.qos.logback.classic.Level
+import io.pact.core.model.{OptionalBody, Response}
 import org.slf4j.{Logger, LoggerFactory}
 
 import scala.collection.JavaConverters._

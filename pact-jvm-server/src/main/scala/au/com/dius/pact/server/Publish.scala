@@ -1,12 +1,11 @@
 package au.com.dius.pact.server
 
-import au.com.dius.pact.core.model.{OptionalBody, Request, Response}
 import com.typesafe.scalalogging.StrictLogging
+import io.pact.core.model.{OptionalBody, Request, Response}
+import io.pact.core.pactbroker.{PactBrokerClient, PactBrokerClientConfig, RequestFailedException}
 
-import scala.collection.JavaConverters._
 import java.io.{File, IOException}
-
-import au.com.dius.pact.core.pactbroker.{PactBrokerClient, PactBrokerClientConfig, RequestFailedException}
+import scala.collection.JavaConverters._
 
 object Publish extends StrictLogging {
 

@@ -1,8 +1,8 @@
 package au.com.dius.pact.provider.gradle
 
-import au.com.dius.pact.core.pactbroker.PactBrokerClient
-import au.com.dius.pact.core.pactbroker.PactBrokerClientConfig
-import au.com.dius.pact.core.support.isNotEmpty
+import io.pact.core.pactbroker.PactBrokerClient
+import io.pact.core.pactbroker.PactBrokerClientConfig
+import io.pact.core.support.isNotEmpty
 import org.gradle.api.DefaultTask
 
 open class PactCanIDeployBaseTask : DefaultTask() {

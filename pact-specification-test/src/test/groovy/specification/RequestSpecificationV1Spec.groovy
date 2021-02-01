@@ -1,6 +1,6 @@
 package specification
 
-import au.com.dius.pact.core.matchers.RequestMatching
+import io.pact.core.matchers.RequestMatching
 import groovy.util.logging.Slf4j
 import spock.lang.Unroll
 

@@ -1,6 +1,6 @@
 package au.com.dius.pact.provider.scalasupport
 
-import au.com.dius.pact.core.model.{OptionalBody, Response}
+import io.pact.core.model.{OptionalBody, Response}
 
 import scala.collection.JavaConverters._
 

@@ -1,10 +1,10 @@
 package au.com.dius.pact.provider.junit.target
 
-import au.com.dius.pact.core.model.BrokerUrlSource
-import au.com.dius.pact.core.model.Interaction
-import au.com.dius.pact.core.model.PactSource
-import au.com.dius.pact.core.support.expressions.SystemPropertyResolver
-import au.com.dius.pact.core.support.expressions.ValueResolver
+import io.pact.core.model.BrokerUrlSource
+import io.pact.core.model.Interaction
+import io.pact.core.model.PactSource
+import io.pact.core.support.expressions.SystemPropertyResolver
+import io.pact.core.support.expressions.ValueResolver
 import au.com.dius.pact.provider.ConsumerInfo
 import au.com.dius.pact.provider.IConsumerInfo
 import au.com.dius.pact.provider.IProviderInfo
@@ -21,7 +21,7 @@ import org.junit.runners.model.TestClass
 import java.io.File
 import java.util.function.BiConsumer
 import java.util.function.Supplier
-import au.com.dius.pact.core.support.BuiltToolConfig.detectedBuildToolPactDirectory
+import io.pact.core.support.BuiltToolConfig.detectedBuildToolPactDirectory
 import au.com.dius.pact.provider.ProviderUtils
 import org.apache.commons.io.FilenameUtils
 

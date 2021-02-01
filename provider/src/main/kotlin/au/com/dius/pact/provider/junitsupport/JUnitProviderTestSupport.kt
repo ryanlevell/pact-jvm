@@ -1,9 +1,8 @@
 package au.com.dius.pact.provider.junitsupport
 
-import au.com.dius.pact.core.model.FilteredPact
-import au.com.dius.pact.core.model.Interaction
-import au.com.dius.pact.core.model.Pact
-import au.com.dius.pact.core.support.isNotEmpty
+import io.pact.core.model.FilteredPact
+import io.pact.core.model.Pact
+import io.pact.core.support.isNotEmpty
 import au.com.dius.pact.provider.ProviderUtils
 import au.com.dius.pact.provider.ProviderVerifier
 import au.com.dius.pact.provider.junitsupport.filter.InteractionFilter

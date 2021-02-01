@@ -1,7 +1,7 @@
 package au.com.dius.pact.server
 
-import au.com.dius.pact.core.support.Json
-import au.com.dius.pact.core.support.json.JsonParser
+import io.pact.core.support.Json
+import io.pact.core.support.json.JsonParser
 
 import scala.collection.JavaConverters._
 

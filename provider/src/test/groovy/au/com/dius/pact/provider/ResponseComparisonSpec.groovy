@@ -1,13 +1,13 @@
 package au.com.dius.pact.provider
 
-import au.com.dius.pact.core.matchers.MatchingContext
-import au.com.dius.pact.core.model.ContentType
-import au.com.dius.pact.core.model.OptionalBody
-import au.com.dius.pact.core.model.Response
-import au.com.dius.pact.core.model.generators.Generators
-import au.com.dius.pact.core.model.matchingrules.MatchingRuleCategory
-import au.com.dius.pact.core.model.matchingrules.MatchingRulesImpl
-import au.com.dius.pact.core.model.messaging.Message
+import io.pact.core.matchers.MatchingContext
+import io.pact.core.model.ContentType
+import io.pact.core.model.OptionalBody
+import io.pact.core.model.Response
+import io.pact.core.model.generators.Generators
+import io.pact.core.model.matchingrules.MatchingRuleCategory
+import io.pact.core.model.matchingrules.MatchingRulesImpl
+import io.pact.core.model.messaging.Message
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import spock.lang.Specification

@@ -1,6 +1,6 @@
 package au.com.dius.pact.provider.junit5
 
-import au.com.dius.pact.core.model.Pact
+import io.pact.core.model.Pact
 import au.com.dius.pact.provider.junitsupport.Consumer
 import au.com.dius.pact.provider.junitsupport.IgnoreNoPactsToVerify
 import au.com.dius.pact.provider.junitsupport.Provider
@@ -108,7 +108,7 @@ class PactVerificationInvocationContextProviderSpec extends Specification {
       []
     }
 
-    au.com.dius.pact.core.model.PactSource pactSource = null
+    io.pact.core.model.PactSource pactSource = null
   }
 
   private PactVerificationInvocationContextProvider provider

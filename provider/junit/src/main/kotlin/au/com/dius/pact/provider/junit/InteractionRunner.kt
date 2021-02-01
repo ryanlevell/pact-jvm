@@ -1,12 +1,12 @@
 package au.com.dius.pact.provider.junit
 
-import au.com.dius.pact.core.matchers.generators.ArrayContainsJsonGenerator
-import au.com.dius.pact.core.model.BrokerUrlSource
-import au.com.dius.pact.core.model.FilteredPact
-import au.com.dius.pact.core.model.Interaction
-import au.com.dius.pact.core.model.Pact
-import au.com.dius.pact.core.model.PactSource
-import au.com.dius.pact.core.model.ProviderState
+import io.pact.core.matchers.generators.ArrayContainsJsonGenerator
+import io.pact.core.model.BrokerUrlSource
+import io.pact.core.model.FilteredPact
+import io.pact.core.model.Interaction
+import io.pact.core.model.Pact
+import io.pact.core.model.PactSource
+import io.pact.core.model.ProviderState
 import au.com.dius.pact.provider.DefaultTestResultAccumulator
 import au.com.dius.pact.provider.IProviderVerifier
 import au.com.dius.pact.provider.ProviderUtils
@@ -43,7 +43,6 @@ import org.junit.runners.model.InitializationError
 import org.junit.runners.model.Statement
 import org.junit.runners.model.TestClass
 import java.util.concurrent.ConcurrentHashMap
-import java.util.function.BiConsumer
 import java.util.function.Supplier
 import kotlin.reflect.jvm.kotlinProperty
 import org.apache.commons.lang3.tuple.Pair as TuplePair

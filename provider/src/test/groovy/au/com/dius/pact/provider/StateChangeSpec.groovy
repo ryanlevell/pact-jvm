@@ -1,9 +1,9 @@
 package au.com.dius.pact.provider
 
-import au.com.dius.pact.core.model.ContentType
-import au.com.dius.pact.core.model.Interaction
-import au.com.dius.pact.core.model.ProviderState
 import com.github.michaelbull.result.Ok
+import io.pact.core.model.ContentType
+import io.pact.core.model.Interaction
+import io.pact.core.model.ProviderState
 import org.apache.http.HttpEntity
 import org.apache.http.ProtocolVersion
 import org.apache.http.client.methods.CloseableHttpResponse

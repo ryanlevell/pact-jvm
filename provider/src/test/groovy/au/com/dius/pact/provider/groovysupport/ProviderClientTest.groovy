@@ -1,11 +1,11 @@
 package au.com.dius.pact.provider.groovysupport
 
-import au.com.dius.pact.core.model.OptionalBody
-import au.com.dius.pact.core.model.PactReaderKt
-import au.com.dius.pact.core.model.Request
+import io.pact.core.model.OptionalBody
+import io.pact.core.model.Request
 import au.com.dius.pact.provider.IHttpClientFactory
 import au.com.dius.pact.provider.ProviderClient
 import au.com.dius.pact.provider.ProviderInfo
+import io.pact.core.model.PactReaderKt
 import org.apache.http.Header
 import org.apache.http.StatusLine
 import org.apache.http.client.methods.CloseableHttpResponse

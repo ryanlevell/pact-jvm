@@ -1,13 +1,12 @@
 package au.com.dius.pact.server
 
-import java.io.IOException
-import java.net.ServerSocket
-
-import au.com.dius.pact.consumer.model.{MockHttpsKeystoreProviderConfig, MockProviderConfig}
-import au.com.dius.pact.core.model._
 import com.typesafe.scalalogging.StrictLogging
+import io.pact.consumer.model.{MockHttpsKeystoreProviderConfig, MockProviderConfig}
+import io.pact.core.model._
 import org.apache.commons.lang3.RandomUtils
 
+import java.io.IOException
+import java.net.ServerSocket
 import scala.collection.JavaConverters._
 
 object Create extends StrictLogging {

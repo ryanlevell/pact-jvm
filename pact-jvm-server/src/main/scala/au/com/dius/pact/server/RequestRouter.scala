@@ -1,8 +1,7 @@
 package au.com.dius.pact.server
 
 import java.util
-
-import au.com.dius.pact.core.model.{Request, Response, _}
+import io.pact.core.model.{OptionalBody, Request, Response}
 
 import scala.collection.JavaConverters._
 

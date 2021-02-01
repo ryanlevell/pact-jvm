@@ -1,7 +1,7 @@
 package au.com.dius.pact.provider.spring
 
-import au.com.dius.pact.core.model.OptionalBody
-import au.com.dius.pact.core.model.Request
+import io.pact.core.model.OptionalBody
+import io.pact.core.model.Request
 import au.com.dius.pact.provider.ProviderInfo
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.web.bind.annotation.RequestBody

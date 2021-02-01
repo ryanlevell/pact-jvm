@@ -1,6 +1,6 @@
 package au.com.dius.pact.provider.maven
 
-import au.com.dius.pact.core.pactbroker.PactBrokerClient
+import io.pact.core.pactbroker.PactBrokerClient
 import org.apache.maven.plugin.MojoExecutionException
 import org.apache.maven.plugins.annotations.Mojo
 import org.apache.maven.plugins.annotations.Parameter

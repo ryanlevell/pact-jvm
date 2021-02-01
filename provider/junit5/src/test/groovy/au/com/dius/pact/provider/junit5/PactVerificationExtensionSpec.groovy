@@ -1,14 +1,14 @@
 package au.com.dius.pact.provider.junit5
 
-import au.com.dius.pact.core.model.Consumer
-import au.com.dius.pact.core.model.FilteredPact
-import au.com.dius.pact.core.model.PactBrokerSource
-import au.com.dius.pact.core.model.Provider
-import au.com.dius.pact.core.model.Request
-import au.com.dius.pact.core.model.RequestResponseInteraction
-import au.com.dius.pact.core.model.RequestResponsePact
-import au.com.dius.pact.core.model.Response
-import au.com.dius.pact.core.support.expressions.ValueResolver
+import io.pact.core.model.Consumer
+import io.pact.core.model.FilteredPact
+import io.pact.core.model.PactBrokerSource
+import io.pact.core.model.Provider
+import io.pact.core.model.Request
+import io.pact.core.model.RequestResponseInteraction
+import io.pact.core.model.RequestResponsePact
+import io.pact.core.model.Response
+import io.pact.core.support.expressions.ValueResolver
 import au.com.dius.pact.provider.IConsumerInfo
 import au.com.dius.pact.provider.IProviderInfo
 import au.com.dius.pact.provider.IProviderVerifier

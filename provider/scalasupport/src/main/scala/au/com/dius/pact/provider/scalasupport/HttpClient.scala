@@ -2,10 +2,8 @@ package au.com.dius.pact.provider.scalasupport
 
 import java.nio.charset.Charset
 import java.util
-
-import au.com.dius.pact.core.model.{OptionalBody, Response}
-import au.com.dius.pact.core.model.Request
 import com.typesafe.scalalogging.StrictLogging
+import io.pact.core.model.{OptionalBody, Request, Response}
 import org.apache.commons.lang3.StringUtils
 import org.asynchttpclient.{DefaultAsyncHttpClient, RequestBuilder}
 

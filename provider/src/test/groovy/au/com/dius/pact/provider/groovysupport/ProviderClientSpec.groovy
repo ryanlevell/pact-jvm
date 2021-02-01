@@ -1,10 +1,10 @@
 package au.com.dius.pact.provider.groovysupport
 
-import au.com.dius.pact.core.model.OptionalBody
-import au.com.dius.pact.core.model.ProviderState
-import au.com.dius.pact.core.model.Request
-import au.com.dius.pact.core.support.Json
-import au.com.dius.pact.core.model.ContentType as PactContentType
+import io.pact.core.model.OptionalBody
+import io.pact.core.model.ProviderState
+import io.pact.core.model.Request
+import io.pact.core.support.Json
+import io.pact.core.model.ContentType as PactContentType
 import au.com.dius.pact.provider.GroovyScalaUtils$
 import au.com.dius.pact.provider.IHttpClientFactory
 import au.com.dius.pact.provider.IProviderInfo

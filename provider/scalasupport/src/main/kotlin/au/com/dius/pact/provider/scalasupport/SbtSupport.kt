@@ -1,7 +1,7 @@
 package au.com.dius.pact.provider.scalasupport
 
-import au.com.dius.pact.core.support.json.JsonParser
-import au.com.dius.pact.core.support.json.JsonValue
+import io.pact.core.support.json.JsonParser
+import io.pact.core.support.json.JsonValue
 import java.io.File
 
 /**

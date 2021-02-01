@@ -1,14 +1,14 @@
 package au.com.dius.pact.provider.junitsupport.loader
 
-import au.com.dius.pact.core.model.DefaultPactReader
-import au.com.dius.pact.core.model.Pact
-import au.com.dius.pact.core.model.PactReader
-import au.com.dius.pact.core.model.PactSource
-import au.com.dius.pact.core.model.UrlSource
-import au.com.dius.pact.core.model.UrlsSource
-import au.com.dius.pact.core.support.Auth
-import au.com.dius.pact.core.support.expressions.SystemPropertyResolver
-import au.com.dius.pact.core.support.expressions.ValueResolver
+import io.pact.core.model.DefaultPactReader
+import io.pact.core.model.Pact
+import io.pact.core.model.PactReader
+import io.pact.core.model.PactSource
+import io.pact.core.model.UrlSource
+import io.pact.core.model.UrlsSource
+import io.pact.core.support.Auth
+import io.pact.core.support.expressions.SystemPropertyResolver
+import io.pact.core.support.expressions.ValueResolver
 
 /**
  * Implementation of [PactLoader] that downloads pacts from given urls

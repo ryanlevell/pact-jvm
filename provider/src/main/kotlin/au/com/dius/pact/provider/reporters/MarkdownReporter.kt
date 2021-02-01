@@ -1,15 +1,15 @@
 package au.com.dius.pact.provider.reporters
 
-import au.com.dius.pact.core.matchers.BodyTypeMismatch
-import au.com.dius.pact.core.matchers.HeaderMismatch
-import au.com.dius.pact.core.model.BasePact
-import au.com.dius.pact.core.model.Interaction
-import au.com.dius.pact.core.model.Pact
-import au.com.dius.pact.core.model.PactSource
-import au.com.dius.pact.core.model.UrlPactSource
-import au.com.dius.pact.core.pactbroker.VerificationNotice
-import au.com.dius.pact.core.support.hasProperty
-import au.com.dius.pact.core.support.property
+import io.pact.core.matchers.BodyTypeMismatch
+import io.pact.core.matchers.HeaderMismatch
+import io.pact.core.model.BasePact
+import io.pact.core.model.Interaction
+import io.pact.core.model.Pact
+import io.pact.core.model.PactSource
+import io.pact.core.model.UrlPactSource
+import io.pact.core.pactbroker.VerificationNotice
+import io.pact.core.support.hasProperty
+import io.pact.core.support.property
 import au.com.dius.pact.provider.BodyComparisonResult
 import au.com.dius.pact.provider.IConsumerInfo
 import au.com.dius.pact.provider.IProviderInfo

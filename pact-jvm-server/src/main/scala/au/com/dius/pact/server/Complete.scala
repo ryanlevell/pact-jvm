@@ -1,8 +1,8 @@
 package au.com.dius.pact.server
 
 import java.io.File
-
-import au.com.dius.pact.core.model._
+import io.pact.core.model._
+import io.pact.core.model.{DefaultPactWriter, OptionalBody, PactSpecVersion, Request, Response}
 
 import scala.collection.JavaConverters._
 import scala.util.Success

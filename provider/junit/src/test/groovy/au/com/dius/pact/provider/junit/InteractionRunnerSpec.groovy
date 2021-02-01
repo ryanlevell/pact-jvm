@@ -1,14 +1,14 @@
 package au.com.dius.pact.provider.junit
 
-import au.com.dius.pact.core.model.Consumer
-import au.com.dius.pact.core.model.FilteredPact
-import au.com.dius.pact.core.model.Provider
-import au.com.dius.pact.core.model.ProviderState
-import au.com.dius.pact.core.model.Request
-import au.com.dius.pact.core.model.RequestResponseInteraction
-import au.com.dius.pact.core.model.RequestResponsePact
-import au.com.dius.pact.core.model.Response
-import au.com.dius.pact.core.model.UnknownPactSource
+import io.pact.core.model.Consumer
+import io.pact.core.model.FilteredPact
+import io.pact.core.model.Provider
+import io.pact.core.model.ProviderState
+import io.pact.core.model.Request
+import io.pact.core.model.RequestResponseInteraction
+import io.pact.core.model.RequestResponsePact
+import io.pact.core.model.Response
+import io.pact.core.model.UnknownPactSource
 import au.com.dius.pact.provider.DefaultTestResultAccumulator
 import au.com.dius.pact.provider.TestResultAccumulator
 import au.com.dius.pact.provider.VerificationReporter
