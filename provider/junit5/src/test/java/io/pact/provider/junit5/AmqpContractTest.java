@@ -1,0 +1,42 @@
+package io.pact.provider.junit5;
+
+import io.pact.core.model.Interaction;
+import io.pact.core.model.Pact;
+import io.pact.provider.PactVerifyProvider;
+import io.pact.provider.junitsupport.Provider;
+import io.pact.provider.junitsupport.State;
+import io.pact.provider.junitsupport.loader.PactFolder;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+@Provider("AmqpProvider")
+@PactFolder("src/test/resources/amqp_pacts")
+public class AmqpContractTest {
+  private static final Logger LOGGER = LoggerFactory.getLogger(AmqpContractTest.class);
+
+  @TestTemplate
+  @ExtendWith(PactVerificationInvocationContextProvider.class)
+  void testTemplate(Pact pact, Interaction interaction, PactVerificationContext context) {
+    LOGGER.info("testTemplate called: " + pact.getProvider().getName() + ", " + interaction);
+    context.verifyInteraction();
+  }
+
+  @BeforeEach
+  void before(PactVerificationContext context) {
+    context.setTarget(new MessageTestTarget());
+  }
+
+  @State("SomeProviderState")
+  public void someProviderState() {
+    LOGGER.info("SomeProviderState callback");
+  }
+
+  @PactVerifyProvider("a test message")
+  public String verifyMessageForOrder() {
+    return "{\"testParam1\": \"value1\",\"testParam2\": \"value2\"}";
+  }
+
+}

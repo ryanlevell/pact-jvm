@@ -1,7 +1,7 @@
 (ns leiningen.pact-verify
-  (:require [au.com.dius.pact.provider.lein.verify-provider :as verify]
+  (:require [io.pact.provider.lein.verify-provider :as verify]
             [clojure.string :as str])
-  (:import (au.com.dius.pact.provider.lein LeinVerifierProxy)))
+  (:import (io.pact.provider.lein LeinVerifierProxy)))
 
 (defn- split-string [arg]
   (if (.contains arg "=")
