@@ -1,12 +1,12 @@
 package io.pact.consumer.junit.v3;
 
 import io.pact.consumer.MessagePactBuilder;
-import io.pact.consumer.junit.MessagePactProviderRule;
-import io.pact.core.model.annotations.Pact;
-import io.pact.core.model.annotations.PactFolder;
-import io.pact.consumer.junit.PactVerification;
 import io.pact.consumer.dsl.Matchers;
 import io.pact.consumer.dsl.PactDslJsonBody;
+import io.pact.consumer.junit.MessagePactProviderRule;
+import io.pact.consumer.junit.PactVerification;
+import io.pact.core.model.annotations.Pact;
+import io.pact.core.model.annotations.PactDirectory;
 import io.pact.core.model.messaging.MessagePact;
 import org.junit.Rule;
 import org.junit.Test;
@@ -18,7 +18,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasEntry;
 import static org.hamcrest.core.Is.is;
 
-@PactFolder("build/pacts/messages")
+@PactDirectory("build/pacts/messages")
 public class AsyncMessageTest {
   @Rule
   public MessagePactProviderRule mockProvider = new MessagePactProviderRule("test_provider", this);
