@@ -18,7 +18,6 @@ import io.pact.core.model.PactSpecVersion
 import io.pact.core.model.Provider
 import io.pact.core.model.RequestResponsePact
 import io.pact.core.model.annotations.Pact
-import io.pact.core.model.annotations.PactFolder
 import io.pact.core.model.annotations.PactDirectory
 import io.pact.core.model.messaging.MessagePact
 import io.pact.core.support.BuiltToolConfig
@@ -388,11 +387,8 @@ class PactConsumerTestExt : Extension, BeforeTestExecutionCallback, BeforeAllCal
   }
 
   private fun lookupPactDirectory(context: ExtensionContext): String {
-    val pactFolder = AnnotationSupport.findAnnotation(context.requiredTestClass, PactFolder::class.java)
     val pactDirectory = AnnotationSupport.findAnnotation(context.requiredTestClass, PactDirectory::class.java)
-    return if (pactFolder.isPresent)
-      pactFolder.get().value
-    else if (pactDirectory.isPresent)
+    return if (pactDirectory.isPresent)
       pactDirectory.get().value
     else
       BuiltToolConfig.pactDirectory

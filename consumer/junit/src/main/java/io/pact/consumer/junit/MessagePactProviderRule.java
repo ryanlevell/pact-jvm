@@ -4,7 +4,6 @@ import io.pact.consumer.MessagePactBuilder;
 import io.pact.core.model.PactSpecVersion;
 import io.pact.core.model.ProviderState;
 import io.pact.core.model.annotations.Pact;
-import io.pact.core.model.annotations.PactFolder;
 import io.pact.core.model.annotations.PactDirectory;
 import io.pact.core.model.messaging.Message;
 import io.pact.core.model.messaging.MessagePact;
@@ -110,11 +109,8 @@ public class MessagePactProviderRule extends ExternalResource {
 				setMessage(providedMessage, description);
 				try {
 					base.evaluate();
-					PactFolder pactFolder = testClassInstance.getClass().getAnnotation(PactFolder.class);
 					PactDirectory pactDirectory = testClassInstance.getClass().getAnnotation(PactDirectory.class);
-					if (pactFolder != null) {
-						messagePact.write(pactFolder.value(), PactSpecVersion.V3);
-					} else if (pactDirectory != null) {
+					if (pactDirectory != null) {
 						messagePact.write(pactDirectory.value(), PactSpecVersion.V3);
 					} else {
 						messagePact.write(BuiltToolConfig.INSTANCE.getPactDirectory(), PactSpecVersion.V3);

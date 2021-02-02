@@ -11,7 +11,6 @@ import io.pact.consumer.model.MockServerImplementation;
 import io.pact.core.model.PactSpecVersion;
 import io.pact.core.model.RequestResponsePact;
 import io.pact.core.model.annotations.Pact;
-import io.pact.core.model.annotations.PactFolder;
 import io.pact.core.model.annotations.PactDirectory;
 import io.pact.core.support.expressions.DataType;
 import org.apache.commons.lang3.StringUtils;
@@ -87,9 +86,8 @@ public class BaseProviderRule extends ExternalResource {
                   return;
               }
 
-            PactFolder pactFolder = target.getClass().getAnnotation(PactFolder.class);
             PactDirectory pactDirectory = target.getClass().getAnnotation(PactDirectory.class);
-            PactVerificationResult result = runPactTest(base, pact.get(), pactFolder, pactDirectory);
+            PactVerificationResult result = runPactTest(base, pact.get(), pactDirectory);
             validateResult(result, pactDef);
           }
       };
@@ -125,9 +123,8 @@ public class BaseProviderRule extends ExternalResource {
       }
     });
 
-    PactFolder pactFolder = target.getClass().getAnnotation(PactFolder.class);
     PactDirectory pactDirectory = target.getClass().getAnnotation(PactDirectory.class);
-    PactVerificationResult result = runPactTest(base, pact[0], pactFolder, pactDirectory);
+    PactVerificationResult result = runPactTest(base, pact[0], pactDirectory);
     JUnitTestSupport.validateMockServerResult(result);
   }
 
@@ -170,15 +167,12 @@ public class BaseProviderRule extends ExternalResource {
       }
   }
 
-  private PactVerificationResult runPactTest(final Statement base, io.pact.core.model.Pact pact, PactFolder pactFolder, PactDirectory pactDirectory) {
+  private PactVerificationResult runPactTest(final Statement base, io.pact.core.model.Pact pact, PactDirectory pactDirectory) {
       return runConsumerTest(pact, config, (mockServer, context) -> {
         this.mockServer = mockServer;
         base.evaluate();
         this.mockServer = null;
 
-        if (pactFolder != null) {
-          context.setPactFolder(pactFolder.value());
-        }
         if (pactDirectory != null) {
           context.setPactFolder(pactDirectory.value());
         }
