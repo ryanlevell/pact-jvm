@@ -3,7 +3,6 @@ package io.pact.core.plugins
 import io.pact.core.support.json.JsonParser
 import io.pact.core.support.json.JsonValue
 import mu.KLogging
-import org.jcsp.lang.Channel
 import java.util.concurrent.LinkedBlockingDeque
 
 class ChildProcess(
