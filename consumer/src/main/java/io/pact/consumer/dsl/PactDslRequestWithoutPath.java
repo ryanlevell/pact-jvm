@@ -42,8 +42,8 @@ public class PactDslRequestWithoutPath extends PactDslRequestBase {
     this.consumerPactBuilder = consumerPactBuilder;
     this.pactDslWithState = pactDslWithState;
     this.description = description;
-    this.consumerName = pactDslWithState.consumerName;
-    this.providerName = pactDslWithState.providerName;
+    this.consumerName = pactDslWithState.getConsumerName();
+    this.providerName = pactDslWithState.getProviderName();
     this.defaultResponseValues = defaultResponseValues;
 
     setupDefaultValues();
