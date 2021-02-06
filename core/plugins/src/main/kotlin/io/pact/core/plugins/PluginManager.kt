@@ -3,16 +3,25 @@ package io.pact.core.plugins
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.mapError
 import com.vdurmont.semver4j.Semver
+import io.grpc.ManagedChannel
+import io.grpc.ManagedChannelBuilder
 import io.pact.core.support.Json
+import io.pact.core.support.Utils
+import io.pact.core.support.handleWith
 import io.pact.core.support.json.JsonParser
 import io.pact.core.support.json.JsonValue
+import io.pact.plugin.PactPluginGrpc
+import io.pact.plugin.PactPluginGrpc.newBlockingStub
+import io.pact.plugin.Plugin
 import mu.KLogging
 import org.apache.commons.lang3.SystemUtils
 import java.io.BufferedReader
 import java.io.File
 import java.io.IOException
 import java.io.InputStreamReader
+import java.lang.Runtime.getRuntime
 import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.concurrent.TimeUnit
@@ -58,15 +67,30 @@ interface PactPlugin {
   val port: Int?
   val serverKey: String?
   val processPid: Long?
+  var stub: PactPluginGrpc.PactPluginBlockingStub?
+  var catalogueEntries: List<Plugin.InitPluginResponse.CatalogueEntry>?
+  var channel: ManagedChannel?
+
+  fun shutdown()
 }
 
 data class DefaultPactPlugin(
   val cp: ChildProcess,
   override val port: Int?,
-  override val serverKey: String
+  override val serverKey: String,
+  override var stub: PactPluginGrpc.PactPluginBlockingStub? = null,
+  override var catalogueEntries: List<Plugin.InitPluginResponse.CatalogueEntry>? = null,
+  override var channel: ManagedChannel? = null
 ) : PactPlugin {
   override val processPid: Long
     get() = cp.pid
+
+  override fun shutdown() {
+    cp.destroy()
+    if (channel != null) {
+      channel!!.shutdownNow().awaitTermination(1, TimeUnit.SECONDS)
+    }
+  }
 }
 
 interface PluginManager {
@@ -79,6 +103,15 @@ interface PluginManager {
 object DefaultPluginManager: KLogging(), PluginManager {
   private val PLUGIN_MANIFEST_REGISTER: MutableMap<String, PactPluginManifest> = mutableMapOf()
   private val PLUGIN_REGISTER: MutableMap<String, PactPlugin> = mutableMapOf()
+
+  init {
+    getRuntime().addShutdownHook(Thread {
+      logger.debug { "SHUTDOWN - shutting down all plugins" }
+      PLUGIN_REGISTER.forEach { (_, plugin) ->
+        plugin.shutdown()
+      }
+    })
+  }
 
   override fun loadPlugin(name: String): Result<PactPlugin, String> {
     return if (PLUGIN_REGISTER.containsKey(name)) {
@@ -99,9 +132,28 @@ object DefaultPluginManager: KLogging(), PluginManager {
     }
     return when (result) {
       is Ok -> {
-        PLUGIN_REGISTER[manifest.name] = result.value
-        logger.debug { "Plugin process started OK (port = ${result.value.port}), sending init message" }
-        TODO()
+        val plugin = result.value
+        PLUGIN_REGISTER[manifest.name] = plugin
+        logger.debug { "Plugin process started OK (port = ${plugin.port}), sending init message" }
+        handleWith<PactPlugin> {
+          val request = Plugin.InitPluginRequest.newBuilder()
+            .setImplementation("Pact-JVM")
+            .setVersion(Utils.lookupVersion(PluginManager::class.java))
+            .build()
+          val channel = ManagedChannelBuilder.forTarget("127.0.0.1:${plugin.port}")
+            .usePlaintext()
+            .build()
+          val stub = newBlockingStub(channel)
+          val response = stub.initPlugin(request)
+          logger.debug { "Got init response ${response.catalogueList} from plugin ${manifest.name}" }
+          plugin.stub = stub
+          plugin.channel = channel
+          plugin.catalogueEntries = response.catalogueList
+          plugin
+        }.mapError { err ->
+          logger.error(err) { "Init call to plugin ${manifest.name} failed" }
+          "Init call to plugin ${manifest.name} failed: $err"
+        }
       }
       is Err -> Err(result.error)
     }
@@ -120,7 +172,7 @@ object DefaultPluginManager: KLogging(), PluginManager {
           if (versionCheck is Err) {
             Err(versionCheck.error)
           } else {
-            val parent = ruby.value.parent
+            //            val parent = ruby.value.parent
             //          when (val bundler = lookForProgramInPath("bundle")) {
             //            is Ok -> startPluginProcess(manifest,
             //              mapOf("BUNDLE_GEMFILE" to manifest.pluginDir.resolve("Gemfile").toString()),
@@ -157,8 +209,7 @@ object DefaultPluginManager: KLogging(), PluginManager {
       ProcessBuilder(command.asList() + manifest.pluginDir.resolve(manifest.entryPoint).toString())
     } else {
       ProcessBuilder(manifest.pluginDir.resolve(manifest.entryPoint).toString())
-    }
-      .directory(manifest.pluginDir)
+    }.directory(manifest.pluginDir)
 
     env.forEach { (k, v) -> pb.environment()[k] = v }
 
@@ -167,7 +218,7 @@ object DefaultPluginManager: KLogging(), PluginManager {
       logger.debug { "Starting plugin ${manifest.name} process ${pb.command()}" }
       cp.start()
       logger.debug { "Plugin ${manifest.name} started with PID ${cp.pid}" }
-      val startupInfo = cp.channel.poll(1000, TimeUnit.MILLISECONDS)
+      val startupInfo = cp.channel.poll(2000, TimeUnit.MILLISECONDS)
       if (startupInfo is JsonValue.Object) {
         Ok(DefaultPactPlugin(cp, Json.toInteger(startupInfo["port"]), Json.toString(startupInfo["serverKey"])))
       } else {
