@@ -23,6 +23,9 @@ import com.sun.net.httpserver.HttpExchange
 import com.sun.net.httpserver.HttpHandler
 import com.sun.net.httpserver.HttpServer
 import com.sun.net.httpserver.HttpsServer
+import io.pact.core.plugins.CatalogueEntry
+import io.pact.core.plugins.CatalogueEntryProviderType
+import io.pact.core.plugins.CatalogueEntryType
 import mu.KLogging
 import org.apache.commons.lang3.StringEscapeUtils
 import org.apache.http.client.methods.HttpOptions
@@ -40,6 +43,11 @@ import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.zip.DeflaterInputStream
 import java.util.zip.GZIPInputStream
+
+fun mockServerCatalogueEntries(): List<CatalogueEntry> {
+  return listOf(CatalogueEntry(CatalogueEntryType.MOCK_SERVER, CatalogueEntryProviderType.CORE, "http-1", mapOf()),
+    CatalogueEntry(CatalogueEntryType.MOCK_SERVER, CatalogueEntryProviderType.CORE, "https-1", mapOf()))
+}
 
 /**
  * Returns a mock server for the pact and config

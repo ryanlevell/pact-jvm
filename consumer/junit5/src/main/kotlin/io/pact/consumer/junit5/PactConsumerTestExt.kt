@@ -9,9 +9,12 @@ import io.pact.consumer.PactTestRun
 import io.pact.consumer.PactVerificationResult
 import io.pact.consumer.junit.JUnitTestSupport
 import io.pact.consumer.mockServer
+import io.pact.consumer.mockServerCatalogueEntries
 import io.pact.consumer.model.MockHttpsProviderConfig
 import io.pact.consumer.model.MockProviderConfig
 import io.pact.consumer.model.MockServerImplementation
+import io.pact.core.matchers.MatchingConfig
+import io.pact.core.matchers.matcherCatalogueEntries
 import io.pact.core.model.BasePact
 import io.pact.core.model.Consumer
 import io.pact.core.model.PactSpecVersion
@@ -20,6 +23,7 @@ import io.pact.core.model.RequestResponsePact
 import io.pact.core.model.annotations.Pact
 import io.pact.core.model.annotations.PactDirectory
 import io.pact.core.model.messaging.MessagePact
+import io.pact.core.plugins.CatalogueManager
 import io.pact.core.support.BuiltToolConfig
 import io.pact.core.support.expressions.DataType
 import io.pact.core.support.expressions.ExpressionParser.parseExpression
@@ -220,6 +224,8 @@ class PactConsumerTestExt : Extension, BeforeTestExecutionCallback, BeforeAllCal
     val store = context.getStore(NAMESPACE)
     store.put("executedFragments", ConcurrentHashMap.newKeySet<Method>())
     store.put("pactsToWrite", ConcurrentHashMap<Pair<Consumer, Provider>, Pair<BasePact, PactSpecVersion>>())
+    CatalogueManager.registerCoreEntries(mockServerCatalogueEntries() + matcherCatalogueEntries() +
+      MatchingConfig.contentMatcherCatalogueEntries())
   }
 
   override fun beforeTestExecution(context: ExtensionContext) {

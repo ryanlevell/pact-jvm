@@ -24,6 +24,8 @@ import java.io.InputStreamReader
 import java.lang.Runtime.getRuntime
 import java.nio.file.Path
 import java.nio.file.Paths
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.ConcurrentMap
 import java.util.concurrent.TimeUnit
 
 interface PactPluginManifest {
@@ -68,7 +70,7 @@ interface PactPlugin {
   val serverKey: String?
   val processPid: Long?
   var stub: PactPluginGrpc.PactPluginBlockingStub?
-  var catalogueEntries: List<Plugin.InitPluginResponse.CatalogueEntry>?
+  var catalogueEntries: List<Plugin.CatalogueEntry>?
   var channel: ManagedChannel?
 
   fun shutdown()
@@ -79,7 +81,7 @@ data class DefaultPactPlugin(
   override val port: Int?,
   override val serverKey: String,
   override var stub: PactPluginGrpc.PactPluginBlockingStub? = null,
-  override var catalogueEntries: List<Plugin.InitPluginResponse.CatalogueEntry>? = null,
+  override var catalogueEntries: List<Plugin.CatalogueEntry>? = null,
   override var channel: ManagedChannel? = null
 ) : PactPlugin {
   override val processPid: Long
@@ -102,7 +104,7 @@ interface PluginManager {
 
 object DefaultPluginManager: KLogging(), PluginManager {
   private val PLUGIN_MANIFEST_REGISTER: MutableMap<String, PactPluginManifest> = mutableMapOf()
-  private val PLUGIN_REGISTER: MutableMap<String, PactPlugin> = mutableMapOf()
+  private val PLUGIN_REGISTER: MutableMap<String, PactPlugin> = ConcurrentHashMap()
 
   init {
     getRuntime().addShutdownHook(Thread {
@@ -146,9 +148,13 @@ object DefaultPluginManager: KLogging(), PluginManager {
           val stub = newBlockingStub(channel)
           val response = stub.initPlugin(request)
           logger.debug { "Got init response ${response.catalogueList} from plugin ${manifest.name}" }
+          CatalogueManager.registerPluginEntries(manifest.name, response.catalogueList)
           plugin.stub = stub
           plugin.channel = channel
           plugin.catalogueEntries = response.catalogueList
+          Thread {
+            publishUpdatedCatalogue()
+          }.run()
           plugin
         }.mapError { err ->
           logger.error(err) { "Init call to plugin ${manifest.name} failed" }
@@ -156,6 +162,22 @@ object DefaultPluginManager: KLogging(), PluginManager {
         }
       }
       is Err -> Err(result.error)
+    }
+  }
+
+  private fun publishUpdatedCatalogue() {
+    val requestBuilder = Plugin.Catalogue.newBuilder()
+    CatalogueManager.entries().forEach { (_, entry) ->
+      requestBuilder.addCatalogue(Plugin.CatalogueEntry.newBuilder()
+        .setKey(entry.key)
+        .setType(entry.type.name)
+        .putAllValues(entry.values)
+        .build())
+    }
+    val request = requestBuilder.build()
+
+    PLUGIN_REGISTER.forEach { (_, plugin) ->
+      plugin.stub?.updateCatalogue(request)
     }
   }
 

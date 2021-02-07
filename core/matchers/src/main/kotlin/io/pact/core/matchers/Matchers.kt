@@ -1,11 +1,5 @@
 package io.pact.core.matchers
 
-import io.pact.core.matchers.BodyItemMatchResult
-import io.pact.core.matchers.BodyMismatch
-import io.pact.core.matchers.BodyMismatchFactory
-import io.pact.core.matchers.MatchingContext
-import io.pact.core.matchers.Mismatch
-import io.pact.core.matchers.MismatchFactory
 import io.pact.core.matchers.util.IndicesCombination
 import io.pact.core.matchers.util.LargestKeyValue
 import io.pact.core.matchers.util.corresponds

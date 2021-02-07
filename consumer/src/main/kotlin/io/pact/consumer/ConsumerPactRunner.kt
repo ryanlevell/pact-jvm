@@ -2,9 +2,12 @@ package io.pact.consumer
 
 import com.github.michaelbull.result.expect
 import io.pact.consumer.model.MockProviderConfig
+import io.pact.core.matchers.MatchingConfig.contentMatcherCatalogueEntries
+import io.pact.core.matchers.matcherCatalogueEntries
 import io.pact.core.model.Pact
 import io.pact.core.model.PactSpecVersion
 import io.pact.core.model.messaging.Message
+import io.pact.core.plugins.CatalogueManager
 import io.pact.core.support.V4PactFeaturesException
 
 interface PactTestRun<R> {
@@ -21,6 +24,8 @@ fun <R> runConsumerTest(pact: Pact, config: MockProviderConfig, test: PactTestRu
   }
 
   val requestResponsePact = pact.asRequestResponsePact().expect { "Expected an HTTP Request/Response Pact" }
+  CatalogueManager.registerCoreEntries(mockServerCatalogueEntries() + matcherCatalogueEntries() +
+    contentMatcherCatalogueEntries())
   val server = mockServer(requestResponsePact, config)
   return server.runAndWritePact(requestResponsePact, config.pactVersion, test)
 }

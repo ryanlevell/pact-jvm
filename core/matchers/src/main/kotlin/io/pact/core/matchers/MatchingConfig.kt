@@ -1,5 +1,8 @@
 package io.pact.core.matchers
 
+import io.pact.core.plugins.CatalogueEntry
+import io.pact.core.plugins.CatalogueEntryProviderType
+import io.pact.core.plugins.CatalogueEntryType
 import kotlin.reflect.full.createInstance
 
 object MatchingConfig {
@@ -28,5 +31,20 @@ object MatchingConfig {
     } else {
       null
     }
+  }
+
+  fun contentMatcherCatalogueEntries(): List<CatalogueEntry> {
+    return listOf(
+      CatalogueEntry(CatalogueEntryType.CONTENT_MATCHER, CatalogueEntryProviderType.CORE, "xml",
+        mapOf("content-types" to "application/.*xml,text/xml")),
+      CatalogueEntry(CatalogueEntryType.CONTENT_MATCHER, CatalogueEntryProviderType.CORE, "json",
+        mapOf("content-types" to "application/.*json,application/json-rpc,application/jsonrequest")),
+      CatalogueEntry(CatalogueEntryType.CONTENT_MATCHER, CatalogueEntryProviderType.CORE, "text",
+        mapOf("content-types" to "text/plain")),
+      CatalogueEntry(CatalogueEntryType.CONTENT_MATCHER, CatalogueEntryProviderType.CORE, "multipart-form-data",
+        mapOf("content-types" to "multipart/form-data,multipart/mixed")),
+      CatalogueEntry(CatalogueEntryType.CONTENT_MATCHER, CatalogueEntryProviderType.CORE, "form-urlencoded",
+        mapOf("content-types" to "application/x-www-form-urlencoded"))
+    )
   }
 }

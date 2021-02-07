@@ -1,20 +1,5 @@
 package io.pact.core.matchers
 
-import io.pact.core.matchers.BodyMismatch
-import io.pact.core.matchers.BodyMismatchFactory
-import io.pact.core.matchers.BodyTypeMismatch
-import io.pact.core.matchers.CookieMismatch
-import io.pact.core.matchers.HeaderMismatch
-import io.pact.core.matchers.MatchingConfig
-import io.pact.core.matchers.MetadataMatcher
-import io.pact.core.matchers.MetadataMismatch
-import io.pact.core.matchers.MethodMismatch
-import io.pact.core.matchers.Mismatch
-import io.pact.core.matchers.PathMismatch
-import io.pact.core.matchers.PathMismatchFactory
-import io.pact.core.matchers.QueryMatcher
-import io.pact.core.matchers.QueryMismatch
-import io.pact.core.matchers.StatusMismatch
 import io.pact.core.model.HttpPart
 import io.pact.core.model.Request
 import io.pact.core.model.matchingrules.MatchingRuleCategory

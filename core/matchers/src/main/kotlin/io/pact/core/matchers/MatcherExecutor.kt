@@ -24,6 +24,9 @@ import io.pact.core.model.matchingrules.RuleLogic
 import io.pact.core.model.matchingrules.TimeMatcher
 import io.pact.core.model.matchingrules.TimestampMatcher
 import io.pact.core.model.matchingrules.TypeMatcher
+import io.pact.core.plugins.CatalogueEntry
+import io.pact.core.plugins.CatalogueEntryProviderType
+import io.pact.core.plugins.CatalogueEntryType
 import io.pact.core.support.json.JsonValue
 import mu.KotlinLogging
 import org.apache.commons.lang3.time.DateUtils
@@ -581,4 +584,29 @@ fun <M : Mismatch> matchContentType(
       "Expected binary contents to have content type '$contentType' " +
         "but detected contents was '$detectedContentType'", path))
   }
+}
+
+fun matcherCatalogueEntries(): List<CatalogueEntry> {
+  return listOf(
+    CatalogueEntry(CatalogueEntryType.MATCHER, CatalogueEntryProviderType.CORE, "v2-regex"),
+    CatalogueEntry(CatalogueEntryType.MATCHER, CatalogueEntryProviderType.CORE, "v2-type"),
+    CatalogueEntry(CatalogueEntryType.MATCHER, CatalogueEntryProviderType.CORE, "v3-number-type"),
+    CatalogueEntry(CatalogueEntryType.MATCHER, CatalogueEntryProviderType.CORE, "v3-integer-type"),
+    CatalogueEntry(CatalogueEntryType.MATCHER, CatalogueEntryProviderType.CORE, "v3-decimal-type"),
+    CatalogueEntry(CatalogueEntryType.MATCHER, CatalogueEntryProviderType.CORE, "v3-date"),
+    CatalogueEntry(CatalogueEntryType.MATCHER, CatalogueEntryProviderType.CORE, "v3-time"),
+    CatalogueEntry(CatalogueEntryType.MATCHER, CatalogueEntryProviderType.CORE, "v3-datetime"),
+    CatalogueEntry(CatalogueEntryType.MATCHER, CatalogueEntryProviderType.CORE, "v2-min-type"),
+    CatalogueEntry(CatalogueEntryType.MATCHER, CatalogueEntryProviderType.CORE, "v2-max-type"),
+    CatalogueEntry(CatalogueEntryType.MATCHER, CatalogueEntryProviderType.CORE, "v2-minmax-type"),
+    CatalogueEntry(CatalogueEntryType.MATCHER, CatalogueEntryProviderType.CORE, "v3-includes"),
+    CatalogueEntry(CatalogueEntryType.MATCHER, CatalogueEntryProviderType.CORE, "v3-null"),
+    CatalogueEntry(CatalogueEntryType.MATCHER, CatalogueEntryProviderType.CORE, "v4-equals-ignore-order"),
+    CatalogueEntry(CatalogueEntryType.MATCHER, CatalogueEntryProviderType.CORE, "v4-min-equals-ignore-order"),
+    CatalogueEntry(CatalogueEntryType.MATCHER, CatalogueEntryProviderType.CORE, "v4-max-equals-ignore-order"),
+    CatalogueEntry(CatalogueEntryType.MATCHER, CatalogueEntryProviderType.CORE, "v4-minmax-equals-ignore-order"),
+    CatalogueEntry(CatalogueEntryType.MATCHER, CatalogueEntryProviderType.CORE, "v3-content-type"),
+    CatalogueEntry(CatalogueEntryType.MATCHER, CatalogueEntryProviderType.CORE, "v4-array-contains"),
+    CatalogueEntry(CatalogueEntryType.MATCHER, CatalogueEntryProviderType.CORE, "v1-equality")
+  )
 }
