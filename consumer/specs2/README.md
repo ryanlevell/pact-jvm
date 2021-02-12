@@ -8,14 +8,14 @@ pact-jvm-consumer-specs2
 In the root folder of your project in build.sbt add the line:
 
 ```scala
-libraryDependencies += "au.com.dius.pact.consumer" %% "specs2" % "4.0.1"
+libraryDependencies += "io.pact.consumer" %% "specs2" % "4.0.1"
 ```
 
 or if you are using Gradle:
 
 ```groovy
 dependencies {
-    testCompile "au.com.dius.pact.consumer:specs2_2.13:4.0.1"
+    testCompile "io.pact.consumer:specs2_2.13:4.0.1"
 }
 
 ```
@@ -32,7 +32,7 @@ First we define a service client called `ConsumerService`. In our example this i
 Here is a simple example:
 
 ```
-import au.com.dius.pact.consumer.PactSpec
+import io.pact.consumer.PactSpec
 
 class ExamplePactSpec extends Specification with PactSpec {
 

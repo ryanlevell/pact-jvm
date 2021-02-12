@@ -1,4 +1,4 @@
-module au.com.dius.pact.core.support {
+module io.pact.core.support {
   requires kotlin.stdlib;
   requires kotlin.logging.jvm;
   requires httpcore;

@@ -16,7 +16,7 @@ import io.pact.provider.VerificationResult
 @CompileStatic
 class LeinVerifierProxy {
 
-  private static final String LEIN_PACT_VERIFY_NAMESPACE = 'au.com.dius.pact.provider.lein.verify-provider'
+  private static final String LEIN_PACT_VERIFY_NAMESPACE = 'io.pact.provider.lein.verify-provider'
 
   def project
   def args

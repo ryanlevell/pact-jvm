@@ -19,10 +19,10 @@ to define your pacts. For a full example, have a look at the example JUnit `Exam
 If you are using gradle for your build, add it to your `build.gradle`:
 
     dependencies {
-        testCompile 'au.com.dius.pact.consumer:groovy:4.1.0'
+        testCompile 'io.pact.consumer:groovy:4.1.0'
     }
     
-In order to avoid the name collision between `au.com.dius.pact.consumer:groovy` and Groovy Gradle plugin's [automatic configuraiton of `groovyClasspath`](https://docs.gradle.org/current/userguide/groovy_plugin.html#sec:automatic_configuration_of_groovyclasspath)
+In order to avoid the name collision between `io.pact.consumer:groovy` and Groovy Gradle plugin's [automatic configuraiton of `groovyClasspath`](https://docs.gradle.org/current/userguide/groovy_plugin.html#sec:automatic_configuration_of_groovyclasspath)
 add the following configuration to your `build.gradle`:
 ```groovy
 compileTestGroovy {
@@ -33,8 +33,8 @@ compileTestGroovy {
 Then create an instance of the `PactBuilder` in your test.
 
 ```groovy
-    import au.com.dius.pact.consumer.PactVerificationResult
-    import au.com.dius.pact.consumer.groovy.PactBuilder
+    import io.pact.consumer.PactVerificationResult
+    import io.pact.consumer.groovy.PactBuilder
     import groovyx.net.http.RESTClient
     import org.junit.Test
 

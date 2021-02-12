@@ -3,9 +3,9 @@ package io.pact.provider.junitsupport.target
 import java.lang.annotation.Inherited
 
 /**
- * Mark [au.com.dius.pact.provider.junit.target.Target] for contract tests
+ * Mark [io.pact.provider.junit.target.Target] for contract tests
  *
- * @see au.com.dius.pact.provider.junit.target.Target
+ * @see io.pact.provider.junit.target.Target
  *
  * @see HttpTarget
  */

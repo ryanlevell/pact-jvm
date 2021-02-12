@@ -33,7 +33,7 @@ const val DEFAULT_GENERATOR_PACKAGE = "io.pact.core.model.generators"
 
 /**
  * Looks up the generator class in the configured generator packages. By default it will look for generators in
- * au.com.dius.pact.model.generators package, but this can be extended by adding a comma separated list to the
+ * io.pact.model.generators package, but this can be extended by adding a comma separated list to the
  * pact.generators.packages system property. The generator class name needs to be <Type>Generator.
  */
 fun lookupGenerator(generatorJson: JsonValue?): Generator? {

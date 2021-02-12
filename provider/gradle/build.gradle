@@ -27,7 +27,7 @@ pluginBundle {
 
   plugins {
     pactProviderPlugin {
-      id = 'au.com.dius.pact'
+      id = 'io.pact'
       displayName = 'Gradle Pact Provider plugin'
     }
   }

@@ -19,7 +19,7 @@ open class BaseBuilder : Matchers() {
     return if (data.containsKey(BODY)) {
       val body = data[BODY]
       val contentType = httpPart.determineContentType()
-      if (body != null && body::class.qualifiedName == "au.com.dius.pact.consumer.groovy.PactBodyBuilder") {
+      if (body != null && body::class.qualifiedName == "io.pact.consumer.groovy.PactBodyBuilder") {
         httpPart.matchingRules.addCategory(body::class.property("matchers")?.get(body) as MatchingRuleCategory)
         httpPart.generators.addGenerators(body::class.property("generators")?.get(body) as Generators)
         OptionalBody.body(body::class.property(BODY)?.get(body).toString().toByteArray(contentType.asCharset()))

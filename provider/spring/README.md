@@ -18,7 +18,7 @@ Supports:
 
 - Multiple @State runs to test a particular Provider State multiple times
 
-- **au.com.dius.pact.provider.junit.State** custom annotation - before each interaction that requires a state change,
+- **io.pact.provider.junit.State** custom annotation - before each interaction that requires a state change,
 all methods annotated by `@State` with appropriate the state listed will be invoked.
 
 **NOTE:** For publishing provider verification results to a pact broker, make sure the Java system property `pact.provider.version`

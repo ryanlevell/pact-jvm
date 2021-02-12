@@ -21,8 +21,8 @@ The library is available on maven central using:
 Example in a JUnit test:
 
 ```java
-import au.com.dius.pact.model.MockProviderConfig;
-import au.com.dius.pact.model.RequestResponsePact;
+import io.pact.model.MockProviderConfig;
+import io.pact.model.RequestResponsePact;
 import org.apache.http.entity.ContentType;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
@@ -31,7 +31,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static au.com.dius.pact.consumer.ConsumerPactRunnerKt.runConsumerTest;
+import static io.pact.consumer.ConsumerPactRunnerKt.runConsumerTest;
 import static org.junit.Assert.assertEquals;
 
 public class PactTest {

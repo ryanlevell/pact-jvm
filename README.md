@@ -2,7 +2,7 @@ pact-jvm
 ========
 
 [![Pact-JVM Build](https://github.com/pact-foundation/pact-jvm/workflows/Pact-JVM%20Build/badge.svg)](https://github.com/pact-foundation/pact-jvm/actions?query=workflow%3A%22Pact-JVM+Build%22)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/au.com.dius.pact.core/model/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/au.com.dius.pact.core/model)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.pact.core/model/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/io.pact.core/model)
 
 JVM implementation of the consumer driven contract library [pact](https://github.com/pact-foundation/pact-specification).
 
@@ -66,29 +66,29 @@ and in the [Pact-JVM wiki](https://github.com/DiUS/pact-jvm/wiki). [Stack Overfl
 **NOTE:** The JARs produced by this project have changed with 4.1.x to better align with Java 9 JPMS. The artefacts are now:
 
 ```
-au.com.dius.pact:consumer
-au.com.dius.pact.consumer:groovy
-au.com.dius.pact.consumer:junit
-au.com.dius.pact.consumer:junit5
-au.com.dius.pact.consumer:java8
-au.com.dius.pact.consumer:specs2_2.13
-au.com.dius.pact:pact-jvm-server
-au.com.dius.pact:provider
-au.com.dius.pact.provider:scalatest_2.13
-au.com.dius.pact.provider:spring
-au.com.dius.pact.provider:maven
-au.com.dius.pact:provider
-au.com.dius.pact.provider:junit
-au.com.dius.pact.provider:junit5
-au.com.dius.pact.provider:scalasupport_2.13
-au.com.dius.pact.provider:lein
-au.com.dius.pact.provider:gradle
-au.com.dius.pact.provider:specs2_2.13
-au.com.dius.pact.provider:junit5spring
-au.com.dius.pact.core:support
-au.com.dius.pact.core:model
-au.com.dius.pact.core:matchers
-au.com.dius.pact.core:pactbroker
+io.pact:consumer
+io.pact.consumer:groovy
+io.pact.consumer:junit
+io.pact.consumer:junit5
+io.pact.consumer:java8
+io.pact.consumer:specs2_2.13
+io.pact:pact-jvm-server
+io.pact:provider
+io.pact.provider:scalatest_2.13
+io.pact.provider:spring
+io.pact.provider:maven
+io.pact:provider
+io.pact.provider:junit
+io.pact.provider:junit5
+io.pact.provider:scalasupport_2.13
+io.pact.provider:lein
+io.pact.provider:gradle
+io.pact.provider:specs2_2.13
+io.pact.provider:junit5spring
+io.pact.core:support
+io.pact.core:model
+io.pact.core:matchers
+io.pact.core:pactbroker
 ```
 
 ## Service Consumers

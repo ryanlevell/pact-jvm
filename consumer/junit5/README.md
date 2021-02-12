@@ -7,7 +7,7 @@ JUnit 5 support for Pact consumer tests
 
 The library is available on maven central using:
 
-* group-id = `au.com.dius.pact.consumer`
+* group-id = `io.pact.consumer`
 * artifact-id = `junit5`
 * version-id = `4.1.0`
 

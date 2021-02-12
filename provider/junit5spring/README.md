@@ -5,7 +5,7 @@ This module extends the base [Pact JUnit5 module](/provider/junit5/README.md). S
 ## Dependency
 The combined library (JUnit5 + Spring) is available on maven central using:
 
-group-id = au.com.dius.pact.provider
+group-id = io.pact.provider
 artifact-id = junit5spring
 version-id = 4.1.x
 

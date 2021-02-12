@@ -7,7 +7,7 @@ Provides a DSL and a base test class for use with Junit to build consumer tests.
 
 The library is available on maven central using:
 
-* group-id = `au.com.dius.pact.consumer`
+* group-id = `io.pact.consumer`
 * artifact-id = `junit`
 * version-id = `4.1.0`
 
@@ -27,10 +27,10 @@ overridden in your test class.
 Here is an example:
 
 ```java
-import au.com.dius.pact.consumer.dsl.PactDslWithProvider;
-import au.com.dius.pact.consumer.junit.exampleclients.ConsumerClient;
-import au.com.dius.pact.consumer.ConsumerPactTest;
-import au.com.dius.pact.model.PactFragment;
+import io.pact.consumer.dsl.PactDslWithProvider;
+import io.pact.consumer.junit.exampleclients.ConsumerClient;
+import io.pact.consumer.ConsumerPactTest;
+import io.pact.model.PactFragment;
 import org.junit.Assert;
 
 import java.io.IOException;
@@ -256,18 +256,18 @@ Sometimes it is not convenient to use the ConsumerPactTest as it only allows one
 Example:
 
 ```java
-import au.com.dius.pact.consumer.ConsumerPactBuilder;
-import au.com.dius.pact.consumer.PactVerificationResult;
-import au.com.dius.pact.consumer.junit.exampleclients.ProviderClient;
-import au.com.dius.pact.model.MockProviderConfig;
-import au.com.dius.pact.model.RequestResponsePact;
+import io.pact.consumer.ConsumerPactBuilder;
+import io.pact.consumer.PactVerificationResult;
+import io.pact.consumer.junit.exampleclients.ProviderClient;
+import io.pact.model.MockProviderConfig;
+import io.pact.model.RequestResponsePact;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static au.com.dius.pact.consumer.ConsumerPactRunnerKt.runConsumerTest;
+import static io.pact.consumer.ConsumerPactRunnerKt.runConsumerTest;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -657,7 +657,7 @@ When the test runs, Pact will start a mock provider that will listen for request
 you setup in `createFragment`. If the request does not match, it will return a 500 error response.
 
 Each request received and the generated response is logged using [SLF4J](http://www.slf4j.org/). Just enable debug level
-logging for au.com.dius.pact.consumer.UnfilteredMockProvider. Most failures tend to be mismatched headers or bodies.
+logging for io.pact.consumer.UnfilteredMockProvider. Most failures tend to be mismatched headers or bodies.
 
 ## Changing the directory pact files are written to
 

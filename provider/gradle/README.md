@@ -14,7 +14,7 @@ not `-D` as with the other Pact-JVM modules!*__
 
 ```groovy
 plugins {
-  id "au.com.dius.pact" version "4.1.0"
+  id "io.pact" version "5.0.0"
 }
 ```
 
@@ -29,7 +29,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'au.com.dius.pact.provider:gradle:4.1.0'
+        classpath 'io.pact.provider:gradle:5.0.0'
     }
 }
 ```
@@ -37,7 +37,7 @@ buildscript {
 #### 1.2. Apply the pact plugin
 
 ```groovy
-apply plugin: 'au.com.dius.pact'
+apply plugin: 'io.pact'
 ```
 
 ### 2. Define the pacts between your consumers and providers

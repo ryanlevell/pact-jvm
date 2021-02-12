@@ -4,7 +4,7 @@
 
 The library is available on maven central using:
 
-* group-id = `au.com.dius.pact.provider`
+* group-id = `io.pact.provider`
 * artifact-id = `junit`
 * version-id = `4.1.x`
 
@@ -24,7 +24,7 @@ once - before/after whole contract test suite.
 - **org.junit.Before**, **org.junit.After** and **org.junit.Rule** JUnit annotations, that will be run before/after
 each test of an interaction.
 
-- **au.com.dius.pact.provider.junit.State** custom annotation - before each interaction that requires a state change,
+- **io.pact.provider.junit.State** custom annotation - before each interaction that requires a state change,
 all methods annotated by `@State` with appropriate the state listed will be invoked. These methods must either take
 no parameters or a single Map parameter.
 
@@ -148,7 +148,7 @@ _NOTE: this requires you to add medadata expections in your consumer test_
 ## Provider state callback methods
 
 For the provider states in the pact being verified, you can define methods to be invoked to setup the correct state
-for each interaction. Just annotate a method with the `au.com.dius.pact.provider.junit.State` annotation and the
+for each interaction. Just annotate a method with the `io.pact.provider.junit.State` annotation and the
 method will be invoked before the interaction is verified.
 
 For example:
@@ -363,7 +363,7 @@ To use pacts from a resource folder of the project annotate test class with
 
 ### Custom pacts source
 
-It's possible to use a custom Pact source. For this, implement interface `au.com.dius.pact.provider.junit.loader.PactLoader`
+It's possible to use a custom Pact source. For this, implement interface `io.pact.provider.junit.loader.PactLoader`
 and annotate the test class with `@PactSource(MyOwnPactLoader.class)`. **Note:** class `MyOwnPactLoader` must have a default empty constructor or a constructor with one argument of class `Class` which at runtime will be the test class so you can get custom annotations of test class.
 
 ### Filtering the interactions that are verified
@@ -397,7 +397,7 @@ filter annotation will then only verify interactions that have a matching value,
 You can provide multiple values to match with.
 
 The filter criteria is defined by the filter property. The filter must implement the
-`au.com.dius.pact.provider.junit.filter.InteractionFilter` interface. Also check the `InteractionFilter` interface
+`io.pact.provider.junit.filter.InteractionFilter` interface. Also check the `InteractionFilter` interface
 for default filter implementations.
 
 For example: 
@@ -456,21 +456,21 @@ an override property: `pact.content_type.override.<TYPE>.<SUBTYPE>=text|binary`.
 
 ## Test target
 
-The field in test class of type `au.com.dius.pact.provider.junit.target.Target` annotated with `au.com.dius.pact.provider.junit.target.TestTarget`
+The field in test class of type `io.pact.provider.junit.target.Target` annotated with `io.pact.provider.junit.target.TestTarget`
 will be used for actual Interaction execution and asserting of contract.
 
 **Note:** there must be exactly 1 such field, otherwise an `InitializationException` will be thrown.
 
 ### HttpTarget
 
-`au.com.dius.pact.provider.junit.target.HttpTarget` - out-of-the-box implementation of `au.com.dius.pact.provider.junit.target.Target`
+`io.pact.provider.junit.target.HttpTarget` - out-of-the-box implementation of `io.pact.provider.junit.target.Target`
 that will play pacts as http request and assert response from service by matching rules from pact.
 
 You can also specify the protocol, defaults to "http".
 
 ### MessageTarget
 
-`au.com.dius.pact.provider.junit.target.MessageTarget` - out-of-the-box implementation of `au.com.dius.pact.provider.junit.target.Target`
+`io.pact.provider.junit.target.MessageTarget` - out-of-the-box implementation of `io.pact.provider.junit.target.Target`
 that will play pacts as an message and assert response from service by matching rules from pact.
 
 **Note for Maven users:** If you use Maven to run your tests, you will have to make sure that the Maven Surefire plugin is at least
@@ -563,7 +563,7 @@ The following report types are available in addition to console output (`console
 `markdown`, `json`.
 
 You can also provide a fully qualified classname as report so custom reports are also supported.
-This class must implement `au.com.dius.pact.provider.reporters.VerifierReporter` interface in order to be correct custom implementation of a report.
+This class must implement `io.pact.provider.reporters.VerifierReporter` interface in order to be correct custom implementation of a report.
 
 # Publishing verification results to a Pact Broker
 
