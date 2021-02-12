@@ -5,6 +5,8 @@ import io.pact.core.model.Interaction
 import io.pact.core.model.Pact
 import io.pact.core.model.PactSource
 import io.pact.core.pactbroker.TestResult
+import io.pact.core.support.expressions.SystemPropertyResolver
+import io.pact.core.support.expressions.ValueResolver
 import io.pact.core.support.isNotEmpty
 import io.pact.provider.ProviderVerifier.Companion.PACT_VERIFIER_PUBLISH_RESULTS
 import mu.KLogging
@@ -19,7 +21,8 @@ interface TestResultAccumulator {
     pact: Pact,
     interaction: Interaction,
     testExecutionResult: TestResult,
-    source: PactSource?
+    source: PactSource?,
+    propertyResolver: ValueResolver = SystemPropertyResolver
   )
   fun clearTestResult(pact: Pact, source: PactSource?)
 }
@@ -33,19 +36,21 @@ object DefaultTestResultAccumulator : TestResultAccumulator, KLogging() {
     pact: Pact,
     interaction: Interaction,
     testExecutionResult: List<VerificationResult>,
-    source: PactSource
+    source: PactSource,
+    propertyResolver: ValueResolver = SystemPropertyResolver
   ) {
     val initial = TestResult.Ok(interaction.interactionId)
     updateTestResult(pact, interaction, testExecutionResult.fold(initial) {
       acc: TestResult, r -> acc.merge(r.toTestResult())
-    }, source)
+    }, source, propertyResolver)
   }
 
   override fun updateTestResult(
     pact: Pact,
     interaction: Interaction,
     testExecutionResult: TestResult,
-    source: PactSource?
+    source: PactSource?,
+    propertyResolver: ValueResolver
   ) {
     logger.debug { "Received test result '$testExecutionResult' for Pact ${pact.provider.name}-${pact.consumer.name} " +
       "and ${interaction.description} (${source?.description()})" }
@@ -63,7 +68,7 @@ object DefaultTestResultAccumulator : TestResultAccumulator, KLogging() {
       logger.debug {
         "All interactions for Pact ${pact.provider.name}-${pact.consumer.name} have a verification result"
       }
-      if (verificationReporter.publishingResultsDisabled()) {
+      if (verificationReporter.publishingResultsDisabled(propertyResolver)) {
         logger.warn { "Skipping publishing of verification results as it has been disabled " +
           "($PACT_VERIFIER_PUBLISH_RESULTS is not 'true')" }
       } else {

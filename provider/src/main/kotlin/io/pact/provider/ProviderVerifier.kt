@@ -29,6 +29,7 @@ import io.pact.core.model.UrlPactSource
 import io.pact.core.model.UrlSource
 import io.pact.core.model.messaging.Message
 import io.pact.core.pactbroker.PactBrokerClient
+import io.pact.core.support.expressions.SystemPropertyResolver
 import io.pact.core.support.hasProperty
 import io.pact.core.support.property
 import mu.KLogging
@@ -264,7 +265,8 @@ open class ProviderVerifier @JvmOverloads constructor (
    */
   override fun publishingResultsDisabled(): Boolean {
     return when {
-      !projectHasProperty.apply(PACT_VERIFIER_PUBLISH_RESULTS) -> verificationReporter.publishingResultsDisabled()
+      !projectHasProperty.apply(PACT_VERIFIER_PUBLISH_RESULTS) ->
+        verificationReporter.publishingResultsDisabled(SystemPropertyResolver)
       else -> projectGetProperty.apply(PACT_VERIFIER_PUBLISH_RESULTS)?.toLowerCase() != "true"
     }
   }

@@ -5,6 +5,7 @@ import io.pact.core.model.BrokerUrlSource
 import io.pact.core.model.FilteredPact
 import io.pact.core.model.Interaction
 import io.pact.core.model.Pact
+import io.pact.core.support.expressions.SystemPropertyResolver
 import io.pact.core.support.expressions.ValueResolver
 import io.pact.core.support.isNotEmpty
 import io.pact.provider.ConsumerInfo
@@ -36,7 +37,8 @@ class PactVerificationExtension(
   private val pactSource: PactSource,
   private val interaction: Interaction,
   private val serviceName: String,
-  private val consumerName: String?
+  private val consumerName: String?,
+  private val propertyResolver: ValueResolver = SystemPropertyResolver
 ) : TestTemplateInvocationContext, ParameterResolver, BeforeEachCallback, BeforeTestExecutionCallback,
   AfterTestExecutionCallback {
 
@@ -184,7 +186,8 @@ class PactVerificationExtension(
     val store = context.getStore(ExtensionContext.Namespace.create("pact-jvm"))
     val testContext = store.get("interactionContext") as PactVerificationContext
     val pact = if (this.pact is FilteredPact) pact.pact else pact
-    DefaultTestResultAccumulator.updateTestResult(pact, interaction, testContext.testExecutionResult, pactSource)
+    testResultAccumulator.updateTestResult(pact, interaction, testContext.testExecutionResult,
+      pactSource, propertyResolver)
   }
 
   companion object : KLogging()

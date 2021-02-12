@@ -72,7 +72,7 @@ class PactMessageBuilder extends GroovyBuilder {
       if (it.value instanceof Matcher) {
         message.matchingRules.addCategory('metadata').addRule(it.key, it.value.matcher)
         if (it.value.generator) {
-          message.generators.addGenerator(au.com.dius.pact.model.generators.Category.METADATA, it.value.generator)
+          message.generators.addGenerator(io.pact.core.model.generators.Category.METADATA, it.value.generator)
         }
         [it.key, it.value.value]
       } else {

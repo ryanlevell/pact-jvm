@@ -4,7 +4,6 @@ import io.pact.core.model.Feature
 import io.pact.core.model.FeatureToggles
 import io.pact.core.model.PactSpecVersion
 import io.pact.core.model.matchingrules.MatchingRuleGroup
-import io.pact.core.model.matchingrules.MinTypeMatcher
 import io.pact.core.model.matchingrules.RegexMatcher
 import io.pact.core.model.matchingrules.RuleLogic
 import io.pact.core.model.matchingrules.TypeMatcher
@@ -243,7 +242,7 @@ class PactDslJsonBodySpec extends Specification {
       '$.one.*': new MatchingRuleGroup([TypeMatcher.INSTANCE]),
       '$.one.*.id': new MatchingRuleGroup([TypeMatcher.INSTANCE]),
       '$.two.*': new MatchingRuleGroup([new RegexMatcher('\\w+', 'test')]),
-      '$.three.*': new MatchingRuleGroup([new MinTypeMatcher(0)]),
+      '$.three.*': new MatchingRuleGroup([TypeMatcher.INSTANCE]),
       '$.three.*[*].key3-id': new MatchingRuleGroup([TypeMatcher.INSTANCE])
     ]
 
@@ -380,5 +379,19 @@ class PactDslJsonBodySpec extends Specification {
 
     then:
     thrown(IllegalArgumentException)
+  }
+
+  def 'like matcher'() {
+    given:
+    PactDslJsonBody body = new PactDslJsonBody()
+      .like('test', 'Test')
+      .like('num', 100)
+
+    expect:
+    body.body.toString() == '{"num":100,"test":"Test"}'
+    body.matchers.toMap(PactSpecVersion.V3) == [
+      '.test': [matchers: [[match: 'type']], combine: 'AND'],
+      '.num': [matchers: [[match: 'type']], combine: 'AND']
+    ]
   }
 }

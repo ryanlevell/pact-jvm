@@ -7,6 +7,8 @@ import io.pact.core.model.Interaction
 import io.pact.core.model.Pact
 import io.pact.core.model.PactSource
 import io.pact.core.model.ProviderState
+import io.pact.core.support.expressions.SystemPropertyResolver
+import io.pact.core.support.expressions.ValueResolver
 import io.pact.provider.DefaultTestResultAccumulator
 import io.pact.provider.IProviderVerifier
 import io.pact.provider.ProviderUtils
@@ -62,6 +64,7 @@ open class InteractionRunner(
   private val testContext = ConcurrentHashMap<String, Any>()
   private val childDescriptions = ConcurrentHashMap<String, Description>()
   private val descriptionGenerator = DescriptionGenerator(testClass, pact)
+  protected var propertyResolver: ValueResolver = SystemPropertyResolver
 
   var testResultAccumulator: TestResultAccumulator = DefaultTestResultAccumulator
 
@@ -175,9 +178,11 @@ open class InteractionRunner(
             pending)
         } finally {
           if (pact is FilteredPact) {
-            testResultAccumulator.updateTestResult(pact.pact, interaction, testResult.toTestResult(), pactSource)
+            testResultAccumulator.updateTestResult(pact.pact, interaction, testResult.toTestResult(), pactSource,
+              propertyResolver)
           } else {
-            testResultAccumulator.updateTestResult(pact, interaction, testResult.toTestResult(), pactSource)
+            testResultAccumulator.updateTestResult(pact, interaction, testResult.toTestResult(), pactSource,
+              propertyResolver)
           }
         }
       }

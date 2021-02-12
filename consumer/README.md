@@ -12,7 +12,7 @@ Provides a DSL for use with Java to build consumer pacts.
 
 The library is available on maven central using:
 
-* group-id = `au.com.dius.pact`
+* group-id = `io.pact`
 * artifact-id = `consumer`
 * version-id = `4.2.x`
 

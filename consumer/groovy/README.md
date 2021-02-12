@@ -7,7 +7,7 @@ Groovy DSL for Pact JVM
 
 The library is available on maven central using:
 
-* group-id = `au.com.dius.pact.consumer`
+* group-id = `io.pact.consumer`
 * artifact-id = `groovy`
 * version-id = `4.1.0`
 

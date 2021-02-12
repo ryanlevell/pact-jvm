@@ -28,6 +28,7 @@ import io.pact.core.model.matchingrules.RegexMatcher
 import io.pact.core.model.messaging.Message
 import io.pact.core.pactbroker.PactBrokerClient
 import io.pact.core.pactbroker.TestResult
+import io.pact.core.support.expressions.SystemPropertyResolver
 import spock.lang.Specification
 import spock.lang.Unroll
 import spock.util.environment.RestoreSystemProperties
@@ -558,6 +559,7 @@ class ProviderVerifierSpec extends Specification {
     given:
     verifier.projectHasProperty = { value != null }
     verifier.projectGetProperty = { value }
+    def resolver = SystemPropertyResolver.INSTANCE
 
     if (value != null) {
       System.setProperty(ProviderVerifier.PACT_VERIFIER_PUBLISH_RESULTS, value)
@@ -565,7 +567,7 @@ class ProviderVerifierSpec extends Specification {
 
     expect:
     verifier.publishingResultsDisabled() == result
-    DefaultVerificationReporter.INSTANCE.publishingResultsDisabled() == result
+    DefaultVerificationReporter.INSTANCE.publishingResultsDisabled(resolver) == result
 
     where:
 

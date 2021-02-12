@@ -4,6 +4,8 @@ import io.pact.core.model.BrokerUrlSource
 import io.pact.core.model.Pact
 import io.pact.core.pactbroker.PactBrokerClient
 import io.pact.core.pactbroker.TestResult
+import io.pact.core.support.expressions.SystemPropertyResolver
+import io.pact.core.support.expressions.ValueResolver
 import com.github.michaelbull.result.Err
 import mu.KLogging
 
@@ -37,7 +39,13 @@ interface VerificationReporter {
   /**
    * This must return true unless the pact.verifier.publishResults property has the value of "true"
    */
+  @Deprecated("Use version that takes a value resolver")
   fun publishingResultsDisabled(): Boolean
+
+  /**
+   * This must return true unless the pact.verifier.publishResults property has the value of "true"
+   */
+  fun publishingResultsDisabled(resolver: ValueResolver): Boolean
 }
 
 /**
@@ -94,11 +102,10 @@ object DefaultVerificationReporter : VerificationReporter, KLogging() {
     }
   }
 
-  override fun publishingResultsDisabled(): Boolean {
-    var property = System.getProperty(ProviderVerifier.PACT_VERIFIER_PUBLISH_RESULTS)
-    if (property.isNullOrEmpty()) {
-      property = System.getenv(ProviderVerifier.PACT_VERIFIER_PUBLISH_RESULTS)
-    }
+  override fun publishingResultsDisabled() = publishingResultsDisabled(SystemPropertyResolver)
+
+  override fun publishingResultsDisabled(resolver: ValueResolver): Boolean {
+    val property = resolver.resolveValue(ProviderVerifier.PACT_VERIFIER_PUBLISH_RESULTS, "false")
     return property?.toLowerCase() != "true"
   }
 }
