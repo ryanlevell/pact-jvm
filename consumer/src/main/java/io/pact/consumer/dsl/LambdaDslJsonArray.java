@@ -268,43 +268,43 @@ public class LambdaDslJsonArray {
     }
 
     /**
-     * Element that must be an ISO formatted timestamp
+     * Element that must be an ISO formatted datetime
      */
-    public LambdaDslJsonArray timestamp() {
-        pactArray.timestamp();
-        return this;
+    public LambdaDslJsonArray datetime() {
+      pactArray.datetime();
+      return this;
     }
 
     /**
-     * Element that must match the given timestamp format
+     * Element that must match the given datetime format
      *
-     * @param format timestamp format
+     * @param format datetime format
      */
-    public LambdaDslJsonArray timestamp(final String format) {
-        pactArray.timestamp(format);
-        return this;
+    public LambdaDslJsonArray datetime(final String format) {
+      pactArray.datetime(format);
+      return this;
     }
 
     /**
-     * Element that must match the given timestamp format
+     * Element that must match the given datetime format
      *
-     * @param format  timestamp format
+     * @param format  datetime format
      * @param example example date and time to use for generated bodies
      */
-    public LambdaDslJsonArray timestamp(final String format, final Date example) {
-        pactArray.timestamp(format, example);
-        return this;
+    public LambdaDslJsonArray datetime(final String format, final Date example) {
+      pactArray.datetime(format, example);
+      return this;
     }
 
     /**
-     * Element that must match the given timestamp format
+     * Element that must match the given datetime format
      *
-     * @param format  timestamp format
+     * @param format  datetime format
      * @param example example date and time to use for generated bodies
      */
-    public LambdaDslJsonArray timestamp(final String format, final Instant example) {
-        pactArray.timestamp(format, example);
-        return this;
+    public LambdaDslJsonArray datetime(final String format, final Instant example) {
+      pactArray.datetime(format, example);
+      return this;
     }
 
     /**

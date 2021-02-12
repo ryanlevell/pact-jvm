@@ -189,17 +189,17 @@ public class LambdaDslObjectTest {
 
     @Test
     public void testZonedDateTimeExampleValue() {
-        final PactDslJsonBody actualPactDsl = new PactDslJsonBody("", "", null);
-        final LambdaDslObject object = new LambdaDslObject(actualPactDsl);
-        final ZonedDateTime example = ZonedDateTime.of(LocalDateTime.of(2016, 10, 16, 02, 12, 45), ZoneId.of("America/Los_Angeles"));
-        object
-            .timestamp("timestamp", "yyyy-MM-dd'T'HH:mm:ssZ", example)
-            .time("time", "HH:mm:ssZ", example)
-            .date("date", "yyyy-MM-dd", example);
-        actualPactDsl.close();
+      final PactDslJsonBody actualPactDsl = new PactDslJsonBody("", "", null);
+      final LambdaDslObject object = new LambdaDslObject(actualPactDsl);
+      final ZonedDateTime example = ZonedDateTime.of(LocalDateTime.of(2016, 10, 16, 02, 12, 45), ZoneId.of("America/Los_Angeles"));
+      object
+          .datetime("datetime", "yyyy-MM-dd'T'HH:mm:ssZ", example)
+          .time("time", "HH:mm:ssZ", example)
+          .date("date", "yyyy-MM-dd", example);
+      actualPactDsl.close();
 
-        String actualJson = actualPactDsl.getBody().toString();
-        assertThat(actualJson, is("{\"date\":\"2016-10-16\",\"time\":\"02:12:45-0700\",\"timestamp\":\"2016-10-16T02:12:45-0700\"}"));
+      String actualJson = actualPactDsl.getBody().toString();
+      assertThat(actualJson, is("{\"date\":\"2016-10-16\",\"datetime\":\"2016-10-16T02:12:45-0700\",\"time\":\"02:12:45-0700\"}"));
     }
 
 

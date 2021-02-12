@@ -390,14 +390,6 @@ public class LambdaDslObject {
     }
 
     /**
-     * Attribute named 'timestamp' that must be an ISO formatted timestamp
-     */
-    public LambdaDslObject timestamp() {
-        object.timestamp();
-        return this;
-    }
-
-    /**
      * Attribute that must be an ISO formatted datetime
      *
      * @param name attribute name
