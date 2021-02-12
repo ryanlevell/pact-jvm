@@ -1,25 +1,21 @@
 package io.pact.core.matchers
 
-import io.pact.core.matchers.BodyItemMatchResult
-import io.pact.core.matchers.BodyMatchResult
-import io.pact.core.matchers.BodyMismatch
-import io.pact.core.matchers.BodyMismatchFactory
-import io.pact.core.matchers.Matchers
 import io.pact.core.matchers.Matchers.compareListContent
 import io.pact.core.matchers.Matchers.compareLists
-import io.pact.core.matchers.MatchingContext
 import io.pact.core.model.OptionalBody
 import io.pact.core.support.json.JsonParser
 import io.pact.core.support.json.JsonValue
 import mu.KLogging
 
 object JsonBodyMatcher : BodyMatcher, KLogging() {
+  override val isCore = true
 
   override fun matchBody(
     expected: OptionalBody,
     actual: OptionalBody,
-    context: MatchingContext
+    context: Any
   ): BodyMatchResult {
+    context as MatchingContext
     return when {
       expected.isMissing() -> BodyMatchResult(null, emptyList())
       expected.isEmpty() && actual.isEmpty() -> BodyMatchResult(null, emptyList())

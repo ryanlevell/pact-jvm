@@ -5,12 +5,14 @@ import io.pact.core.model.matchingrules.RegexMatcher
 import mu.KLogging
 
 class PlainTextBodyMatcher : BodyMatcher {
+  override val isCore = true
 
   override fun matchBody(
     expected: OptionalBody,
     actual: OptionalBody,
-    context: MatchingContext
+    context: Any
   ): BodyMatchResult {
+    context as MatchingContext
     return when {
       expected.isMissing() -> BodyMatchResult(null, emptyList())
       expected.isNull() && actual.isPresent() -> BodyMatchResult(null, listOf(

@@ -2,7 +2,13 @@ package io.pact.core.model.matchingrules
 
 import io.pact.core.model.PactSpecVersion
 import io.pact.core.model.generators.Generator
+import io.pact.core.support.FromJson
+import io.pact.core.support.ToJson
+import io.pact.core.support.json.JsonParser
 import io.pact.core.support.json.JsonValue
+import io.pact.core.support.jsonObject
+import io.pact.core.support.toJson
+import io.pact.core.support.toJsonValue
 import mu.KLogging
 import java.util.Comparator
 import java.util.function.Predicate
@@ -13,9 +19,7 @@ import java.util.function.Predicate
 data class MatchingRuleCategory @JvmOverloads constructor(
   val name: String,
   var matchingRules: MutableMap<String, MatchingRuleGroup> = mutableMapOf()
-) {
-
-  companion object : KLogging()
+) : ToJson {
 
   /**
    * Add a rule by key to the given category
@@ -252,5 +256,16 @@ data class MatchingRuleCategory @JvmOverloads constructor(
       }
     }
     return map
+  }
+
+  override fun toJson() = jsonObject(
+    "name" to name.toJsonValue(),
+    "matchingRules" to toMap(PactSpecVersion.V4).toJson()
+  )
+
+  companion object : KLogging(), FromJson<MatchingRuleCategory> {
+    override fun fromJson(json: JsonValue): MatchingRuleCategory {
+      return MatchingRuleCategory(json["name"].asString()!!).fromJson(json["matchingRules"])
+    }
   }
 }

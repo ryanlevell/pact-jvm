@@ -280,7 +280,7 @@ sealed class JsonValue {
 fun <R> JsonValue?.map(transform: (JsonValue) -> R): List<R> = when {
   this == null -> emptyList()
   this is JsonValue.Array -> this.values.map(transform)
-  else -> emptyList()
+  else -> listOf(transform(this))
 }
 
 operator fun JsonValue?.get(field: Any): JsonValue = when {

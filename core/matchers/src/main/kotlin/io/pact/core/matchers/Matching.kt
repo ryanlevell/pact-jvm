@@ -5,9 +5,20 @@ import io.pact.core.model.Request
 import io.pact.core.model.matchingrules.MatchingRuleCategory
 import io.pact.core.model.matchingrules.MatchingRuleGroup
 import io.pact.core.model.matchingrules.TypeMatcher
+import io.pact.core.plugins.DefaultPluginManager
+import io.pact.core.support.FromJson
+import io.pact.core.support.Json
+import io.pact.core.support.Json.fromJson
+import io.pact.core.support.ToJson
+import io.pact.core.support.json.JsonValue
+import io.pact.core.support.json.map
+import io.pact.core.support.toJsonValue
 import mu.KLogging
 
-data class MatchingContext(val matchers: MatchingRuleCategory, val allowUnexpectedKeys: Boolean) {
+data class MatchingContext(
+  val matchers: MatchingRuleCategory,
+  val allowUnexpectedKeys: Boolean
+) : ToJson {
   fun matcherDefined(path: List<String>, pathComparator: Comparator<String> = Comparator.naturalOrder()): Boolean {
     return resolveMatchers(path, pathComparator).isNotEmpty()
   }
@@ -92,6 +103,24 @@ data class MatchingContext(val matchers: MatchingRuleCategory, val allowUnexpect
       emptyList()
     }
   }
+
+  override fun toJson(): JsonValue {
+    return JsonValue.Object(
+      "matchers" to matchers.toJson(),
+      "allowUnexpectedKeys" to allowUnexpectedKeys.toJsonValue()
+    )
+  }
+
+  companion object : FromJson<MatchingContext> {
+    override fun fromJson(json: JsonValue) = if (json is JsonValue.Object) {
+      MatchingContext(
+        MatchingRuleCategory.fromJson(json["matchers"]),
+        json["allowUnexpectedKeys"].asBoolean() ?: false
+      )
+    } else {
+      null
+    }
+  }
 }
 
 object Matching : KLogging() {
@@ -146,10 +175,13 @@ object Matching : KLogging() {
     val expectedContentType = expected.determineContentType()
     val actualContentType = actual.determineContentType()
     return if (expectedContentType.getBaseType() == actualContentType.getBaseType()) {
-      val matcher = MatchingConfig.lookupBodyMatcher(actualContentType.getBaseType())
+      val matcher = MatchingConfig.lookupContentMatcher(actualContentType.getBaseType())
       if (matcher != null) {
         logger.debug { "Found a matcher for $actualContentType -> $matcher" }
-        matcher.matchBody(expected.body, actual.body, context)
+        when (val result = DefaultPluginManager.invokeContentMatcher(matcher, expected.body, actual.body, context)) {
+          is BodyMatchResult -> result
+          else -> BodyMatchResult.fromJson(Json.toJson(result))!!
+        }
       } else {
         logger.debug { "No matcher for $actualContentType, using equality" }
         when {
@@ -241,8 +273,24 @@ object Matching : KLogging() {
 
 data class QueryMatchResult(val key: String, val result: List<QueryMismatch>)
 data class HeaderMatchResult(val key: String, val result: List<HeaderMismatch>)
-data class BodyItemMatchResult(val key: String, val result: List<BodyMismatch>)
-data class BodyMatchResult(val typeMismatch: BodyTypeMismatch?, val bodyResults: List<BodyItemMatchResult>) {
+
+data class BodyItemMatchResult(val key: String, val result: List<BodyMismatch>) {
+  companion object: FromJson<BodyItemMatchResult> {
+    override fun fromJson(json: JsonValue) = if (json is JsonValue.Object) {
+      BodyItemMatchResult(
+        json["key"].asString().orEmpty(),
+        json["result"].map { BodyMismatch.fromJson(it) }.filterNotNull()
+      )
+    } else {
+      null
+    }
+  }
+}
+
+data class BodyMatchResult(
+  val typeMismatch: BodyTypeMismatch?,
+  val bodyResults: List<BodyItemMatchResult>
+) {
   fun matchedOk() = typeMismatch == null && bodyResults.all { it.result.isEmpty() }
 
   val mismatches: List<Mismatch>
@@ -253,4 +301,15 @@ data class BodyMatchResult(val typeMismatch: BodyTypeMismatch?, val bodyResults:
         bodyResults.flatMap { it.result }
       }
     }
+
+  companion object: FromJson<BodyMatchResult> {
+    override fun fromJson(json: JsonValue) = if (json is JsonValue.Object) {
+      BodyMatchResult(
+        BodyTypeMismatch.fromJson(json["typeMismatch"]),
+        json["bodyResults"].map { BodyItemMatchResult.fromJson(it) }.filterNotNull()
+      )
+    } else {
+      null
+    }
+  }
 }

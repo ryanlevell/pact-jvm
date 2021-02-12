@@ -16,11 +16,14 @@ class ContentType(val contentType: MediaType?) {
 
   fun isJson(): Boolean {
     return if (contentType != null) {
+      val supertype = registry.getSupertype(contentType)
       val override = System.getProperty("pact.content_type.override.${contentType.baseType}")
-      if (override == null)
-        jsonRegex.matches(contentType.subtype.toLowerCase())
-      else
+      if (override != null)
         jsonRegex.matches(override)
+      else if (supertype != null && jsonRegex.matches(supertype.subtype))
+        true
+      else
+        jsonRegex.matches(contentType.subtype.toLowerCase())
     } else false
   }
 
@@ -111,6 +114,10 @@ class ContentType(val contentType: MediaType?) {
       }
     }
   }
+
+  fun matches(regex: String) = if (contentType != null ) {
+    Regex(regex).matches(contentType.baseType.toString())
+  } else false
 
   companion object : KLogging() {
     @JvmStatic

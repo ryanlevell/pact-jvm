@@ -1,22 +1,19 @@
 package io.pact.core.matchers
 
-import io.pact.core.matchers.BodyItemMatchResult
-import io.pact.core.matchers.BodyMatchResult
-import io.pact.core.matchers.BodyMismatch
-import io.pact.core.matchers.BodyMismatchFactory
-import io.pact.core.matchers.Matchers
-import io.pact.core.matchers.MatchingContext
 import io.pact.core.model.OptionalBody
 import mu.KLogging
 import org.apache.http.NameValuePair
 import org.apache.http.client.utils.URLEncodedUtils
 
 class FormPostBodyMatcher : BodyMatcher {
+  override val isCore = true
+
   override fun matchBody(
     expected: OptionalBody,
     actual: OptionalBody,
-    context: MatchingContext
+    context: Any
   ): BodyMatchResult {
+    context as MatchingContext
     val expectedBody = expected
     val actualBody = actual
     return when {

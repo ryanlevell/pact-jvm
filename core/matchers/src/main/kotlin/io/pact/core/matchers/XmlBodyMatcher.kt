@@ -16,12 +16,14 @@ import javax.xml.XMLConstants
 import javax.xml.parsers.DocumentBuilderFactory
 
 object XmlBodyMatcher : BodyMatcher, KLogging() {
+  override val isCore = true
 
   override fun matchBody(
     expected: OptionalBody,
     actual: OptionalBody,
-    context: MatchingContext
+    context: Any
   ): BodyMatchResult {
+    context as MatchingContext
     return when {
       expected.isMissing() -> BodyMatchResult(null, emptyList())
       expected.isEmpty() && actual.isEmpty() -> BodyMatchResult(null, emptyList())

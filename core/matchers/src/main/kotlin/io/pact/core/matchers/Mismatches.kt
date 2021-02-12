@@ -1,6 +1,9 @@
 package io.pact.core.matchers
 
 import com.github.ajalt.mordant.TermColors
+import io.pact.core.support.FromJson
+import io.pact.core.support.Json
+import io.pact.core.support.json.JsonValue
 
 /**
  * Interface to a factory class to create a mismatch
@@ -36,6 +39,14 @@ data class BodyTypeMismatch(val expected: String?, val actual: String?) : Mismat
     return mapOf("mismatch" to description())
   }
   override fun type() = "body-content-type"
+
+  companion object: FromJson<BodyTypeMismatch> {
+    override fun fromJson(json: JsonValue) = if (json is JsonValue.Object) {
+      BodyTypeMismatch(json["expected"].asString(), json["actual"].asString())
+    } else {
+      null
+    }
+  }
 }
 
 data class CookieMismatch(val expected: List<String>, val actual: List<String>) : Mismatch()
@@ -116,6 +127,20 @@ data class BodyMismatch @JvmOverloads constructor(
 ) : Mismatch() {
   override fun description() = mismatch
   override fun type() = "body"
+
+  companion object : FromJson<BodyMismatch> {
+    override fun fromJson(json: JsonValue) = if (json is JsonValue.Object) {
+      BodyMismatch(
+        json["expected"].asString(),
+        json["actual"].asString(),
+        json["mismatch"].asString().orEmpty(),
+        json["path"].asString() ?: "/",
+        json["diff"].asString()
+      )
+    } else {
+      null
+    }
+  }
 }
 
 object BodyMismatchFactory : MismatchFactory<BodyMismatch> {

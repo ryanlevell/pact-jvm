@@ -21,6 +21,8 @@ import io.pact.core.support.jsonObject
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
+import io.pact.core.matchers.BodyMatchResult
+import io.pact.core.plugins.DefaultPluginManager
 import mu.KLogging
 
 data class BodyComparisonResult(
@@ -147,13 +149,17 @@ class ResponseComparison(
       message: Message,
       actual: OptionalBody,
       context: MatchingContext
-    ): MutableList<BodyMismatch> {
-      val result = MatchingConfig.lookupBodyMatcher(message.getContentType().getBaseType())
-      var bodyMismatches = mutableListOf<BodyMismatch>()
-      if (result != null) {
-        bodyMismatches = result.matchBody(message.contents, actual, context)
-          .bodyResults.flatMap { it.result }.toMutableList()
+    ): List<BodyMismatch> {
+      val contentType = message.getContentType().getBaseType()
+      val matcher = MatchingConfig.lookupContentMatcher(contentType)
+      return if (matcher != null) {
+        logger.debug { "Found a matcher for $contentType -> $matcher" }
+        when (val result = DefaultPluginManager.invokeContentMatcher(matcher, message.contents, actual, context)) {
+          is BodyMatchResult -> result
+          else -> BodyMatchResult.fromJson(Json.toJson(result))!!
+        }.bodyResults.flatMap { it.result }
       } else {
+        val bodyMismatches = mutableListOf<BodyMismatch>()
         val expectedBody = message.contents.valueAsString()
         if (expectedBody.isNotEmpty() && actual.isNullOrEmpty()) {
           bodyMismatches.add(BodyMismatch(expectedBody, null, "Expected body '$expectedBody' but was missing"))
@@ -161,8 +167,8 @@ class ResponseComparison(
           bodyMismatches.add(BodyMismatch(expectedBody, actual.valueAsString(),
             "Actual body '${actual.valueAsString()}' is not equal to the expected body '$expectedBody'"))
         }
+        bodyMismatches
       }
-      return bodyMismatches
     }
   }
 }

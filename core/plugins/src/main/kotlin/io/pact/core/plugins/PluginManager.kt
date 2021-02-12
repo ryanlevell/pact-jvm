@@ -7,6 +7,7 @@ import com.github.michaelbull.result.mapError
 import com.vdurmont.semver4j.Semver
 import io.grpc.ManagedChannel
 import io.grpc.ManagedChannelBuilder
+import io.pact.core.model.OptionalBody
 import io.pact.core.support.Json
 import io.pact.core.support.Utils
 import io.pact.core.support.handleWith
@@ -22,11 +23,16 @@ import java.io.File
 import java.io.IOException
 import java.io.InputStreamReader
 import java.lang.Runtime.getRuntime
+import java.lang.RuntimeException
+import java.lang.reflect.InvocationTargetException
 import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.concurrent.ConcurrentHashMap
-import java.util.concurrent.ConcurrentMap
 import java.util.concurrent.TimeUnit
+import kotlin.reflect.full.createInstance
+import kotlin.reflect.full.declaredMemberFunctions
+import kotlin.reflect.full.memberFunctions
+import kotlin.reflect.jvm.jvmErasure
 
 interface PactPluginManifest {
   val pluginDir: File
@@ -100,6 +106,16 @@ interface PluginManager {
    * Loads the plugin by name
    */
   fun loadPlugin(name: String): Result<PactPlugin, String>
+
+  /**
+   * Invoke the content type matcher
+   */
+  fun invokeContentMatcher(
+    matcher: ContentMatcher,
+    expected: OptionalBody,
+    actual: OptionalBody,
+    context: Any
+  ): Any?
 }
 
 object DefaultPluginManager: KLogging(), PluginManager {
@@ -123,6 +139,36 @@ object DefaultPluginManager: KLogging(), PluginManager {
         is Ok -> initialisePlugin(manifest.value)
         is Err -> Err(manifest.error)
       }
+    }
+  }
+
+  override fun invokeContentMatcher(
+    matcher: ContentMatcher,
+    expected: OptionalBody,
+    actual: OptionalBody,
+    context: Any
+  ): Any? {
+    return when {
+      matcher is CatalogueContentMatcher && matcher.isCore -> {
+        val clazz = Class.forName(matcher.catalogueEntry.values["implementation"]).kotlin
+        val bodyMatcher = clazz.objectInstance ?: clazz.createInstance()
+        try {
+          clazz.memberFunctions.find { it.name == "matchBody" }!!.call(bodyMatcher, expected, actual, context)
+        } catch (e: InvocationTargetException) {
+          throw e.targetException
+        }
+      }
+      matcher is CatalogueContentMatcher -> {
+        TODO()
+      }
+      matcher.isCore -> {
+        try {
+          matcher::class.memberFunctions.find { it.name == "matchBody" }!!.call(matcher, expected, actual, context)
+        } catch (e: InvocationTargetException) {
+          throw e.targetException
+        }
+      }
+      else -> throw RuntimeException("Mis-configured content type matcher $matcher")
     }
   }
 

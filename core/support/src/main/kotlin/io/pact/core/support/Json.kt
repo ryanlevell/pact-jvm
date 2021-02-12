@@ -11,6 +11,14 @@ import org.apache.commons.lang3.text.translate.LookupTranslator
 import java.io.Writer
 import java.math.BigInteger
 
+interface ToJson {
+  fun toJson(): JsonValue
+}
+
+interface FromJson<out T> {
+  fun fromJson(json: JsonValue): T?
+}
+
 /**
  * JSON support functions
  */
@@ -22,6 +30,7 @@ object Json {
   fun toJson(any: Any?): JsonValue {
     return when (any) {
       is JsonValue -> any
+      is ToJson -> any.toJson()
       is Number -> any.toJsonValue()
       is String -> any.toJsonValue()
       is Boolean -> any.toJsonValue()
@@ -112,14 +121,14 @@ object Json {
   )
 }
 
-private fun Char.toJsonValue() = JsonValue.StringValue(JsonToken.StringValue(charArrayOf(this)))
+fun Char.toJsonValue() = JsonValue.StringValue(JsonToken.StringValue(charArrayOf(this)))
 
-private fun Boolean.toJsonValue() = if (this) JsonValue.True
+fun Boolean.toJsonValue() = if (this) JsonValue.True
   else JsonValue.False
 
-private fun String.toJsonValue() = JsonValue.StringValue(JsonToken.StringValue(this.toCharArray()))
+fun String.toJsonValue() = JsonValue.StringValue(JsonToken.StringValue(this.toCharArray()))
 
-private fun Number.toJsonValue(): JsonValue = when (this) {
+fun Number.toJsonValue(): JsonValue = when (this) {
   is Int -> JsonValue.Integer(JsonToken.Integer(this.toString().toCharArray()))
   is Long -> JsonValue.Integer(JsonToken.Integer(this.toString().toCharArray()))
   is BigInteger -> JsonValue.Integer(JsonToken.Integer(this.toString().toCharArray()))
@@ -135,3 +144,5 @@ fun jsonObject(vararg pairs: Pair<String, Any?>) = JsonValue.Object(
 
 fun jsonObject(pairs: List<Pair<String, Any?>>) = JsonValue.Object(
   pairs.associate { it.first to toJson(it.second) }.toMutableMap())
+
+fun <K, V> Map<K, V>.toJson() = toJson(this)

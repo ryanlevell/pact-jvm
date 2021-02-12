@@ -2,5 +2,8 @@
 <mime-info>
   <mime-type type="application/x-www-form-urlencoded">
 	  <sub-class-of type="text/plain"/>
-   </mime-type>
+  </mime-type>
+  <mime-type type="application/x-thrift">
+    <sub-class-of type="application/json"/>
+  </mime-type>
 </mime-info>

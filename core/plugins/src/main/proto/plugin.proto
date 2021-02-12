@@ -23,7 +23,16 @@ message Catalogue {
 
 message Void {}
 
+message CompareContentsRequest {
+
+}
+
+message CompareContentsResponse {
+
+}
+
 service PactPlugin {
   rpc InitPlugin(InitPluginRequest) returns (InitPluginResponse);
   rpc UpdateCatalogue(Catalogue) returns (Void);
+  rpc CompareContents(CompareContentsRequest) returns (CompareContentsResponse);
 }

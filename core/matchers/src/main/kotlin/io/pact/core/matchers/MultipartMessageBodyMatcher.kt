@@ -8,12 +8,14 @@ import javax.mail.internet.MimeMultipart
 import javax.mail.util.ByteArrayDataSource
 
 class MultipartMessageBodyMatcher : BodyMatcher {
+  override val isCore = true
 
   override fun matchBody(
     expected: OptionalBody,
     actual: OptionalBody,
-    context: MatchingContext
+    context: Any
   ): BodyMatchResult {
+    context as MatchingContext
     return when {
       expected.isMissing() -> BodyMatchResult(null, emptyList())
       expected.isPresent() && actual.isNotPresent() -> BodyMatchResult(null,

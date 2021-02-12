@@ -8,10 +8,6 @@ import java.nio.charset.Charset
 @SuppressWarnings('UnnecessaryBooleanExpression')
 class ContentTypeSpec extends Specification {
 
-  def setupSpec() {
-    System.setProperty('pact.content_type.override.application/x-thrift', 'json')
-  }
-
   @Unroll
   def '"#value" is json -> #result'() {
     expect:
@@ -119,5 +115,20 @@ class ContentTypeSpec extends Specification {
     'application/x-www-form-urlencoded' || 'text/plain'
 
     contentType = new ContentType(value)
+  }
+
+  @Unroll
+  def '"#value" matches "#contentType" -> #result'() {
+    expect:
+    new ContentType(contentType).matches(value) == result
+
+    where:
+
+    contentType                      | value                | result
+    'application/json'               | 'application/json'   | true
+    'application/json'               | 'application/.*json' | true
+    'application/json'               | 'application/.*xml'  | false
+    'application/json;charset=UTF-8' | 'application/json'   | true
+    'application/json;charset=UTF-8' | 'application/.*json' | true
   }
 }
