@@ -159,7 +159,14 @@ object DefaultPluginManager: KLogging(), PluginManager {
         }
       }
       matcher is CatalogueContentMatcher -> {
-        TODO()
+        val request = Plugin.CompareContentsRequest.newBuilder()
+          .setExpected(Plugin.Body.newBuilder())
+          .setActual(Plugin.Body.newBuilder())
+          .setContext(com.google.protobuf.Struct.parseFrom(
+            Json.toJson(context).serialise().toByteArray()
+          ))
+          .build()
+        PLUGIN_REGISTER[matcher.catalogueEntry.key]!!.stub!!.compareContents(request)
       }
       matcher.isCore -> {
         try {
