@@ -18,5 +18,6 @@ class ConsumerVersionSelectorSpec extends Specification {
     'A'  | false  | null     | null     | '{"latest":false,"tag":"A"}'
     'A'  | false  | 'Bob'    | null     | '{"consumer":"Bob","latest":false,"tag":"A"}'
     null | false  | 'Bob'    | null     | '{"consumer":"Bob","latest":false}'
+    ''   | true   | ''       | null     | '{"latest":true}'
   }
 }

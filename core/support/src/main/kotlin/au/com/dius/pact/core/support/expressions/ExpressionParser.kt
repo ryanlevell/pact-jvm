@@ -47,8 +47,9 @@ object ExpressionParser {
 
   @JvmOverloads
   @JvmStatic
-  fun parseListExpression(value: String, valueResolver: ValueResolver = SystemPropertyResolver): List<String> {
-    return replaceExpressions(value, valueResolver).split(VALUES_SEPARATOR).map { it.trim() }.filter { it.isNotEmpty() }
+  fun parseListExpression(value: String, valueResolver: ValueResolver = SystemPropertyResolver, filterEmpty: Boolean = true): List<String> {
+    val values = replaceExpressions(value, valueResolver).split(VALUES_SEPARATOR).map { it.trim() }
+    return if (filterEmpty) values.filter { it.isNotEmpty() } else values
   }
 
   @JvmOverloads

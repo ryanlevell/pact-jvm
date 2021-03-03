@@ -124,7 +124,8 @@ open class PactBrokerLoader(
         .map { ConsumerVersionSelector(it.first, consumer = it.second) }
     } else {
       pactBrokerConsumerVersionSelectors.flatMap {
-        val tags = parseListExpression(it.tag, resolver)
+        // filter empty tags if consumers present. else allow empty to load the absolute latest
+        val tags = parseListExpression(it.tag, resolver, filterEmpty = it.consumer.isNotEmpty())
         val consumer = parseExpression(it.consumer, DataType.STRING, resolver) as String?
         val fallbackTag = parseExpression(it.fallbackTag, DataType.STRING, resolver) as String?
         val parsedLatest = parseListExpression(it.latest, resolver)

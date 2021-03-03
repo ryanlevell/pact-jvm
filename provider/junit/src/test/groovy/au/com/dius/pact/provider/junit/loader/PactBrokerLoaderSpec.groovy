@@ -988,6 +988,27 @@ class PactBrokerLoaderSpec extends Specification {
     ]
   }
 
+  def 'when building the list of selectors, if tag is empty create a selector with empty tag'() {
+    given:
+    valueResolver = Mock(ValueResolver)
+    tags = []
+    consumerVersionSelectors = [
+            createVersionSelector(tag: 'one'),
+            createVersionSelector(tag: ''),
+            createVersionSelector(tag: 'two')
+    ]
+
+    when:
+    def result = pactBrokerLoader.call().buildConsumerVersionSelectors(valueResolver)
+
+    then:
+    result == [
+      new ConsumerVersionSelector('one', true, '', null),
+      new ConsumerVersionSelector('', true, '', null),
+      new ConsumerVersionSelector('two', true, '', null),
+    ]
+  }
+
   def 'when building the list of selectors, if falling back to tags create a selector with any consumers'() {
     given:
     valueResolver = Mock(ValueResolver)
